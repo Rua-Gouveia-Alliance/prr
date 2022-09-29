@@ -1,5 +1,6 @@
 # prr
-Application for managing networks of communication terminals
+
+Project done in the scope of the course Object-Oriented Programming, IST 2022/2023.
 
 ## Index
 
