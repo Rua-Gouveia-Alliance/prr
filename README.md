@@ -12,7 +12,7 @@ Project done in the scope of the course Object-Oriented Programming, IST 2022/20
 1. Compile (`make` inside po-uilib, prr-core and prr-app)
 2.  In root dir:
 ```
-java -cp prr-core/prr-core.jar:prr-app/prr-app.jar:po-uilib-202209081626/po-uilib.jar prr.app.App
+java -cp prr-core/prr-core.jar:prr-app/prr-app.jar:po-uilib/po-uilib.jar prr.app.App
 ```
 
 ## Useful links
