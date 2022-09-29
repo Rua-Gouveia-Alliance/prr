@@ -1,5 +1,6 @@
 # prr
-Application for managing networks of communication terminals
+
+Project done in the scope of the course Object-Oriented Programming, IST 2022/2023.
 
 ## Index
 
@@ -9,7 +10,10 @@ Application for managing networks of communication terminals
 ## How to run
 
 1. Compile (`make` inside po-uilib, prr-core and prr-app)
-1. `java -cp prr-core/prr-core.jar:prr-app/prr-app.jar:po-uilib-202209081626/po-uilib.jar prr.app.App` in root dir
+2.  In root dir:
+```
+java -cp prr-core/prr-core.jar:prr-app/prr-app.jar:po-uilib-202209081626/po-uilib.jar prr.app.App
+```
 
 ## Useful links
 
