@@ -96,4 +96,9 @@ interface Message {
     static String noOngoingCommunication() {
         return "Não existe nenhuma comunicação em curso.";
     }
+
+    /** @return status message */
+    static String invalidCommunication() {
+        return "O identificador da comunicação é inválido.";
+    }
 }
