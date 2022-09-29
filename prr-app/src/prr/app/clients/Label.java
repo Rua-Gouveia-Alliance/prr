@@ -4,25 +4,25 @@ package prr.app.clients;
  * Menu entries.
  */
 interface Label {
-	
-	/** Menu title. */
-	String TITLE = "GESTÃO DE CLIENTES";
 
-	/** Show client. */
-	String SHOW_CLIENT = "Visualizar cliente";
+    /** Menu title. */
+    String TITLE = "GESTÃO DE CLIENTES";
 
-	/** Show all clients. */
-	String SHOW_ALL_CLIENTS = "Visualizar todos os clientes";
+    /** Show client. */
+    String SHOW_CLIENT = "Visualizar cliente";
 
-	/** Register client. */
-	String REGISTER_CLIENT = "Registar cliente";
+    /** Show all clients. */
+    String SHOW_ALL_CLIENTS = "Visualizar todos os clientes";
 
-	/** Enable client notifications. */
-	String ENABLE_CLIENT_NOTIFICATIONS = "Activar notificações";
+    /** Register client. */
+    String REGISTER_CLIENT = "Registar cliente";
 
-	/** Disable client notifications. */
-	String DISABLE_CLIENT_NOTIFICATIONS = "Desactivar notificações";
+    /** Enable client notifications. */
+    String ENABLE_CLIENT_NOTIFICATIONS = "Activar notificações";
 
-	/** Show balance. */
-	String SHOW_CLIENT_BALANCE = "Mostrar saldo de cliente";
+    /** Disable client notifications. */
+    String DISABLE_CLIENT_NOTIFICATIONS = "Desactivar notificações";
+
+    /** Show balance. */
+    String SHOW_CLIENT_BALANCE = "Mostrar saldo de cliente";
 }

@@ -11,14 +11,14 @@ import pt.tecnico.uilib.menus.CommandException;
  */
 class DoRegisterClient extends Command<Network> {
 
-	DoRegisterClient(Network receiver) {
-		super(Label.REGISTER_CLIENT, receiver);
-                //FIXME add command fields
-	}
+    DoRegisterClient(Network receiver) {
+        super(Label.REGISTER_CLIENT, receiver);
+        // FIXME add command fields
+    }
 
-	@Override
-	protected final void execute() throws CommandException {
-                //FIXME implement command
-	}
+    @Override
+    protected final void execute() throws CommandException {
+        // FIXME implement command
+    }
 
 }

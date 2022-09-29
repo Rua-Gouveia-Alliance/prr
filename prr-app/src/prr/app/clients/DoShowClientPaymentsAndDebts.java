@@ -11,13 +11,13 @@ import pt.tecnico.uilib.menus.CommandException;
  */
 class DoShowClientPaymentsAndDebts extends Command<Network> {
 
-	DoShowClientPaymentsAndDebts(Network receiver) {
-		super(Label.SHOW_CLIENT_BALANCE, receiver);
-		//FIXME add command fields
-	}
+    DoShowClientPaymentsAndDebts(Network receiver) {
+        super(Label.SHOW_CLIENT_BALANCE, receiver);
+        // FIXME add command fields
+    }
 
-	@Override
-	protected final void execute() throws CommandException {
-                //FIXME implement command
-	}
+    @Override
+    protected final void execute() throws CommandException {
+        // FIXME implement command
+    }
 }

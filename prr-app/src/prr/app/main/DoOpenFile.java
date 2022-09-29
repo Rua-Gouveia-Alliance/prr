@@ -12,20 +12,20 @@ import pt.tecnico.uilib.menus.CommandException;
  */
 class DoOpenFile extends Command<NetworkManager> {
 
-	DoOpenFile(NetworkManager receiver) {
-		super(Label.OPEN_FILE, receiver);
-                //FIXME add command fields
-	}
+    DoOpenFile(NetworkManager receiver) {
+        super(Label.OPEN_FILE, receiver);
+        // FIXME add command fields
+    }
 
-	@Override
-	protected final void execute() throws CommandException {
-                /*
-                        try {
-                                //FIXME implement command
-                        } catch (UnavailableFileException e) {
-                                throw new FileOpenFailedException(e);
-                        }
-                */
+    @Override
+    protected final void execute() throws CommandException {
+        /*
+         * try {
+         * //FIXME implement command
+         * } catch (UnavailableFileException e) {
+         * throw new FileOpenFailedException(e);
+         * }
+         */
 
-	}
+    }
 }

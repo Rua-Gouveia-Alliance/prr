@@ -5,6 +5,6 @@ package prr.app.lookups;
  */
 interface Message {
 
-	// EMPTY
-	
+    // EMPTY
+
 }
