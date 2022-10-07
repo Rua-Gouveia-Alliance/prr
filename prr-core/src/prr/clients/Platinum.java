@@ -7,14 +7,17 @@ public class Platinum extends ClientType {
         super(client);
     }
 
+    @Override
     public ClientType getPrevType() {
         return (client.getBalance() < 0) ? new Normal(client) : new Gold(client);
     }
 
+    @Override
     public ClientType getNextType() {
         return new Platinum(client);
     }
 
+    @Override
     public boolean canDowngrade() {
         return (client.getBalance() >= 0 && client.straightCommunications(CommunicationType.TEXT) == 2)
                 || client.getBalance() < 0;
@@ -22,6 +25,7 @@ public class Platinum extends ClientType {
         // a 2a ainda tem que ser considerado plat
     }
 
+    @Override
     public boolean canUpgrade() {
         return false;
     }

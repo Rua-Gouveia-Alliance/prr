@@ -5,18 +5,22 @@ public class Normal extends ClientType {
         super(client);
     }
 
+    @Override
     public ClientType getPrevType() {
         return new Normal(client);
     }
 
+    @Override
     public ClientType getNextType() {
         return new Gold(client);
     }
 
+    @Override
     public boolean canDowngrade() {
         return false;
     }
 
+    @Override
     public boolean canUpgrade() {
         return client.getBalance() > 500;
     }
