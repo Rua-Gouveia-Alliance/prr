@@ -6,15 +6,15 @@ import prr.comunications.CommunicationType;
 import prr.terminals.Terminal;
 
 public class Communication {
-    private CommunicationStatus status = CommunicationStatus.ONGOING;
-    private CommunicationType type;
-    private ClientTypeEnum clientType;
-    private long price = 0;
-    private int length = 0;
     private int id;
-    private boolean paid = false;
     private Terminal sender;
     private Terminal receiver;
+    private int length = 0;
+    private long price = 0;
+    private boolean paid = false;
+    private ClientTypeEnum clientType;
+    private CommunicationType type;
+    private CommunicationStatus status = CommunicationStatus.ONGOING;
 
     /* Video/Voice constructor */
     public Communication(CommunicationType type, ClientTypeEnum clientType, int id, Terminal sender,
@@ -37,12 +37,40 @@ public class Communication {
         this.status = CommunicationStatus.FINISHED;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public Terminal getSender() {
+        return sender;
+    }
+
+    public Terminal getReceiver() {
+        return receiver;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
     public long getPrice() {
         return price;
     }
 
     public boolean getPaid() {
         return paid;
+    }
+
+    public ClientTypeEnum getClientType() {
+        return clientType;
+    }
+
+    public CommunicationType getType() {
+        return type;
+    }
+
+    public CommunicationStatus getStatus() {
+        return status;
     }
 
     public void endCommunication(int length, long price) {
