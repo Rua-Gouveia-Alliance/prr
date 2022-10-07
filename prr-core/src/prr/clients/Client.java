@@ -28,19 +28,22 @@ public class Client {
     public long getOwed() {
         long owed = 0;
         for (Terminal terminal : terminals)
-            balance += terminal.getOwed();
+            owed += terminal.getOwed();
         return owed;
     }
 
     public long getPaid() {
         long paid = 0;
         for (Terminal terminal : terminals)
-            balance += terminal.getPaid();
+            paid += terminal.getPaid();
         return paid;
     }
 
     public long getBalance() {
-        return getPaid() - getOwed();
+        long balance = 0;
+        for (Terminal terminal : terminals)
+            balance += terminal.getBalance();
+        return balance;
     }
 
     public long calcPrice(Communication communication) {
