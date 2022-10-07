@@ -6,7 +6,10 @@ package prr.clients;
  */
 public interface ClientPlan {
     public long calcTextPrice(Communication communication);
+
     public long calcVoicePrice(Communication communication);
+
     public long calcVideoPrice(Communication communication);
+
     public long calcPrice(Communication communication);
 }
