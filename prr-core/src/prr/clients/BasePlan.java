@@ -1,10 +1,13 @@
 package prr.clients;
 
+import prr.Communications.Communication;
+import prr.Communications.CommunicationType;
+
 public class BasePlan implements ClientPlan {
     public long calcTextPrice(Communication communication) {
-        if (communication.getDuration() < 50)
+        if (communication.getLength() < 50)
             return (communication.getClientType() == ClientTypeEnum.PLATINUM) ? 0 : 10;
-        if (communication.getDuration() < 100) {
+        if (communication.getLength() < 100) {
             if (communication.getClientType() == ClientTypeEnum.NORMAL)
                 return 16;
             if (communication.getClientType() == ClientTypeEnum.GOLD)
