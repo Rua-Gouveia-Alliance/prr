@@ -2,10 +2,13 @@ O padrao visitor pode ser usado para criar filtros pa pesquisa (por ex quando qu
 
 Ainda nao percebi como implementar o visitor nas notificacoes
 
-O ClientTypeEnum faz sentido? ha de haver uma solucao menos a padeiro
-
 O plano tarifario esta implementado da melhor forma?
 
 Fazer do ClientType uma classe interna?
 
 Clients e terminais e cenas dessas que e preciso ordenar - Meter em TreeMap
+
+BasePlan - O base plan devia ter um atributo client ou clientType, como so precisa de saber o client
+type faria sentido guardar enquanto atributo so o client type. Se guardar o client type como atributo aquilo
+fica tipo ponteiro para o atributo do Client e quando o atualizar aquilo tambem muda só? Caso não, e preciso guardar
+o client todo (acho)
