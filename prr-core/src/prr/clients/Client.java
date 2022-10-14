@@ -1,8 +1,9 @@
 package prr.clients;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Client {
+public class Client implements Serializables {
     String name;
     String id;
     int nif;

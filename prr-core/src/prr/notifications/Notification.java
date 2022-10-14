@@ -1,6 +1,8 @@
 package prr.notifications;
 
-public class Notification {
+import java.io.Serializable;
+
+public class Notification implements Serializable {
     private NotificationType type;
     private int terminalId;
 

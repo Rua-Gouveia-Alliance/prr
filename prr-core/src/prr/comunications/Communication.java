@@ -1,11 +1,13 @@
 package prr.communications;
 
+import java.io.Serializable;
+
 import prr.clients.ClientTypeEnum;
 import prr.comunications.CommunicationStatus;
 import prr.comunications.CommunicationType;
 import prr.terminals.Terminal;
 
-public class Communication {
+public class Communication implements Serializable {
     private int id;
     private Terminal sender;
     private Terminal receiver;
