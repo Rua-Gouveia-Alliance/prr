@@ -26,6 +26,10 @@ public class Client implements Serializables {
         this.notifications = notifications;
     }
 
+    public ClientType getType() {
+        return type;
+    }
+
     public long getOwed() {
         long owed = 0;
         for (Terminal terminal : terminals)
