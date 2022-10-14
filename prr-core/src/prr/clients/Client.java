@@ -5,16 +5,16 @@ import java.util.ArrayList;
 
 public class Client implements Serializables {
     String name;
-    String id;
+    String key;
     int nif;
     ClientPlan plan = new BasePlan();
     ArrayList<Terminal> terminals = new ArrayList<>();
     ClientType type = new Normal(this);
     boolean notifications = false;
 
-    public Client(String name, String id, int nif) {
+    public Client(String name, String key, int nif) {
         this.name = name;
-        this.id = id;
+        this.key = key;
         this.nif = nif;
     }
 
