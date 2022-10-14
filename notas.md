@@ -5,3 +5,5 @@ Ainda nao percebi como implementar o visitor nas notificacoes
 O ClientTypeEnum faz sentido? ha de haver uma solucao menos a padeiro
 
 O plano tarifario esta implementado da melhor forma?
+
+Fazer do ClientType uma classe interna?
