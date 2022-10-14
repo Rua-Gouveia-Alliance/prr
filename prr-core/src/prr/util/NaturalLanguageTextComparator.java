@@ -13,7 +13,7 @@ public class NaturalLanguageTextComparator implements Comparator<String>, Serial
 
   public NaturalLanguageTextComparator() {
     collator = Collator.getInstance(Locale.getDefault());
-    collator.setStrength(Collator.PRIMARY);
+    collator.setStrength(Collator.PRIMARY); // Ignoring case and accentuation
   }
 
   private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
