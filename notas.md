@@ -7,3 +7,5 @@ O ClientTypeEnum faz sentido? ha de haver uma solucao menos a padeiro
 O plano tarifario esta implementado da melhor forma?
 
 Fazer do ClientType uma classe interna?
+
+Clients e terminais e cenas dessas que e preciso ordenar - Meter em TreeMap
