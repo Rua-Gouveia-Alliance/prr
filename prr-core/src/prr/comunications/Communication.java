@@ -8,7 +8,7 @@ import prr.comunications.CommunicationType;
 import prr.terminals.Terminal;
 
 public class Communication implements Serializable {
-    private int id;
+    private int key;
     private Terminal sender;
     private Terminal receiver;
     private int length = 0;
@@ -19,28 +19,28 @@ public class Communication implements Serializable {
     private CommunicationStatus status = CommunicationStatus.ONGOING;
 
     /* Video/Voice constructor */
-    public Communication(CommunicationType type, ClientTypeEnum clientType, int id, Terminal sender,
+    public Communication(CommunicationType type, ClientTypeEnum clientType, int key, Terminal sender,
             Terminal receiver) {
         this.type = type;
         this.clientType = clientType;
-        this.id = id;
+        this.key = key;
         this.sender = sender;
         this.receiver = receiver;
     }
 
     /* Text constructor */
-    public Communication(int length, ClientTypeEnum clientType, int id, Terminal sender, Terminal receiver) {
+    public Communication(int length, ClientTypeEnum clientType, int key, Terminal sender, Terminal receiver) {
         this.length = length;
         this.type = CommunicationType.TEXT;
         this.clientType = clientType;
-        this.id = id;
+        this.key = key;
         this.sender = sender;
         this.receiver = receiver;
         this.status = CommunicationStatus.FINISHED;
     }
 
-    public int getId() {
-        return id;
+    public int getKey() {
+        return key;
     }
 
     public Terminal getSender() {

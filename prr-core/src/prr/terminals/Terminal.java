@@ -16,7 +16,7 @@ abstract public class Terminal implements Serializable, Comparable<Terminal> /* 
     private static final long serialVersionUID = 202208091753L;
 
     // FIXME define attributes
-    private String id;
+    private String key;
     Client owner;
     private TerminalState state;
     private ArrayList<Communication> receivedComms = new ArrayList<>();
