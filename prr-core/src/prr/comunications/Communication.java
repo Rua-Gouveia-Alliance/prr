@@ -2,7 +2,7 @@ package prr.communications;
 
 import java.io.Serializable;
 
-import prr.clients.ClientTypeEnum;
+import prr.clients.ClientType;
 import prr.comunications.CommunicationStatus;
 import prr.comunications.CommunicationType;
 import prr.terminals.Terminal;
@@ -14,7 +14,7 @@ public class Communication implements Serializable {
     private int length = 0;
     private long price = 0;
     private boolean paid = false;
-    private ClientTypeEnum clientType;
+    private ClientType clientType;
     private CommunicationType type;
     private CommunicationStatus status = CommunicationStatus.ONGOING;
 

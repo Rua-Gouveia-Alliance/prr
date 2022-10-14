@@ -7,27 +7,27 @@ public class BasePlan implements ClientPlan {
     @Override
     public long calcTextPrice(Communication communication) {
         if (communication.getLength() < 50)
-            return (communication.getClientType() == ClientTypeEnum.PLATINUM) ? 0 : 10;
+            return (communication.getClientType() instanceof Platinum) ? 0 : 10;
         if (communication.getLength() < 100) {
-            if (communication.getClientType() == ClientTypeEnum.NORMAL)
-                return 16;
-            if (communication.getClientType() == ClientTypeEnum.GOLD)
+            if (communication.getClientType() instanceof Gold)
                 return 10;
+            if (communication.getClientType() instanceof Normal)
+                return 16;
             return 4;
         }
-        return (communication.getClientType() == ClientTypeEnum.PLATINUM) ? 4 : 2 * communication.duration;
+        return (communication.getClientType() instanceof Platinum) ? 4 : 2 * communication.GetDuration();
     }
 
     @Override
     public long calcVoicePrice(Communication communication) {
-        return (communication.getClientType() == ClientTypeEnum.NORMAL) ? 20 : 10;
+        return (communication.getClientType() instanceof Normal) ? 20 : 10;
     }
 
     @Override
     public long calcVideoPrice(Communication communication) {
-        if (communication.getClientType() == ClientTypeEnum.NORMAL)
+        if (communication.getClientType() instanceof Normal)
             return 30;
-        if (communication.getClientType() == ClientTypeEnum.GOLD)
+        if (communication.getClientType() instanceof Gold)
             return 20;
         return 10;
     }
