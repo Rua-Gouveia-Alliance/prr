@@ -1,10 +1,9 @@
 package prr;
 
 import java.io.Serializable;
+import java.util.Map;
 import java.io.IOException;
 import prr.exceptions.UnrecognizedEntryException;
-
-// FIXME add more import if needed (cannot import from pt.tecnico or prr.app)
 
 /**
  * Class Store implements a store.
@@ -13,10 +12,6 @@ public class Network implements Serializable {
 
     /** Serial number for serialization. */
     private static final long serialVersionUID = 202208091753L;
-
-    // FIXME define attributes
-    // FIXME define contructor(s)
-    // FIXME define methods
 
     /**
      * Read text input file and create corresponding domain entities.
