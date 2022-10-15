@@ -4,12 +4,12 @@ package prr.exceptions;
  * Basic exception class for client key related issues.
  * Mustn't be instaciated.
  */
-public abstract class KeyException extends Exception {
+public abstract class KeyRelatedException extends Exception {
 
     private final String key;
 
     /** @param key */
-    public KeyException(String key) {
+    public KeyRelatedException(String key) {
         this.key = key;
     }
 
