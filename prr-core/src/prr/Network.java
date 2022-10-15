@@ -1,6 +1,7 @@
 package prr;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 import java.io.IOException;
@@ -46,6 +47,15 @@ public class Network implements Serializable {
         if (clients.containsKey(key))
             throw new DuplicateClientKeyException(key);
         clients.put(key, new Client(name, key, nif));
+    }
+
+    /**
+     * Get all clients registered in the network
+     * 
+     * @return A {@link Collection} of clients, sorted by their key
+     */
+    public Collection<Client> getAlClients() {
+        return this.clients.values();
     }
 
     /**
