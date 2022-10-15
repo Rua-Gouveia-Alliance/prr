@@ -15,15 +15,26 @@ abstract public class Terminal implements Serializable, Comparable<Terminal> /* 
     /** Serial number for serialization. */
     private static final long serialVersionUID = 202208091753L;
 
-    // FIXME define attributes
+    // attributes
     private String key;
     Client owner;
     private TerminalState state;
-    private ArrayList<Communication> receivedComms = new ArrayList<>();
-    private ArrayList<Communication> madeComms = new ArrayList<>();
-    private ArrayList<Terminal> friends = new ArrayList<>();
+    private ArrayList<Communication> receivedComms;
+    private ArrayList<Communication> madeComms;
+    private ArrayList<Terminal> friends;
 
-    // FIXME define contructor(s)
+    // contructor(s)
+    public Terminal(String key, Client owner) {
+        this.key = key;
+        this.owner = owner;
+
+        this.state = new Idle();
+        this.receivedComms = new ArrayList<Communication>();
+        this.madeComms = new ArrayList<Communication>();
+        this.friends = new ArrayList<Terminal>();
+
+    }
+
     // FIXME define methods
 
     /**
@@ -52,5 +63,27 @@ abstract public class Terminal implements Serializable, Comparable<Terminal> /* 
     public int compareTo(Terminal o) {
         // TODO Auto-generated method stub
         return 0;
+    }
+
+    @Override
+    public String toString() {
+        String s = new StringJoiner("|")
+                .add(this.key)
+                .add(this.owner.getKey())
+                .add(this.state)
+                .add(this.getPaid())
+                .add(this.getOwed());
+
+        if (friends.getLenght() != 0) {
+            s += "|";
+            for (Terminal f : friends) {
+                s += f.getKey() + ",";
+            }
+
+            // remove last ,
+            s = s.substring(0, s.legth - 1);
+        }
+
+        return s;
     }
 }
