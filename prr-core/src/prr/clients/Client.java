@@ -34,6 +34,10 @@ public class Client implements Serializable {
     public ClientType getType() {
         return this.type;
     }
+    
+    public String getKey() {
+        return key;
+    } 
 
     public long getOwed() {
         long owed = 0;
@@ -77,6 +81,5 @@ public class Client implements Serializable {
                 .add(Long.toString(this.getPaid()))
                 .add(Long.toString(this.getOwed()))
                 .toString();
-
     }
 }
