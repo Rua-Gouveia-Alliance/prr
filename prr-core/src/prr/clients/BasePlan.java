@@ -1,7 +1,7 @@
 package prr.clients;
 
-import prr.Communications.Communication;
-import prr.Communications.CommunicationType;
+import prr.communications.Communication;
+import prr.communications.CommunicationType;
 
 public class BasePlan implements ClientPlan {
     private Client client;
@@ -21,11 +21,11 @@ public class BasePlan implements ClientPlan {
                 return 16;
             return 4;
         }
-        return (client.getType() instanceof Platinum) ? 4 : 2 * communication.GetDuration();
+        return (client.getType() instanceof Platinum) ? 4 : 2 * communication.getLength();
     }
 
     @Override
-    public long calcVoicePrice(Communication communication) {
+    public long calcCallPrice(Communication communication) {
         return (client.getType() instanceof Normal) ? 20 : 10;
     }
 
@@ -40,13 +40,11 @@ public class BasePlan implements ClientPlan {
 
     @Override
     public long calcPrice(Communication communication) {
-        switch (communication.getType()) {
-            case CommunicationType.TEXT:
-                return calcTextPrice(communication);
-            case CommunicationType.VOICE:
-                return calcVoicePrice(communication);
-            default:
-                return calcVideoPrice(communication);
-        }
+        CommunicationType type = communication.getType();
+        if (type == CommunicationType.TEXT)
+            return calcTextPrice(communication);
+        if (type == CommunicationType.CALL)
+            return calcCallPrice(communication);
+        return calcVideoPrice(communication);
     }
 }

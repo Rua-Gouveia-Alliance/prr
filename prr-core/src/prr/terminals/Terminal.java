@@ -3,7 +3,7 @@ package prr.terminals;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-// FIXME add more import if needed (cannot import from pt.tecnico or prr.app)
+import prr.clients.Client;
 import prr.terminals.states.TerminalState;
 import prr.communications.Communication;
 
@@ -15,7 +15,6 @@ abstract public class Terminal implements Serializable, Comparable<Terminal> /* 
     /** Serial number for serialization. */
     private static final long serialVersionUID = 202208091753L;
 
-    // FIXME define attributes
     private String key;
     Client owner;
     private TerminalState state;
@@ -46,6 +45,18 @@ abstract public class Terminal implements Serializable, Comparable<Terminal> /* 
     public boolean canStartCommunication() {
         // FIXME add implementation code
         return false;
+    }
+
+    public long getBalance() {
+        return 0;
+    }
+
+    public long getOwed() {
+        return 0;
+    }
+
+    public long getPaid() {
+        return 0;
     }
 
     @Override
