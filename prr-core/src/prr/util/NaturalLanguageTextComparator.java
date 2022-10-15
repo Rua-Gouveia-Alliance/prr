@@ -12,14 +12,17 @@ public class NaturalLanguageTextComparator implements Comparator<String>, Serial
   private transient Collator collator;
 
   public NaturalLanguageTextComparator() {
+    this.mount();
+  }
+
+  private void mount() {
     collator = Collator.getInstance(Locale.getDefault());
     collator.setStrength(Collator.PRIMARY); // Ignoring case and accentuation
   }
 
   private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
     ois.defaultReadObject();
-    collator = Collator.getInstance(Locale.getDefault());
-    collator.setStrength(Collator.PRIMARY);
+    this.mount();
   }
 
   @Override
