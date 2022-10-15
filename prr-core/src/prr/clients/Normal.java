@@ -24,4 +24,9 @@ public class Normal extends ClientType {
     public boolean canUpgrade() {
         return client.getBalance() > 500;
     }
+
+    @Override
+    public String toString() {
+        return "NORMAL";
+    }
 }
