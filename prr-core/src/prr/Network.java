@@ -1,15 +1,15 @@
 package prr;
 
 import java.io.Serializable;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
-import java.io.IOException;
 
-import prr.app.exceptions.DuplicateClientKeyException;
 import prr.clients.Client;
-import prr.exceptions.UnrecognizedEntryException;
 import prr.util.NaturalLanguageTextComparator;
+import prr.exceptions.UnrecognizedEntryException;
+import prr.exceptions.ClientExistsException;
 
 /**
  * Class Store implements a store.
@@ -43,10 +43,19 @@ public class Network implements Serializable {
      * @param nif  new client's tax id
      * @throws DuplicateClientKeyException if the given key is already in use
      */
-    public void newClient(String name, String key, int nif) throws DuplicateClientKeyException {
+    public void registerClient(String key, String name, String nif) throws DuplicateClientKeyException {
         if (clients.containsKey(key))
-            throw new DuplicateClientKeyException(key);
+            throw new ClientExistsException(key);
         clients.put(key, new Client(name, key, nif));
+    }
+
+    /**
+     * Get all terminals registered in the network
+     * 
+     * @return A {@link Collection} of terminals, sorted by their key
+     */
+    public Collection<Client> getAllTerminals() {
+        return this.terminals.values();
     }
 
     /**
@@ -54,7 +63,7 @@ public class Network implements Serializable {
      * 
      * @return A {@link Collection} of clients, sorted by their key
      */
-    public Collection<Client> getAlClients() {
+    public Collection<Client> getAllClients() {
         return this.clients.values();
     }
 
