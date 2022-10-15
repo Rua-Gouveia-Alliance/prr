@@ -1,11 +1,10 @@
 package prr.app.clients;
 
-import java.util.stream.Collectors;
-
 import prr.Network;
 import prr.clients.Client;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
+import java.util.Collection;
 
 /**
  * Show all clients.
