@@ -44,9 +44,9 @@ public class Network implements Serializable {
      * @param name new client's name
      * @param key  new client's key
      * @param nif  new client's tax id
-     * @throws DuplicateClientKeyException if the given key is already in use
+     * @throws ClientExistsException if the given key is already in use
      */
-    public void registerClient(String key, String name, String nif) throws DuplicateClientKeyException {
+    public void registerClient(String key, String name, String nif) throws ClientExistsException {
         if (clients.containsKey(key))
             throw new ClientExistsException(key);
         clients.put(key, new Client(name, key, nif));
@@ -66,7 +66,7 @@ public class Network implements Serializable {
      * 
      * @return A {@link Collection} of clients, sorted by their key
      */
-    public Client getClients(String key) {
+    public Client getClients(String key) throws ClientDoesntExistException {
         if (!clients.containsKey(key))
             throw new ClientDoesntExistException(key);
         return clients.get(key);

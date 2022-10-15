@@ -1,4 +1,4 @@
-package prr.comunications;
+package prr.communications;
 
 public enum CommunicationStatus {
     FINISHED,

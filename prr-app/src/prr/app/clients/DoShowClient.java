@@ -19,7 +19,7 @@ class DoShowClient extends Command<Network> {
     @Override
     protected final void execute() throws CommandException {
         try {
-            _display.popup(_receiver.getClient(stringField("key")));
+            _display.popup(_receiver.getClient(stringField("key")).toString());
         } catch (ClientDoesntExistException e) {
             throw new UnknownClientKeyException(e.getKey());
         }

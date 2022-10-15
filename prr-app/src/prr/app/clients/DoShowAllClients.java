@@ -1,5 +1,7 @@
 package prr.app.clients;
 
+import java.util.stream.Collectors;
+
 import prr.Network;
 import prr.clients.Client;
 import pt.tecnico.uilib.menus.Command;
@@ -16,7 +18,8 @@ class DoShowAllClients extends Command<Network> {
 
     @Override
     protected final void execute() throws CommandException {
-        _display.addAll(_receiver.getAlClients());
-        _display.display();
+        Collection<Client> clients = _receiver.getAlClients();
+        for (Client c : clients)
+            _display.popup(c.toString());
     }
 }

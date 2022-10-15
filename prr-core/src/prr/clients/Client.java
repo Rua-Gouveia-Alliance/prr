@@ -4,11 +4,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.StringJoiner;
 
-public class Client implements Serializables {
+import prr.terminals.Terminal;
+import prr.communications.Communication;
+import prr.communications.CommunicationType;
+
+public class Client implements Serializable {
     String name;
     String key;
     String nif;
-    ClientPlan plan = new BasePlan();
+    ClientPlan plan = new BasePlan(this);
     ArrayList<Terminal> terminals = new ArrayList<>();
     ClientType type = new Normal(this);
     boolean notifications = false;
@@ -52,8 +56,12 @@ public class Client implements Serializables {
         return balance;
     }
 
+    public int straightCommunications(CommunicationType type) {
+        return 0;
+    }
+
     public long calcPrice(Communication communication) {
-        return this.plan.calcPrice();
+        return this.plan.calcPrice(communication);
     }
 
     @Override
@@ -62,12 +70,13 @@ public class Client implements Serializables {
                 .add("CLIENT")
                 .add(this.key)
                 .add(this.name)
-                .add(this.taxId)
-                .add(this.type)
+                .add(this.nif)
+                .add(this.type.toString())
                 .add(this.notifications ? "YES" : "NO")
-                .add(this.terminals.getLength())
-                .add(this.getPaid())
-                .add(this.getOwed());
+                .add(Integer.toString(this.terminals.size()))
+                .add(Long.toString(this.getPaid()))
+                .add(Long.toString(this.getOwed()))
+                .toString();
 
     }
 }

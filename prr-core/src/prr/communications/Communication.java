@@ -2,9 +2,6 @@ package prr.communications;
 
 import java.io.Serializable;
 
-import prr.clients.ClientType;
-import prr.comunications.CommunicationStatus;
-import prr.comunications.CommunicationType;
 import prr.terminals.Terminal;
 
 public class Communication implements Serializable {
@@ -14,25 +11,22 @@ public class Communication implements Serializable {
     private int length = 0;
     private long price = 0;
     private boolean paid = false;
-    private ClientType clientType;
     private CommunicationType type;
     private CommunicationStatus status = CommunicationStatus.ONGOING;
 
     /* Video/Voice constructor */
-    public Communication(CommunicationType type, ClientTypeEnum clientType, int key, Terminal sender,
+    public Communication(CommunicationType type, int key, Terminal sender,
             Terminal receiver) {
         this.type = type;
-        this.clientType = clientType;
         this.key = key;
         this.sender = sender;
         this.receiver = receiver;
     }
 
     /* Text constructor */
-    public Communication(int length, ClientTypeEnum clientType, int key, Terminal sender, Terminal receiver) {
+    public Communication(int length, int key, Terminal sender, Terminal receiver) {
         this.length = length;
         this.type = CommunicationType.TEXT;
-        this.clientType = clientType;
         this.key = key;
         this.sender = sender;
         this.receiver = receiver;
@@ -61,10 +55,6 @@ public class Communication implements Serializable {
 
     public boolean getPaid() {
         return paid;
-    }
-
-    public ClientTypeEnum getClientType() {
-        return clientType;
     }
 
     public CommunicationType getType() {
