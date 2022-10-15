@@ -14,6 +14,7 @@ import prr.terminals.BasicTerminal;
 import prr.terminals.Terminal;
 import prr.exceptions.ClientDoesntExistException;
 import prr.exceptions.ClientExistsException;
+import prr.exceptions.IncorrectTerminalKeyException;
 import prr.exceptions.TerminalExistsException;
 
 /**
@@ -70,7 +71,7 @@ public class Network implements Serializable {
      * @return The {@link Client} with the matching key
      * @throws ClientDoesntExistException if the given key can't be found
      */
-    public Client getClients(String key) throws ClientDoesntExistException {
+    public Client getClient(String key) throws ClientDoesntExistException {
         if (!clients.containsKey(key))
             throw new ClientDoesntExistException(key);
         return clients.get(key);
@@ -92,7 +93,7 @@ public class Network implements Serializable {
      * @return The {@link Terminal} with the matching key
      * @throws ClientDoesntExistException if the given key can't be found
      */
-    public Terminal getTerminalObj(String key) {
+    public Terminal getTerminal(String key) {
         return terminals.get(key);
     }
 
@@ -106,22 +107,24 @@ public class Network implements Serializable {
      * @throws ClientDoenstExistException if the given client doesnt exist
      */
     public void registerTerminal(String key, String type, String client)
-            throws TerminalExistsException, ClientDoesntExistException {
+            throws TerminalExistsException, IncorrectTerminalKeyException, ClientDoesntExistException {
         if (terminals.containsKey(key))
             throw new TerminalExistsException(key);
 
         if (!clients.containsKey(client))
             throw new ClientDoesntExistException(client);
 
+        if (key.length() != 6)
+            throw new IncorrectTerminalKeyException(key);
+
         Terminal newTerminal;
         if (type.equals("FANCY")) {
             newTerminal = new FancyTerminal(key, clients.get(client));
-        } else if (type.equals("BASIC")) {
+        } else {
             newTerminal = new BasicTerminal(key, clients.get(client));
         }
 
         terminals.put(key, newTerminal);
-
     }
 
     /**
