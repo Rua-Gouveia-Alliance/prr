@@ -9,6 +9,7 @@ import java.util.TreeMap;
 import prr.clients.Client;
 import prr.util.NaturalLanguageTextComparator;
 import prr.exceptions.UnrecognizedEntryException;
+import prr.exceptions.ClientDoesntExistException;
 import prr.exceptions.ClientExistsException;
 
 /**
@@ -55,7 +56,7 @@ public class Network implements Serializable {
      * @return A {@link Collection} of terminals, sorted by their key
      */
     public Collection<Client> getAllTerminals() {
-        return this.terminals.values();
+        return terminals.values();
     }
 
     /**
@@ -64,7 +65,18 @@ public class Network implements Serializable {
      * @return A {@link Collection} of clients, sorted by their key
      */
     public Collection<Client> getAllClients() {
-        return this.clients.values();
+        return clients.values();
+    }
+
+    /**
+     * Get all clients registered in the network
+     * 
+     * @return A {@link Collection} of clients, sorted by their key
+     */
+    public Client getClients(String key) {
+        if (!clients.containsKey(key))
+            throw new ClientDoesntExistException(key);
+        return clients.get(key);
     }
 
     /**
