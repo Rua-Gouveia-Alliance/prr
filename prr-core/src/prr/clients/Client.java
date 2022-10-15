@@ -2,6 +2,7 @@ package prr.clients;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.StringJoiner;
 
 public class Client implements Serializables {
     String name;
@@ -27,31 +28,46 @@ public class Client implements Serializables {
     }
 
     public ClientType getType() {
-        return type;
+        return this.type;
     }
 
     public long getOwed() {
         long owed = 0;
-        for (Terminal terminal : terminals)
+        for (Terminal terminal : this.terminals)
             owed += terminal.getOwed();
         return owed;
     }
 
     public long getPaid() {
         long paid = 0;
-        for (Terminal terminal : terminals)
+        for (Terminal terminal : this.terminals)
             paid += terminal.getPaid();
         return paid;
     }
 
     public long getBalance() {
         long balance = 0;
-        for (Terminal terminal : terminals)
+        for (Terminal terminal : this.terminals)
             balance += terminal.getBalance();
         return balance;
     }
 
     public long calcPrice(Communication communication) {
-        return plan.calcPrice();
+        return this.plan.calcPrice();
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner("|")
+                .add("CLIENT")
+                .add(this.key)
+                .add(this.name)
+                .add(this.taxId)
+                .add(this.type)
+                .add(this.notifications ? "YES" : "NO")
+                .add(this.terminals.getLength())
+                .add(this.getPaid())
+                .add(this.getOwed());
+
     }
 }

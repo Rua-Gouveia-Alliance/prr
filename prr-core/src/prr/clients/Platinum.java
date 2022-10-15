@@ -29,4 +29,9 @@ public class Platinum extends ClientType {
     public boolean canUpgrade() {
         return false;
     }
+    
+    @Override
+    public String toString() {
+        return "PLATINUM";
+    }
 }

@@ -27,4 +27,9 @@ public class Gold extends ClientType {
         return client.getBalance() >= 0 && client.straightCommunications(CommunicationType.VIDEO) == 5;
         // a 5a ainda tem que ser considerado gold
     }
+
+    @Override
+    public String toString() {
+        return "GOLD";
+    }
 }
