@@ -2,10 +2,11 @@ package prr.terminals;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.StringJoiner;
 
 import prr.clients.Client;
-import prr.terminals.states.TerminalState;
 import prr.communications.Communication;
+import prr.terminals.states.*;
 
 /**
  * Abstract terminal.
@@ -15,10 +16,7 @@ abstract public class Terminal implements Serializable, Comparable<Terminal> /* 
     /** Serial number for serialization. */
     private static final long serialVersionUID = 202208091753L;
 
-<<<<<<< HEAD
     // attributes
-=======
->>>>>>> 2269a01b9cd988b32bba03eb43700f44e6369552
     private String key;
     Client owner;
     private TerminalState state;
@@ -30,15 +28,16 @@ abstract public class Terminal implements Serializable, Comparable<Terminal> /* 
     public Terminal(String key, Client owner) {
         this.key = key;
         this.owner = owner;
-
         this.state = new Idle();
         this.receivedComms = new ArrayList<Communication>();
         this.madeComms = new ArrayList<Communication>();
         this.friends = new ArrayList<Terminal>();
 
     }
-
-    // FIXME define methods
+    
+    public String getKey() {
+        return key;
+    }
 
     /**
      * Checks if this terminal can end the current interactive communication.
@@ -85,18 +84,19 @@ abstract public class Terminal implements Serializable, Comparable<Terminal> /* 
         String s = new StringJoiner("|")
                 .add(this.key)
                 .add(this.owner.getKey())
-                .add(this.state)
-                .add(this.getPaid())
-                .add(this.getOwed());
+                .add(this.state.toString())
+                .add(Long.toString(this.getPaid()))
+                .add(Long.toString(this.getOwed()))
+                .toString();
 
-        if (friends.getLenght() != 0) {
+        if (friends.size() != 0) {
             s += "|";
             for (Terminal f : friends) {
                 s += f.getKey() + ",";
             }
 
             // remove last ,
-            s = s.substring(0, s.legth - 1);
+            s = s.substring(0, s.length() - 1);
         }
 
         return s;
