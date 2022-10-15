@@ -10,6 +10,8 @@ import prr.clients.Client;
 import prr.util.NaturalLanguageTextComparator;
 import prr.exceptions.UnrecognizedEntryException;
 import prr.terminals.FancyTerminal;
+import prr.terminals.BasicTerminal;
+import prr.terminals.Terminal;
 import prr.exceptions.ClientDoesntExistException;
 import prr.exceptions.ClientExistsException;
 import prr.exceptions.TerminalExistsException;
@@ -26,7 +28,7 @@ public class Network implements Serializable {
     private final Map<String, Client> clients = new TreeMap<>(new NaturalLanguageTextComparator());
 
     /** Terminals list, sorted by key */
-    private final Map<String, Client> terminals = new TreeMap<>(new NaturalLanguageTextComparator());
+    private final Map<String, Terminal> terminals = new TreeMap<>(new NaturalLanguageTextComparator());
 
     /** Communications counter, used for generating communication keys */
     private int communicationKey = 0;
@@ -62,9 +64,11 @@ public class Network implements Serializable {
     }
 
     /**
-     * Get all clients registered in the network
+     * Get a client
      * 
-     * @return A {@link Collection} of clients, sorted by their key
+     * @param key the key that identifies the client
+     * @return The {@link Client} with the matching key
+     * @throws ClientDoesntExistException if the given key can't be found
      */
     public Client getClients(String key) throws ClientDoesntExistException {
         if (!clients.containsKey(key))
@@ -81,21 +85,32 @@ public class Network implements Serializable {
         return terminals.values();
     }
 
+    /**
+     * Get a terminal
+     * 
+     * @param key the key that identifies the terminal
+     * @return The {@link Terminal} with the matching key
+     * @throws ClientDoesntExistException if the given key can't be found
+     */
     public Terminal getTerminalObj(String key) {
         return terminals.get(key);
     }
 
     /**
-     * Register new terminal
+     * Register a new client in the network
      * 
-     * @return False if key already registered (failed), otherwise true
+     * @param key    new terminal's key
+     * @param type   new terminal's type
+     * @param client new terminal's owner
+     * @throws TerminalExistsException    if the given key is already in use
+     * @throws ClientDoenstExistException if the given client doesnt exist
      */
     public void registerTerminal(String key, String type, String client)
             throws TerminalExistsException, ClientDoesntExistException {
-        if (terminals.get(key) != null)
+        if (terminals.containsKey(key))
             throw new TerminalExistsException(key);
 
-        if (clients.get(client) == null)
+        if (!clients.containsKey(client))
             throw new ClientDoesntExistException(client);
 
         Terminal newTerminal;
