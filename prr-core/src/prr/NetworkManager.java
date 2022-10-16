@@ -1,14 +1,12 @@
 package prr;
 
-import java.io.IOException;
-import java.io.FileNotFoundException;
-
 import prr.exceptions.ImportFileException;
 import prr.exceptions.MissingFileAssociationException;
 import prr.exceptions.UnavailableFileException;
 import prr.exceptions.UnrecognizedEntryException;
 
 //FIXME add more import if needed (cannot import from pt.tecnico or prr.app)
+import java.io.*;
 
 /**
  * Manage access to network and implement load/save operations.
@@ -18,6 +16,7 @@ public class NetworkManager {
     /** The network itself. */
     private Network _network = new Network();
     // FIXME addmore fields if needed
+    private String _currentFile = "";
 
     public Network getNetwork() {
         return _network;
@@ -48,7 +47,12 @@ public class NetworkManager {
      *                                         to disk.
      */
     public void save() throws FileNotFoundException, MissingFileAssociationException, IOException {
-        // FIXME implement serialization method
+        if (!asOpenedFile())
+            throw new MissingFileAssociationException();
+
+        ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(_currentFile)));
+        oos.writeObject(_network);
+        oos.close();
     }
 
     /**
@@ -66,7 +70,12 @@ public class NetworkManager {
      *                                         to disk.
      */
     public void saveAs(String filename) throws FileNotFoundException, MissingFileAssociationException, IOException {
-        // FIXME implement serialization method
+        _currentFile = filename;
+        save();
+    }
+
+    public boolean asOpenedFile() {
+        return _currentFile != "";
     }
 
     /**
