@@ -14,10 +14,15 @@ import prr.util.NaturalLanguageTextComparator;
 import prr.terminals.FancyTerminal;
 import prr.terminals.BasicTerminal;
 import prr.terminals.Terminal;
+import prr.terminals.states.Idle;
+import prr.terminals.states.Off;
+import prr.terminals.states.Silence;
+import prr.terminals.states.TerminalState;
 import prr.exceptions.UnrecognizedEntryException;
 import prr.exceptions.ClientDoesntExistException;
 import prr.exceptions.ClientExistsException;
 import prr.exceptions.IncorrectTerminalKeyException;
+import prr.exceptions.InvalidEntryException;
 import prr.exceptions.TerminalExistsException;
 
 /**
@@ -117,7 +122,7 @@ public class Network implements Serializable {
     }
 
     /**
-     * Register a new client in the network
+     * Register a new terminal in the network
      * 
      * @param key    new terminal's key
      * @param type   new terminal's type
@@ -126,6 +131,21 @@ public class Network implements Serializable {
      * @throws ClientDoenstExistException if the given client doesnt exist
      */
     public void registerTerminal(String key, String type, String client)
+            throws TerminalExistsException, IncorrectTerminalKeyException, ClientDoesntExistException {
+        registerTerminal(key, type, client, new Idle());
+    }
+
+    /**
+     * Register a new terminal in the network
+     * 
+     * @param key    new terminal's key
+     * @param type   new terminal's type
+     * @param client new terminal's owner
+     * @param state  new terminal's initial state
+     * @throws TerminalExistsException    if the given key is already in use
+     * @throws ClientDoenstExistException if the given client doesnt exist
+     */
+    public void registerTerminal(String key, String type, String client, TerminalState state)
             throws TerminalExistsException, IncorrectTerminalKeyException, ClientDoesntExistException {
         if (terminals.containsKey(key))
             throw new TerminalExistsException(key);
@@ -142,28 +162,71 @@ public class Network implements Serializable {
         } else {
             newTerminal = new BasicTerminal(key, clients.get(client));
         }
-
+        newTerminal.setState(state);
         terminals.put(key, newTerminal);
+
     }
 
+    /**
+     * Loads a client onto the network from an array of fields
+     * 
+     * @param line the line fields
+     * @throws UnrecognizedEntryException if some entry is not correct
+     * @throws InvalidEntryException      if some entry doesn't respect the rules
+     *                                    (repeated keys, invalid keys, etc.)
+     */
     private void importClient(String[] line) {
         if (line.length != 4)
             throw new UnrecognizedEntryException(String.join("|", line));
         try {
             registerClient(line[1], line[2], line[3]);
         } catch (DuplicateClientKeyException e) {
-            throw new UnrecognizedEntryException(String.join("|", line));
+            throw new InvalidEntryException(String.join("|", line), e);
         }
     }
 
-    private void importObject(String[] line) {
+    /**
+     * Loads a terminal onto the network from an array of fields
+     * 
+     * @param line the line fields
+     * @throws UnrecognizedEntryException if some entry is not correct
+     * @throws InvalidEntryException      if some entry doesn't respect the rules
+     *                                    (repeated keys, invalid keys, etc.)
+     */
+    private void importTerminal(String[] line) throws UnrecognizedEntryException, InvalidEntryException {
+        if (line.length != 4)
+            throw new UnrecognizedEntryException(String.join("|", line));
+        try {
+            TerminalState state;
+            switch (line[3]) {
+                case "ON":
+                    state = new Idle();
+                case "OFF":
+                    state = new Off();
+                case "SILENCE":
+                    state = new Silence();
+                default:
+                    throw new UnrecognizedEntryException(String.join("|", line));
+            }
+            registerTerminal(line[1], line[0], line[2], state);
+        } catch (TerminalExistsException | IncorrectTerminalKeyException | ClientDoesntExistException e) {
+            throw new InvalidEntryException(String.join("|", line), e);
+        }
+    }
+
+    /**
+     * Read the first field of a line and check what object is supposed to be
+     * imported
+     * 
+     * @param line the line fields
+     * @throws UnrecognizedEntryException if the first field isn't recognized
+     */
+    private void importObject(String[] line) throws UnrecognizedEntryException {
         switch (line[0]) {
             case "CLIENT":
                 importClient(line);
-            case "BASIC":
-                importBasicTerminal(line);
-            case "FANCY":
-                importFancyTerminal(line);
+            case "BASIC|FANCY":
+                importTerminal(line);
             case "FRIENDS":
                 importFriends(line);
             default:
@@ -172,6 +235,15 @@ public class Network implements Serializable {
 
     }
 
+    /**
+     * Read text input file and parse each line
+     * 
+     * @param filename name of the text input file
+     * @return an {@link ArrayList} in wich each element represents the fields of a
+     *         line
+     * @throws IOException if there is an IO error while processing
+     *                     the text file
+     */
     public ArrayList<String[]> readFile(String filename) throws IOException {
         ArrayList<String[]> file = new ArrayList<>();
         String line;
@@ -187,10 +259,12 @@ public class Network implements Serializable {
      * 
      * @param filename name of the text input file
      * @throws UnrecognizedEntryException if some entry is not correct
+     * @throws InvalidEntryException      if some entry doesn't respect the rules
+     *                                    (repeated keys, invalid keys, etc.)
      * @throws IOException                if there is an IO error while processing
      *                                    the text file
      */
-    void importFile(String filename) throws UnrecognizedEntryException, IOException /* FIXME maybe other exceptions */ {
+    void importFile(String filename) throws UnrecognizedEntryException, InvalidEntryException, IOException {
         ArrayList<String[]> file = readFile(filename);
         for (String[] line : file)
             importObject(line);
