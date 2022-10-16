@@ -53,7 +53,7 @@ public class Communication implements Serializable {
         return price;
     }
 
-    public boolean getPaid() {
+    public boolean isPaid() {
         return paid;
     }
 

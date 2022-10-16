@@ -66,15 +66,27 @@ abstract public class Terminal implements Serializable, Comparable<Terminal> /* 
     }
 
     public long getBalance() {
-        return 0;
+        return getPaid() - getOwed();
     }
 
     public long getOwed() {
-        return 0;
+        long total = 0;
+        for (Communication c : madeComms) {
+            if (!c.isPaid())
+                total += c.getPrice();
+        }
+
+        return total;
     }
 
     public long getPaid() {
-        return 0;
+        long total = 0;
+        for (Communication c : madeComms) {
+            if (c.isPaid())
+                total += c.getPrice();
+        }
+
+        return total;
     }
 
     public int getCommCount() {
