@@ -101,6 +101,22 @@ public class Network implements Serializable {
     }
 
     /**
+     * Get all terminals with no communication history
+     * 
+     * @return A {@link Collection} of terminals, sorted by their key
+     */
+    public Collection<Terminal> getUnusedTerminals() {
+        ArrayList<Terminal> unused = new ArrayList<Terminal>();
+
+        for (Terminal t : terminals.values()) {
+            if (t.getCommCount() == 0)
+                unused.add(t);
+        }
+
+        return unused;
+    }
+
+    /**
      * Register a new client in the network
      * 
      * @param key    new terminal's key
@@ -117,16 +133,8 @@ public class Network implements Serializable {
         if (!clients.containsKey(client))
             throw new ClientDoesntExistException(client);
 
-        if (key.length() != 6)
+        if (!key.matches("[0-9]{6}"))
             throw new IncorrectTerminalKeyException(key);
-
-        // FIXME Sqe esta maneira nao e a melhor de fazer as cenas
-        try {
-            Integer.parseInt(key); // If a NumberFormatException is thrown by this then the key has non numerical
-                                   // characters
-        } catch (NumberFormatException e) {
-            throw new IncorrectTerminalKeyException(key);
-        }
 
         Terminal newTerminal;
         if (type.equals("FANCY")) {

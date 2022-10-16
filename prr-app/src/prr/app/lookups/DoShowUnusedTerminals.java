@@ -3,7 +3,8 @@ package prr.app.lookups;
 import prr.Network;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
-//FIXME add more imports if needed
+import prr.terminals.Terminal;
+import java.util.Collection;
 
 /**
  * Show unused terminals (without communications).
@@ -16,6 +17,9 @@ class DoShowUnusedTerminals extends Command<Network> {
 
     @Override
     protected final void execute() throws CommandException {
-        // FIXME implement command
+        Collection<Terminal> terminals = _receiver.getUnusedTerminals();
+        for (Terminal t : terminals) {
+            _display.popup(t.toString());
+        }
     }
 }
