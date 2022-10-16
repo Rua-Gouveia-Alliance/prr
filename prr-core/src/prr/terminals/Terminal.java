@@ -34,7 +34,7 @@ abstract public class Terminal implements Serializable, Comparable<Terminal> /* 
         this.friends = new ArrayList<Terminal>();
 
     }
-    
+
     public String getKey() {
         return key;
     }
@@ -71,6 +71,10 @@ abstract public class Terminal implements Serializable, Comparable<Terminal> /* 
 
     public long getPaid() {
         return 0;
+    }
+
+    public int getCommCount() {
+        return receivedComms.size() + madeComms.size();
     }
 
     @Override

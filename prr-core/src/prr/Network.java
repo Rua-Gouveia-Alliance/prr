@@ -2,6 +2,7 @@ package prr;
 
 import java.io.Serializable;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
@@ -95,6 +96,22 @@ public class Network implements Serializable {
      */
     public Terminal getTerminal(String key) {
         return terminals.get(key);
+    }
+
+    /**
+     * Get all terminals with no communication history
+     * 
+     * @return A {@link Collection} of terminals, sorted by their key
+     */
+    public Collection<Terminal> getUnusedTerminals() {
+        ArrayList<Terminal> unused = new ArrayList<Terminal>();
+
+        for (Terminal t : terminals.values()) {
+            if (t.getCommCount() == 0)
+                unused.add(t);
+        }
+
+        return unused;
     }
 
     /**
