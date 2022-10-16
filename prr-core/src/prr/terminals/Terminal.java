@@ -39,6 +39,10 @@ abstract public class Terminal implements Serializable, Comparable<Terminal> /* 
         return key;
     }
 
+    public void setState(TerminalState state) {
+        this.state = state;
+    }
+
     /**
      * Checks if this terminal can end the current interactive communication.
      *
