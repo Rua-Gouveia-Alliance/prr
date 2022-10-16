@@ -31,7 +31,13 @@ public class NetworkManager {
      *                                  an error while processing this file.
      */
     public void load(String filename) throws UnavailableFileException {
-        // FIXME implement serialization method
+        try {
+            ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filename)));
+            _network = (Network) ois.readObject();
+            ois.close();
+        } catch (IOException e) {
+            throw new UnavailableFileException(filename);
+        }
     }
 
     /**

@@ -14,18 +14,15 @@ class DoOpenFile extends Command<NetworkManager> {
 
     DoOpenFile(NetworkManager receiver) {
         super(Label.OPEN_FILE, receiver);
-        // FIXME add command fields
+        addStringField("file", Prompt.openFile());
     }
 
     @Override
     protected final void execute() throws CommandException {
-        /*
-         * try {
-         * //FIXME implement command
-         * } catch (UnavailableFileException e) {
-         * throw new FileOpenFailedException(e);
-         * }
-         */
-
+        try {
+            _receiver.load(stringField("file"));
+        } catch (UnavailableFileException e) {
+            throw new FileOpenFailedException(e);
+        }
     }
 }
