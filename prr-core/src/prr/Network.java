@@ -1,17 +1,20 @@
 package prr;
 
 import java.io.Serializable;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
 import prr.clients.Client;
 import prr.util.NaturalLanguageTextComparator;
-import prr.exceptions.UnrecognizedEntryException;
 import prr.terminals.FancyTerminal;
 import prr.terminals.BasicTerminal;
 import prr.terminals.Terminal;
+import prr.exceptions.UnrecognizedEntryException;
 import prr.exceptions.ClientDoesntExistException;
 import prr.exceptions.ClientExistsException;
 import prr.exceptions.IncorrectTerminalKeyException;
@@ -135,6 +138,42 @@ public class Network implements Serializable {
         terminals.put(key, newTerminal);
     }
 
+    private void importClient(String[] line) {
+        if (line.length != 4)
+            throw new UnrecognizedEntryException(String.join("|", line));
+        try {
+            registerClient(line[1], line[2], line[3]);
+        } catch (DuplicateClientKeyException e) {
+            throw new UnrecognizedEntryException(String.join("|", line));
+        }
+    }
+
+    private void importObject(String[] line) {
+        switch (line[0]) {
+            case "CLIENT":
+                importClient(line);
+            case "BASIC":
+                importBasicTerminal(line);
+            case "FANCY":
+                importFancyTerminal(line);
+            case "FRIENDS":
+                importFriends(line);
+            default:
+                throw new UnrecognizedEntryException(String.join("|", line));
+        }
+
+    }
+
+    public ArrayList<String[]> readFile(String filename) throws IOException {
+        ArrayList<String[]> file = new ArrayList<>();
+        String line;
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            while (line = reader.readLine() != null)
+                file.add(line.split("\\|"));
+        }
+        return file;
+    }
+
     /**
      * Read text input file and create corresponding domain entities.
      * 
@@ -144,6 +183,8 @@ public class Network implements Serializable {
      *                                    the text file
      */
     void importFile(String filename) throws UnrecognizedEntryException, IOException /* FIXME maybe other exceptions */ {
-        // FIXME implement method
+        ArrayList<String[]> file = readFile(filename);
+        for (String[] line : file)
+            importObject(line);
     }
 }
