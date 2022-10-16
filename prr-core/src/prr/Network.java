@@ -117,6 +117,14 @@ public class Network implements Serializable {
         if (key.length() != 6)
             throw new IncorrectTerminalKeyException(key);
 
+        // FIXME Sqe esta maneira nao e a melhor de fazer as cenas
+        try {
+            Integer.parseInt(key); // If a NumberFormatException is thrown by this then the key has non numerical
+                                   // characters
+        } catch (NumberFormatException e) {
+            throw new IncorrectTerminalKeyException(key);
+        }
+
         Terminal newTerminal;
         if (type.equals("FANCY")) {
             newTerminal = new FancyTerminal(key, clients.get(client));
