@@ -1,3 +1,7 @@
 *.class
 *.jar
 .DS_Store
+*.dat
+/tests/*.out
+/tests/*.outhyp
+/tests/*.diff
