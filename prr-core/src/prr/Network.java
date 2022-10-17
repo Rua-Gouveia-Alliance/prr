@@ -23,6 +23,7 @@ import prr.exceptions.ClientDoesntExistException;
 import prr.exceptions.ClientExistsException;
 import prr.exceptions.IncorrectTerminalKeyException;
 import prr.exceptions.InvalidEntryException;
+import prr.exceptions.TerminalDoesntExistException;
 import prr.exceptions.TerminalExistsException;
 
 /**
@@ -99,9 +100,11 @@ public class Network implements Serializable {
      * 
      * @param key the key that identifies the terminal
      * @return The {@link Terminal} with the matching key
-     * @throws ClientDoesntExistException if the given key can't be found
+     * @throws TerminalDoesntExistException if the given key can't be found
      */
-    public Terminal getTerminal(String key) {
+    public Terminal getTerminal(String key) throws TerminalDoesntExistException {
+        if (!terminals.containsKey(key))
+            throw new TerminalDoesntExistException(key);
         return terminals.get(key);
     }
 
@@ -158,11 +161,10 @@ public class Network implements Serializable {
 
         Terminal newTerminal;
         if (type.equals("FANCY")) {
-            newTerminal = new FancyTerminal(key, clients.get(client));
+            newTerminal = new FancyTerminal(key, clients.get(client), state);
         } else {
-            newTerminal = new BasicTerminal(key, clients.get(client));
+            newTerminal = new BasicTerminal(key, clients.get(client), state);
         }
-        newTerminal.setState(state);
         terminals.put(key, newTerminal);
 
     }
@@ -175,12 +177,12 @@ public class Network implements Serializable {
      * @throws InvalidEntryException      if some entry doesn't respect the rules
      *                                    (repeated keys, invalid keys, etc.)
      */
-    private void importClient(String[] line) {
+    private void importClient(String[] fields) throws UnrecognizedEntryException, InvalidEntryException {
         if (fields.length != 4)
             throw new UnrecognizedEntryException(String.join("|", fields));
         try {
             registerClient(fields[1], fields[2], fields[3]);
-        } catch (DuplicateClientKeyException e) {
+        } catch (ClientExistsException e) {
             throw new InvalidEntryException(String.join("|", fields), e);
         }
     }
@@ -218,13 +220,37 @@ public class Network implements Serializable {
     }
 
     /**
+     * Loads a list of friends onto the network from an array of fields
+     * 
+     * @param fields the line fields
+     * @throws UnrecognizedEntryException if some entry is not correct
+     * @throws InvalidEntryException      if some entry doesn't respect the rules
+     *                                    (repeated keys, invalid keys, etc.)
+     */
+    private void importFriends(String[] fields) throws UnrecognizedEntryException, InvalidEntryException {
+        if (fields.length != 3)
+            throw new UnrecognizedEntryException(String.join("|", fields));
+
+        try {
+            Terminal terminal = this.getTerminal(fields[1]);
+            String[] friends = fields[2].split(",");
+            for (String friend : friends) {
+                this.getTerminal(friend);
+                terminal.addFriend(friend);
+            }
+        } catch (TerminalDoesntExistException e) {
+            throw new InvalidEntryException(String.join("|", fields), e);
+        }
+    }
+
+    /**
      * Read the first field of a line and check what object is supposed to be
      * imported
      * 
-     * @param line the line fields
+     * @param fields the line fields
      * @throws UnrecognizedEntryException if the first field isn't recognized
      */
-    private void importObject(String[] fields) throws UnrecognizedEntryException {
+    private void importObject(String[] fields) throws UnrecognizedEntryException, InvalidEntryException {
         if (fields[0].matches("^(CLIENT)"))
             importClient(fields);
         else if (fields[0].matches("^(BASIC|FANCY)"))
@@ -232,7 +258,7 @@ public class Network implements Serializable {
         else if (fields[0].matches("^(FRIENDS)"))
             importFriends(fields);
         else
-            throw new UnrecognizedEntryException(String.join("|", line));
+            throw new UnrecognizedEntryException(String.join("|", fields));
     }
 
     /**
@@ -248,7 +274,7 @@ public class Network implements Serializable {
     void importFile(String filename) throws UnrecognizedEntryException, InvalidEntryException, IOException {
         String line;
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-            while (line = reader.readLine() != null)
+            while ((line = reader.readLine()) != null)
                 importObject(line.split("\\|"));
         }
     }
