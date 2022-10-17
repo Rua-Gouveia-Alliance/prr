@@ -63,6 +63,10 @@ public class Client implements Serializable {
         return balance;
     }
 
+    public void addTerminal(Terminal t) {
+        this.terminals.add(t);
+    }
+
     public int straightCommunications(CommunicationType type) {
         return 0;
     }
