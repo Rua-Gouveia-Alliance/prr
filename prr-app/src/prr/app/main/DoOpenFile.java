@@ -1,6 +1,7 @@
 package prr.app.main;
 
 import prr.NetworkManager;
+import prr.exceptions.UnavailableFileException;
 import prr.app.exceptions.FileOpenFailedException;
 import pt.tecnico.uilib.forms.Form;
 import pt.tecnico.uilib.menus.Command;
