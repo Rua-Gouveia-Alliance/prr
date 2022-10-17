@@ -9,8 +9,8 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
-import prr.clients.Client;
 import prr.util.NaturalLanguageTextComparator;
+import prr.clients.Client;
 import prr.terminals.FancyTerminal;
 import prr.terminals.BasicTerminal;
 import prr.terminals.Terminal;
@@ -170,47 +170,50 @@ public class Network implements Serializable {
     /**
      * Loads a client onto the network from an array of fields
      * 
-     * @param line the line fields
+     * @param fields the line fields
      * @throws UnrecognizedEntryException if some entry is not correct
      * @throws InvalidEntryException      if some entry doesn't respect the rules
      *                                    (repeated keys, invalid keys, etc.)
      */
     private void importClient(String[] line) {
-        if (line.length != 4)
-            throw new UnrecognizedEntryException(String.join("|", line));
+        if (fields.length != 4)
+            throw new UnrecognizedEntryException(String.join("|", fields));
         try {
-            registerClient(line[1], line[2], line[3]);
+            registerClient(fields[1], fields[2], fields[3]);
         } catch (DuplicateClientKeyException e) {
-            throw new InvalidEntryException(String.join("|", line), e);
+            throw new InvalidEntryException(String.join("|", fields), e);
         }
     }
 
     /**
      * Loads a terminal onto the network from an array of fields
      * 
-     * @param line the line fields
+     * @param fields the line fields
      * @throws UnrecognizedEntryException if some entry is not correct
      * @throws InvalidEntryException      if some entry doesn't respect the rules
      *                                    (repeated keys, invalid keys, etc.)
      */
-    private void importTerminal(String[] line) throws UnrecognizedEntryException, InvalidEntryException {
-        if (line.length != 4)
-            throw new UnrecognizedEntryException(String.join("|", line));
+    private void importTerminal(String[] fields) throws UnrecognizedEntryException, InvalidEntryException {
+        if (fields.length != 4)
+            throw new UnrecognizedEntryException(String.join("|", fields));
         try {
             TerminalState state;
-            switch (line[3]) {
+            switch (fields[3]) {
                 case "ON":
                     state = new Idle();
+                    break;
                 case "OFF":
                     state = new Off();
+                    break;
                 case "SILENCE":
                     state = new Silence();
+                    break;
                 default:
-                    throw new UnrecognizedEntryException(String.join("|", line));
+                    throw new UnrecognizedEntryException(String.join("|", fields));
             }
-            registerTerminal(line[1], line[0], line[2], state);
+            registerTerminal(fields[1], fields[0], fields[2], state);
         } catch (TerminalExistsException | IncorrectTerminalKeyException | ClientDoesntExistException e) {
-            throw new InvalidEntryException(String.join("|", line), e);
+            throw new InvalidEntryException(String.join("|", fields), e);
         }
     }
 
@@ -221,37 +224,15 @@ public class Network implements Serializable {
      * @param line the line fields
      * @throws UnrecognizedEntryException if the first field isn't recognized
      */
-    private void importObject(String[] line) throws UnrecognizedEntryException {
-        switch (line[0]) {
-            case "CLIENT":
-                importClient(line);
-            case "BASIC|FANCY":
-                importTerminal(line);
-            case "FRIENDS":
-                importFriends(line);
-            default:
-                throw new UnrecognizedEntryException(String.join("|", line));
-        }
-
-    }
-
-    /**
-     * Read text input file and parse each line
-     * 
-     * @param filename name of the text input file
-     * @return an {@link ArrayList} in wich each element represents the fields of a
-     *         line
-     * @throws IOException if there is an IO error while processing
-     *                     the text file
-     */
-    public ArrayList<String[]> readFile(String filename) throws IOException {
-        ArrayList<String[]> file = new ArrayList<>();
-        String line;
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-            while (line = reader.readLine() != null)
-                file.add(line.split("\\|"));
-        }
-        return file;
+    private void importObject(String[] fields) throws UnrecognizedEntryException {
+        if (fields[0].matches("^(CLIENT)"))
+            importClient(fields);
+        else if (fields[0].matches("^(BASIC|FANCY)"))
+            importTerminal(fields);
+        else if (fields[0].matches("^(FRIENDS)"))
+            importFriends(fields);
+        else
+            throw new UnrecognizedEntryException(String.join("|", line));
     }
 
     /**
@@ -265,8 +246,10 @@ public class Network implements Serializable {
      *                                    the text file
      */
     void importFile(String filename) throws UnrecognizedEntryException, InvalidEntryException, IOException {
-        ArrayList<String[]> file = readFile(filename);
-        for (String[] line : file)
-            importObject(line);
+        String line;
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            while (line = reader.readLine() != null)
+                importObject(line.split("\\|"));
+        }
     }
 }
