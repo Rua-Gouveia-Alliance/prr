@@ -15,7 +15,7 @@ public class InvalidEntryException extends Exception {
      * @param entrySpecification
      */
     public InvalidEntryException(String entrySpecification) {
-        _entrySpecification = entrySpecification;
+        this.entrySpecification = entrySpecification;
     }
 
     /**
@@ -24,7 +24,7 @@ public class InvalidEntryException extends Exception {
      */
     public InvalidEntryException(String entrySpecification, Exception cause) {
         super(cause);
-        _entrySpecification = entrySpecification;
+        this.entrySpecification = entrySpecification;
     }
 
     /**
@@ -33,5 +33,4 @@ public class InvalidEntryException extends Exception {
     public String getEntrySpecification() {
         return entrySpecification;
     }
-
 }
