@@ -63,7 +63,7 @@ abstract public class Terminal implements Serializable, Comparable<Terminal> /* 
      **/
     public boolean canStartCommunication() {
         // FIXME add implementation code
-        return false;
+        return true;
     }
 
     public long getBalance() {

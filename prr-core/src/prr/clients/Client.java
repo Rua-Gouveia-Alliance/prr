@@ -14,13 +14,13 @@ public class Client implements Serializable {
 
     String name;
     String key;
-    String nif;
+    int nif;
     ClientPlan plan = new BasePlan(this);
     ArrayList<Terminal> terminals = new ArrayList<>();
     ClientType type = new Normal(this);
     boolean notifications = true;
 
-    public Client(String name, String key, String nif) {
+    public Client(String name, String key, int nif) {
         this.name = name;
         this.key = key;
         this.nif = nif;
@@ -81,7 +81,7 @@ public class Client implements Serializable {
                 .add("CLIENT")
                 .add(this.key)
                 .add(this.name)
-                .add(this.nif)
+                .add(Integer.toString(this.nif))
                 .add(this.type.toString())
                 .add(this.notifications ? "YES" : "NO")
                 .add(Integer.toString(this.terminals.size()))

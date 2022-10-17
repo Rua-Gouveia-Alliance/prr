@@ -61,7 +61,7 @@ public class Network implements Serializable {
     public void registerClient(String key, String name, String nif) throws ClientExistsException {
         if (clients.containsKey(key))
             throw new ClientExistsException(key);
-        clients.put(key, new Client(name, key, nif));
+        clients.put(key, new Client(name, key, Integer.parseInt(nif)));
     }
 
     /**
