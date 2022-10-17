@@ -1,9 +1,11 @@
 package prr.clients;
 
+import java.io.Serializable;
+
 import prr.communications.Communication;
 import prr.communications.CommunicationType;
 
-public class BasePlan implements ClientPlan {
+public class BasePlan implements ClientPlan, Serializable {
     private Client client;
 
     public BasePlan(Client client) {
