@@ -1,6 +1,7 @@
 package prr;
 
 import prr.exceptions.ImportFileException;
+import prr.exceptions.InvalidEntryException;
 import prr.exceptions.MissingFileAssociationException;
 import prr.exceptions.UnavailableFileException;
 import prr.exceptions.UnrecognizedEntryException;
@@ -31,11 +32,11 @@ public class NetworkManager {
      *                                  an error while processing this file.
      */
     public void load(String filename) throws UnavailableFileException {
-        try {
-            ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filename)));
+        try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filename)))) {
             _network = (Network) ois.readObject();
-            ois.close();
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
+            // FIXME o compilador pede ClassNotFound aqui mas parece meio estranho lancar
+            // um UnavailableFile por nao encontrar a classe
             throw new UnavailableFileException(filename);
         }
     }
@@ -53,12 +54,13 @@ public class NetworkManager {
      *                                         to disk.
      */
     public void save() throws FileNotFoundException, MissingFileAssociationException, IOException {
-        if (!asOpenedFile())
+        if (!hasOpenedFile())
             throw new MissingFileAssociationException();
 
-        ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(_currentFile)));
-        oos.writeObject(_network);
-        oos.close();
+        try (ObjectOutputStream oos = new ObjectOutputStream(
+                new BufferedOutputStream(new FileOutputStream(_currentFile)))) {
+            oos.writeObject(_network);
+        }
     }
 
     /**
@@ -80,8 +82,8 @@ public class NetworkManager {
         save();
     }
 
-    public boolean asOpenedFile() {
-        return _currentFile != "";
+    public boolean hasOpenedFile() {
+        return !_currentFile.equals("");
     }
 
     /**
@@ -93,7 +95,7 @@ public class NetworkManager {
     public void importFile(String filename) throws ImportFileException {
         try {
             _network.importFile(filename);
-        } catch (IOException | UnrecognizedEntryException /* FIXME maybe other exceptions */ e) {
+        } catch (IOException | UnrecognizedEntryException | InvalidEntryException e) {
             throw new ImportFileException(filename, e);
         }
     }
