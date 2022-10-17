@@ -1,7 +1,8 @@
 package prr.terminals.states;
 
-import prr.terminals.Terminal;
-
 public class Idle extends TerminalState {
-
+    @Override
+    public String toString() {
+        return "IDLE";
+    }
 }
