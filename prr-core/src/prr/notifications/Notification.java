@@ -3,6 +3,9 @@ package prr.notifications;
 import java.io.Serializable;
 
 public class Notification implements Serializable {
+    
+    private static final long serialVersionUID = 202217101700L;
+    
     private NotificationType type;
     private int terminalId;
 

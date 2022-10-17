@@ -6,6 +6,9 @@ package prr.exceptions;
  * characters)
  */
 public class IncorrectTerminalKeyException extends KeyRelatedException {
+    
+    private static final long serialVersionUID = 202217101700L;
+    
     /** @param key the invalid key */
     public IncorrectTerminalKeyException(String key) {
         super(key);

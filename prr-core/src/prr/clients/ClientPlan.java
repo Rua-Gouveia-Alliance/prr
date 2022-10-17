@@ -1,16 +1,26 @@
 package prr.clients;
 
+import java.io.Serializable;
+
 import prr.communications.Communication;
-/* O clientType vai se atualizando sozinho por ser uma maquina de estatdo,
- * a ideia e ir fazendo intanceof no objeto na altura de calcular os precos.
- * Meter uma data de finals nos descendentes de clientPlan?
- */
-public interface ClientPlan {
-    public long calcTextPrice(Communication communication);
+import prr.communications.CommunicationType;
 
-    public long calcCallPrice(Communication communication);
+public abstract class ClientPlan implements Serializable {
 
-    public long calcVideoPrice(Communication communication);
+    private static final long serialVersionUID = 202217101700L;
 
-    public long calcPrice(Communication communication);
+    public abstract long calcTextPrice(Communication communication);
+
+    public abstract long calcCallPrice(Communication communication);
+
+    public abstract long calcVideoPrice(Communication communication);
+
+    public long calcPrice(Communication communication) {
+        CommunicationType type = communication.getType();
+        if (type == CommunicationType.TEXT)
+            return calcTextPrice(communication);
+        if (type == CommunicationType.CALL)
+            return calcCallPrice(communication);
+        return calcVideoPrice(communication);
+    }
 }

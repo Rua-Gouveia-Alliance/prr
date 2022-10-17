@@ -5,6 +5,9 @@ package prr.exceptions;
  * a key that hasn't been registered.
  */
 public class TerminalDoesntExistException extends KeyRelatedException {
+    
+    private static final long serialVersionUID = 202217101700L;
+    
     /** @param key the nonexistent key */
     public TerminalDoesntExistException(String key) {
         super(key);

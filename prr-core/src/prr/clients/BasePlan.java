@@ -3,9 +3,9 @@ package prr.clients;
 import java.io.Serializable;
 
 import prr.communications.Communication;
-import prr.communications.CommunicationType;
 
-public class BasePlan implements ClientPlan, Serializable {
+public class BasePlan extends ClientPlan {
+    
     private Client client;
 
     public BasePlan(Client client) {
@@ -38,15 +38,5 @@ public class BasePlan implements ClientPlan, Serializable {
         if (client.getType() instanceof Gold)
             return 20;
         return 10;
-    }
-
-    @Override
-    public long calcPrice(Communication communication) {
-        CommunicationType type = communication.getType();
-        if (type == CommunicationType.TEXT)
-            return calcTextPrice(communication);
-        if (type == CommunicationType.CALL)
-            return calcCallPrice(communication);
-        return calcVideoPrice(communication);
     }
 }

@@ -5,6 +5,9 @@ import java.io.Serializable;
 import prr.terminals.Terminal;
 
 public class Communication implements Serializable {
+    
+    private static final long serialVersionUID = 202217101700L;
+    
     private int key;
     private Terminal sender;
     private Terminal receiver;

@@ -9,6 +9,9 @@ import prr.communications.Communication;
 import prr.communications.CommunicationType;
 
 public class Client implements Serializable {
+
+    private static final long serialVersionUID = 202217101700L;
+
     String name;
     String key;
     String nif;
@@ -34,10 +37,10 @@ public class Client implements Serializable {
     public ClientType getType() {
         return this.type;
     }
-    
+
     public String getKey() {
         return key;
-    } 
+    }
 
     public long getOwed() {
         long owed = 0;
