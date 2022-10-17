@@ -34,6 +34,7 @@ public class NetworkManager {
     public void load(String filename) throws UnavailableFileException {
         try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filename)))) {
             _network = (Network) ois.readObject();
+            _currentFile = filename;
         } catch (IOException | ClassNotFoundException e) {
             // FIXME o compilador pede ClassNotFound aqui mas parece meio estranho lancar
             // um UnavailableFile por nao encontrar a classe
