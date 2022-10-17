@@ -15,7 +15,7 @@ public class Client implements Serializable {
     ClientPlan plan = new BasePlan(this);
     ArrayList<Terminal> terminals = new ArrayList<>();
     ClientType type = new Normal(this);
-    boolean notifications = false;
+    boolean notifications = true;
 
     public Client(String name, String key, String nif) {
         this.name = name;
