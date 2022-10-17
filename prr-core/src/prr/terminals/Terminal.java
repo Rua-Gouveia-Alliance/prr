@@ -20,27 +20,28 @@ abstract public class Terminal implements Serializable, Comparable<Terminal> /* 
     private String key;
     Client owner;
     private TerminalState state;
-    private ArrayList<Communication> receivedComms;
-    private ArrayList<Communication> madeComms;
-    private ArrayList<Terminal> friends;
+    private ArrayList<Communication> receivedComms = new ArrayList<>();
+    private ArrayList<Communication> madeComms = new ArrayList<>();
+    private ArrayList<String> friends = new ArrayList<>();
 
     // contructor(s)
-    public Terminal(String key, Client owner) {
+    public Terminal(String key, Client owner, TerminalState state) {
         this.key = key;
         this.owner = owner;
-        this.state = new Idle();
-        this.receivedComms = new ArrayList<Communication>();
-        this.madeComms = new ArrayList<Communication>();
-        this.friends = new ArrayList<Terminal>();
-
+        this.state = state;
     }
 
     public String getKey() {
-        return key;
+        return this.key;
     }
 
     public void setState(TerminalState state) {
         this.state = state;
+    }
+
+    public void addFriend(String friend) {
+        if (!friends.contains(friend))
+            friends.add(friend);
     }
 
     /**
@@ -111,11 +112,10 @@ abstract public class Terminal implements Serializable, Comparable<Terminal> /* 
 
         if (friends.size() != 0) {
             s += "|";
-            for (Terminal f : friends) {
-                s += f.getKey() + ",";
-            }
+            for (String f : friends)
+                s += f + ",";
 
-            // remove last ,
+            // remove last comma
             s = s.substring(0, s.length() - 1);
         }
 
