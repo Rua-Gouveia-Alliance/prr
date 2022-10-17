@@ -153,20 +153,18 @@ public class Network implements Serializable {
         if (terminals.containsKey(key))
             throw new TerminalExistsException(key);
 
-        if (!clients.containsKey(client))
-            throw new ClientDoesntExistException(client);
-
         if (!key.matches("[0-9]{6}"))
             throw new IncorrectTerminalKeyException(key);
 
+        Client owner = this.getClient(client);
         Terminal newTerminal;
         if (type.equals("FANCY")) {
             newTerminal = new FancyTerminal(key, clients.get(client), state);
         } else {
             newTerminal = new BasicTerminal(key, clients.get(client), state);
         }
+        owner.addTerminal(newTerminal);
         terminals.put(key, newTerminal);
-
     }
 
     /**
