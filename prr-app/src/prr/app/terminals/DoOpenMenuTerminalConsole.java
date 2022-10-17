@@ -1,6 +1,7 @@
 package prr.app.terminals;
 
 import prr.Network;
+import prr.exceptions.TerminalDoesntExistException;
 import prr.app.exceptions.UnknownTerminalKeyException;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
@@ -20,6 +21,10 @@ class DoOpenMenuTerminalConsole extends Command<Network> {
     protected final void execute() throws CommandException {
         // create an instance of prr.app.terminal.Menu with the
         // selected Terminal
-        (new prr.app.terminal.Menu(_receiver, _receiver.getTerminal(stringField("key")))).open();
+        try {
+            (new prr.app.terminal.Menu(_receiver, _receiver.getTerminal(stringField("key")))).open();
+        } catch(TerminalDoesntExistException e) {
+            throw new UnknownTerminalKeyException(e.getKey());
+        }
     }
 }
