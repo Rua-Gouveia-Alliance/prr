@@ -1,5 +1,6 @@
 package prr;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -32,6 +33,7 @@ import prr.exceptions.TerminalExistsException;
 public class Network implements Serializable {
 
     /** Serial number for serialization. */
+    @Serial
     private static final long serialVersionUID = 202208091753L;
 
     /** Clients list, sorted by key */

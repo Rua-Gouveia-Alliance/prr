@@ -1,5 +1,6 @@
 package prr.clients;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.StringJoiner;
@@ -10,6 +11,7 @@ import prr.communications.CommunicationType;
 
 public class Client implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 202217101700L;
 
     String name;

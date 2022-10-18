@@ -1,11 +1,13 @@
 package prr.exceptions;
 
+import java.io.Serial;
 /**
  * Exception for invalid import file entries.
  */
 public class InvalidEntryException extends Exception {
 
     /** Class serial number. */
+    @Serial
     private static final long serialVersionUID = 202208091753L;
 
     /** Invalid entry specification. */

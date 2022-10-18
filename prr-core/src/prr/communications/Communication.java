@@ -1,11 +1,13 @@
 package prr.communications;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import prr.terminals.Terminal;
 
 public class Communication implements Serializable {
     
+    @Serial
     private static final long serialVersionUID = 202217101700L;
     
     private int key;

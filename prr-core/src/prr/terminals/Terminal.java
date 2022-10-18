@@ -1,5 +1,6 @@
 package prr.terminals;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.StringJoiner;
@@ -14,6 +15,7 @@ import prr.terminals.states.*;
 abstract public class Terminal implements Serializable, Comparable<Terminal> /* FIXME maybe ad more interfaces */ {
 
     /** Serial number for serialization. */
+    @Serial
     private static final long serialVersionUID = 202208091753L;
 
     // attributes

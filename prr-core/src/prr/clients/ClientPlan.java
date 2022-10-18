@@ -1,12 +1,14 @@
 package prr.clients;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import prr.communications.Communication;
 import prr.communications.CommunicationType;
 
 public abstract class ClientPlan implements Serializable {
-
+    
+    @Serial
     private static final long serialVersionUID = 202217101700L;
 
     public abstract long calcTextPrice(Communication communication);
