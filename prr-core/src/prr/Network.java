@@ -210,8 +210,7 @@ public class Network implements Serializable {
      *                                    (repeated keys, invalid keys, etc.)
      */
     private void importTerminal(String[] fields) throws UnrecognizedEntryException, InvalidEntryException {
-        // TODO: ns se é a melhor maneira de verificar isto:
-        if (fields.length != 4 | fields[3] != "ON" | fields[3] != "OFF" | fields[3] != "SILENCE")
+        if (fields.length != 4 | !fields[3].matches("^(ON|OFF|SILENCE)"))
             throw new UnrecognizedEntryException(String.join("|", fields));
         try {
             registerTerminal(fields[1], fields[0], fields[2], fields[3]);
