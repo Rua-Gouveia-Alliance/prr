@@ -9,6 +9,7 @@ import pt.tecnico.uilib.menus.CommandException;
 import prr.exceptions.ClientDoesntExistException;
 import prr.exceptions.IncorrectTerminalKeyException;
 import prr.exceptions.TerminalExistsException;
+import prr.exceptions.UnrecognizedTerminalTypeException;
 
 /**
  * Register terminal.
@@ -33,6 +34,8 @@ class DoRegisterTerminal extends Command<Network> {
             throw new UnknownClientKeyException(e.getKey());
         } catch (IncorrectTerminalKeyException e) {
             throw new InvalidTerminalKeyException(e.getKey());
+        } catch (UnrecognizedTerminalTypeException e) {
+            e.printStackTrace();
         }
     }
 }

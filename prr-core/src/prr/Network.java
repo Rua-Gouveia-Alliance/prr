@@ -20,6 +20,7 @@ import prr.terminals.states.Off;
 import prr.terminals.states.Silence;
 import prr.terminals.states.TerminalState;
 import prr.exceptions.UnrecognizedEntryException;
+import prr.exceptions.UnrecognizedTerminalTypeException;
 import prr.exceptions.ClientDoesntExistException;
 import prr.exceptions.ClientExistsException;
 import prr.exceptions.IncorrectTerminalKeyException;
@@ -160,10 +161,12 @@ public class Network implements Serializable {
 
         Client owner = this.getClient(client);
         Terminal newTerminal;
-        if (type.equals("FANCY")) {
+        if (type.equals("BASIC")) {
             newTerminal = new FancyTerminal(key, clients.get(client), state);
-        } else {
+        } else if (type.equals("FANCY")) {
             newTerminal = new BasicTerminal(key, clients.get(client), state);
+        } else {
+            throw new UnrecognizedTerminalTypeException(type);
         }
         owner.addTerminal(newTerminal);
         terminals.put(key, newTerminal);
@@ -214,7 +217,8 @@ public class Network implements Serializable {
                     throw new UnrecognizedEntryException(String.join("|", fields));
             }
             registerTerminal(fields[1], fields[0], fields[2], state);
-        } catch (TerminalExistsException | IncorrectTerminalKeyException | ClientDoesntExistException e) {
+        } catch (TerminalExistsException | IncorrectTerminalKeyException | ClientDoesntExistException
+                | UnrecognizedTerminalTypeException e) {
             throw new InvalidEntryException(String.join("|", fields), e);
         }
     }
