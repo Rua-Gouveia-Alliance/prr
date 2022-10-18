@@ -19,16 +19,30 @@ abstract public class Terminal implements Serializable, Comparable<Terminal> /* 
     // attributes
     private String key;
     Client owner;
-    private TerminalState state;
     private ArrayList<Communication> receivedComms = new ArrayList<>();
     private ArrayList<Communication> madeComms = new ArrayList<>();
     private ArrayList<String> friends = new ArrayList<>();
 
+    // Terminal State
+    private TerminalState busyState;
+    private TerminalState idleState;
+    private TerminalState offState;
+    private TerminalState silenceState;
+    private TerminalState state;
+
     // contructor(s)
-    public Terminal(String key, Client owner, TerminalState state) {
+    public Terminal(String key, Client owner) {
         this.key = key;
         this.owner = owner;
-        this.state = state;
+
+        // Setup states
+        this.busyState = new Busy(this);
+        this.idleState = new Idle(this);
+        this.offState = new Off(this);
+        this.silenceState = new Silence(this);
+
+        // Default state
+        this.state = idleState;
     }
 
     public String getKey() {
@@ -37,6 +51,42 @@ abstract public class Terminal implements Serializable, Comparable<Terminal> /* 
 
     public void setState(TerminalState state) {
         this.state = state;
+    }
+
+    public TerminalState getState() {
+        return this.state;
+    }
+
+    public TerminalState getBusyState() {
+        return this.busyState;
+    }
+
+    public TerminalState getIdleState() {
+        return this.idleState;
+    }
+
+    public TerminalState getOffState() {
+        return this.offState;
+    }
+
+    public TerminalState getSilenceState() {
+        return this.silenceState;
+    }
+
+    public void toSilence() {
+        state.toSilence();
+    }
+
+    public void toOff() {
+        state.toOff();
+    }
+
+    public void toBusy() {
+        state.toBusy();
+    }
+
+    public void toIdle() {
+        state.toIdle();
     }
 
     public void addFriend(String friend) {

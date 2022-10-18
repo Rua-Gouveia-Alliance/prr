@@ -1,11 +1,9 @@
 package prr.clients;
 
-import java.io.Serializable;
-
 import prr.communications.Communication;
 
 public class BasePlan extends ClientPlan {
-    
+
     private Client client;
 
     public BasePlan(Client client) {
