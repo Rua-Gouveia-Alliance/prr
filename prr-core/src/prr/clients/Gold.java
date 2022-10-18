@@ -8,13 +8,13 @@ public class Gold extends ClientType {
     }
 
     @Override
-    public ClientType getPrevType() {
-        return new Normal(client);
+    public void upgrade() {
+        client.setType(client.getPlatinum());
     }
 
     @Override
-    public ClientType getNextType() {
-        return new Platinum(client);
+    public void downgrade() {
+        client.setType(client.getNormal());
     }
 
     @Override

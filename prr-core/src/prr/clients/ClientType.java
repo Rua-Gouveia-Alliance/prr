@@ -4,28 +4,28 @@ import java.io.Serial;
 import java.io.Serializable;
 
 public abstract class ClientType implements Serializable {
-    
+
     @Serial
     private static final long serialVersionUID = 202217101700L;
-    
+
     protected Client client;
 
     public ClientType(Client client) {
         this.client = client;
     }
 
-    abstract public ClientType getPrevType();
+    abstract protected void upgrade();
 
-    abstract public ClientType getNextType();
+    abstract protected void downgrade();
 
-    abstract public boolean canDowngrade();
+    abstract protected boolean canDowngrade();
 
-    abstract public boolean canUpgrade();
+    abstract protected boolean canUpgrade();
 
-    public void upgrade() {
+    public void update() {
         if (canUpgrade())
-            client.setType(getNextType());
+            upgrade();
         else if (canDowngrade())
-            client.setType(getPrevType());
+            downgrade();
     }
 }
