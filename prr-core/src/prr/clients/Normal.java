@@ -6,13 +6,13 @@ public class Normal extends ClientType {
     }
 
     @Override
-    public ClientType getPrevType() {
-        return new Normal(client);
+    public void upgrade() {
+        client.setType(client.getGold());
     }
 
     @Override
-    public ClientType getNextType() {
-        return new Gold(client);
+    public void downgrade() {
+        // empty
     }
 
     @Override

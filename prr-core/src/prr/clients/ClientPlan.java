@@ -11,18 +11,18 @@ public abstract class ClientPlan implements Serializable {
     @Serial
     private static final long serialVersionUID = 202217101700L;
 
-    public abstract long calcTextPrice(Communication communication);
+    protected abstract long getTextPrice(Communication communication);
 
-    public abstract long calcCallPrice(Communication communication);
+    protected abstract long getCallPrice(Communication communication);
 
-    public abstract long calcVideoPrice(Communication communication);
+    protected abstract long getVideoPrice(Communication communication);
 
-    public long calcPrice(Communication communication) {
+    public long getPrice(Communication communication) {
         CommunicationType type = communication.getType();
         if (type == CommunicationType.TEXT)
-            return calcTextPrice(communication);
+            return getTextPrice(communication);
         if (type == CommunicationType.CALL)
-            return calcCallPrice(communication);
-        return calcVideoPrice(communication);
+            return getCallPrice(communication);
+        return getVideoPrice(communication);
     }
 }

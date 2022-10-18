@@ -15,10 +15,6 @@ import prr.clients.Client;
 import prr.terminals.FancyTerminal;
 import prr.terminals.BasicTerminal;
 import prr.terminals.Terminal;
-import prr.terminals.states.Idle;
-import prr.terminals.states.Off;
-import prr.terminals.states.Silence;
-import prr.terminals.states.TerminalState;
 import prr.exceptions.UnrecognizedEntryException;
 import prr.exceptions.UnrecognizedTerminalTypeException;
 import prr.exceptions.ClientDoesntExistException;
@@ -119,10 +115,9 @@ public class Network implements Serializable {
     public Collection<Terminal> getUnusedTerminals() {
         ArrayList<Terminal> unused = new ArrayList<Terminal>();
 
-        for (Terminal t : terminals.values()) {
+        for (Terminal t : terminals.values())
             if (t.getCommCount() == 0)
                 unused.add(t);
-        }
 
         return unused;
     }
@@ -137,8 +132,9 @@ public class Network implements Serializable {
      * @throws ClientDoenstExistException if the given client doesnt exist
      */
     public void registerTerminal(String key, String type, String client)
-            throws TerminalExistsException, IncorrectTerminalKeyException, ClientDoesntExistException {
-        registerTerminal(key, type, client, new Idle());
+            throws TerminalExistsException, IncorrectTerminalKeyException, ClientDoesntExistException,
+            UnrecognizedTerminalTypeException {
+        registerTerminal(key, type, client, "IDLE");
     }
 
     /**
@@ -149,10 +145,12 @@ public class Network implements Serializable {
      * @param client new terminal's owner
      * @param state  new terminal's initial state
      * @throws TerminalExistsException    if the given key is already in use
-     * @throws ClientDoenstExistException if the given client doesnt exist
+     * @throws ClientDoesntExistException if the given client doesnt exist
      */
-    public void registerTerminal(String key, String type, String client, TerminalState state)
-            throws TerminalExistsException, IncorrectTerminalKeyException, ClientDoesntExistException {
+    private void registerTerminal(String key, String type, String client, String state)
+            throws TerminalExistsException, IncorrectTerminalKeyException, ClientDoesntExistException,
+            UnrecognizedTerminalTypeException {
+
         if (terminals.containsKey(key))
             throw new TerminalExistsException(key);
 
@@ -161,13 +159,26 @@ public class Network implements Serializable {
 
         Client owner = this.getClient(client);
         Terminal newTerminal;
-        if (type.equals("BASIC")) {
-            newTerminal = new FancyTerminal(key, clients.get(client), state);
-        } else if (type.equals("FANCY")) {
-            newTerminal = new BasicTerminal(key, clients.get(client), state);
-        } else {
+
+        if (type.equals("FANCY"))
+            newTerminal = new FancyTerminal(key, clients.get(client));
+        else if (type.equals("BASIC"))
+            newTerminal = new BasicTerminal(key, clients.get(client));
+        else
             throw new UnrecognizedTerminalTypeException(type);
+
+        switch (state) {
+            case "ON":
+                newTerminal.toIdle();
+                break;
+            case "OFF":
+                newTerminal.toOff();
+                break;
+            case "SILENCE":
+                newTerminal.toSilence();
+                break;
         }
+
         owner.addTerminal(newTerminal);
         terminals.put(key, newTerminal);
     }
@@ -199,24 +210,10 @@ public class Network implements Serializable {
      *                                    (repeated keys, invalid keys, etc.)
      */
     private void importTerminal(String[] fields) throws UnrecognizedEntryException, InvalidEntryException {
-        if (fields.length != 4)
+        if (fields.length != 4 | !fields[3].matches("^(ON|OFF|SILENCE)"))
             throw new UnrecognizedEntryException(String.join("|", fields));
         try {
-            TerminalState state;
-            switch (fields[3]) {
-                case "ON":
-                    state = new Idle();
-                    break;
-                case "OFF":
-                    state = new Off();
-                    break;
-                case "SILENCE":
-                    state = new Silence();
-                    break;
-                default:
-                    throw new UnrecognizedEntryException(String.join("|", fields));
-            }
-            registerTerminal(fields[1], fields[0], fields[2], state);
+            registerTerminal(fields[1], fields[0], fields[2], fields[3]);
         } catch (TerminalExistsException | IncorrectTerminalKeyException | ClientDoesntExistException
                 | UnrecognizedTerminalTypeException e) {
             throw new InvalidEntryException(String.join("|", fields), e);

@@ -8,13 +8,16 @@ public class Platinum extends ClientType {
     }
 
     @Override
-    public ClientType getPrevType() {
-        return (client.getBalance() < 0) ? new Normal(client) : new Gold(client);
+    public void upgrade() {
+        // empty
     }
 
     @Override
-    public ClientType getNextType() {
-        return new Platinum(client);
+    public void downgrade() {
+        if (client.getBalance() < 0)
+            client.setType(client.getNormal());
+        else
+            client.setType(client.getGold());
     }
 
     @Override

@@ -14,13 +14,16 @@ public class Client implements Serializable {
     @Serial
     private static final long serialVersionUID = 202217101700L;
 
-    String name;
-    String key;
-    int nif;
-    ClientPlan plan = new BasePlan(this);
-    ArrayList<Terminal> terminals = new ArrayList<>();
-    ClientType type = new Normal(this);
-    boolean notifications = true;
+    private String name;
+    private String key;
+    private int nif;
+    private ClientPlan plan = new BasePlan(this);
+    private ArrayList<Terminal> terminals = new ArrayList<>();
+    private boolean notifications = true;
+    private ClientType type = new Normal(this);
+    private ClientType normal = new Normal(this);
+    private ClientType gold = new Gold(this);
+    private ClientType platinum = new Platinum(this);
 
     public Client(String name, String key, int nif) {
         this.name = name;
@@ -34,6 +37,18 @@ public class Client implements Serializable {
 
     public void setNotifications(boolean notifications) {
         this.notifications = notifications;
+    }
+
+    public ClientType getGold() {
+        return gold;
+    }
+
+    public ClientType getNormal() {
+        return normal;
+    }
+
+    public ClientType getPlatinum() {
+        return platinum;
     }
 
     public ClientType getType() {
@@ -65,16 +80,16 @@ public class Client implements Serializable {
         return balance;
     }
 
-    public void addTerminal(Terminal t) {
-        this.terminals.add(t);
+    public void addTerminal(Terminal terminal) {
+        this.terminals.add(terminal);
     }
 
     public int straightCommunications(CommunicationType type) {
         return 0;
     }
 
-    public long calcPrice(Communication communication) {
-        return this.plan.calcPrice(communication);
+    public long getPrice(Communication communication) {
+        return this.plan.getPrice(communication);
     }
 
     @Override

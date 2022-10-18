@@ -1,12 +1,11 @@
 package prr.terminals;
 
 import prr.clients.Client;
-import prr.terminals.states.TerminalState;
 
 public class BasicTerminal extends Terminal {
 
-    public BasicTerminal(String key, Client owner, TerminalState state) {
-        super(key, owner, state);
+    public BasicTerminal(String key, Client owner) {
+        super(key, owner);
     }
 
     @Override
