@@ -11,7 +11,7 @@ public class BasePlan extends ClientPlan {
     }
 
     @Override
-    public long calcTextPrice(Communication communication) {
+    protected long getTextPrice(Communication communication) {
         if (communication.getLength() < 50)
             return (client.getType() instanceof Platinum) ? 0 : 10;
         if (communication.getLength() < 100) {
@@ -25,12 +25,12 @@ public class BasePlan extends ClientPlan {
     }
 
     @Override
-    public long calcCallPrice(Communication communication) {
+    protected long getCallPrice(Communication communication) {
         return (client.getType() instanceof Normal) ? 20 : 10;
     }
 
     @Override
-    public long calcVideoPrice(Communication communication) {
+    protected long getVideoPrice(Communication communication) {
         if (client.getType() instanceof Normal)
             return 30;
         if (client.getType() instanceof Gold)
