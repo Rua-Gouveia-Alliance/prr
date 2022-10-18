@@ -80,8 +80,8 @@ public class Client implements Serializable {
         return balance;
     }
 
-    public void addTerminal(Terminal t) {
-        this.terminals.add(t);
+    public void addTerminal(Terminal terminal) {
+        this.terminals.add(terminal);
     }
 
     public int straightCommunications(CommunicationType type) {
