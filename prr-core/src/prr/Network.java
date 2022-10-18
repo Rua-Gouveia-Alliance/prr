@@ -115,10 +115,9 @@ public class Network implements Serializable {
     public Collection<Terminal> getUnusedTerminals() {
         ArrayList<Terminal> unused = new ArrayList<Terminal>();
 
-        for (Terminal t : terminals.values()) {
+        for (Terminal t : terminals.values())
             if (t.getCommCount() == 0)
                 unused.add(t);
-        }
 
         return unused;
     }
@@ -146,11 +145,12 @@ public class Network implements Serializable {
      * @param client new terminal's owner
      * @param state  new terminal's initial state
      * @throws TerminalExistsException    if the given key is already in use
-     * @throws ClientDoenstExistException if the given client doesnt exist
+     * @throws ClientDoesntExistException if the given client doesnt exist
      */
     private void registerTerminal(String key, String type, String client, String state)
             throws TerminalExistsException, IncorrectTerminalKeyException, ClientDoesntExistException,
             UnrecognizedTerminalTypeException {
+
         if (terminals.containsKey(key))
             throw new TerminalExistsException(key);
 
@@ -159,13 +159,13 @@ public class Network implements Serializable {
 
         Client owner = this.getClient(client);
         Terminal newTerminal;
-        if (type.equals("FANCY")) {
+
+        if (type.equals("FANCY"))
             newTerminal = new FancyTerminal(key, clients.get(client));
-        } else if (type.equals("BASIC")) {
+        else if (type.equals("BASIC"))
             newTerminal = new BasicTerminal(key, clients.get(client));
-        } else {
+        else
             throw new UnrecognizedTerminalTypeException(type);
-        }
 
         switch (state) {
             case "ON":
