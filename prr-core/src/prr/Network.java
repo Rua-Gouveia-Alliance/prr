@@ -1,5 +1,6 @@
 package prr;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -15,6 +16,7 @@ import prr.terminals.FancyTerminal;
 import prr.terminals.BasicTerminal;
 import prr.terminals.Terminal;
 import prr.exceptions.UnrecognizedEntryException;
+import prr.exceptions.UnrecognizedTerminalTypeException;
 import prr.exceptions.ClientDoesntExistException;
 import prr.exceptions.ClientExistsException;
 import prr.exceptions.IncorrectTerminalKeyException;
@@ -28,6 +30,7 @@ import prr.exceptions.TerminalExistsException;
 public class Network implements Serializable {
 
     /** Serial number for serialization. */
+    @Serial
     private static final long serialVersionUID = 202208091753L;
 
     /** Clients list, sorted by key */
@@ -130,7 +133,8 @@ public class Network implements Serializable {
      * @throws ClientDoenstExistException if the given client doesnt exist
      */
     public void registerTerminal(String key, String type, String client)
-            throws TerminalExistsException, IncorrectTerminalKeyException, ClientDoesntExistException {
+            throws TerminalExistsException, IncorrectTerminalKeyException, ClientDoesntExistException,
+            UnrecognizedTerminalTypeException {
         registerTerminal(key, type, client, "IDLE");
     }
 
@@ -145,7 +149,8 @@ public class Network implements Serializable {
      * @throws ClientDoenstExistException if the given client doesnt exist
      */
     public void registerTerminal(String key, String type, String client, String state)
-            throws TerminalExistsException, IncorrectTerminalKeyException, ClientDoesntExistException {
+            throws TerminalExistsException, IncorrectTerminalKeyException, ClientDoesntExistException,
+            UnrecognizedTerminalTypeException {
         if (terminals.containsKey(key))
             throw new TerminalExistsException(key);
 
@@ -156,8 +161,10 @@ public class Network implements Serializable {
         Terminal newTerminal;
         if (type.equals("FANCY")) {
             newTerminal = new FancyTerminal(key, clients.get(client));
-        } else {
+        } else if (type.equals("FANCY")) {
             newTerminal = new BasicTerminal(key, clients.get(client));
+        } else {
+            throw new UnrecognizedTerminalTypeException(type);
         }
 
         switch (state) {
@@ -208,7 +215,8 @@ public class Network implements Serializable {
             throw new UnrecognizedEntryException(String.join("|", fields));
         try {
             registerTerminal(fields[1], fields[0], fields[2], fields[3]);
-        } catch (TerminalExistsException | IncorrectTerminalKeyException | ClientDoesntExistException e) {
+        } catch (TerminalExistsException | IncorrectTerminalKeyException | ClientDoesntExistException
+                | UnrecognizedTerminalTypeException e) {
             throw new InvalidEntryException(String.join("|", fields), e);
         }
     }
