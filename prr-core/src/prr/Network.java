@@ -148,7 +148,7 @@ public class Network implements Serializable {
      * @throws TerminalExistsException    if the given key is already in use
      * @throws ClientDoenstExistException if the given client doesnt exist
      */
-    public void registerTerminal(String key, String type, String client, String state)
+    private void registerTerminal(String key, String type, String client, String state)
             throws TerminalExistsException, IncorrectTerminalKeyException, ClientDoesntExistException,
             UnrecognizedTerminalTypeException {
         if (terminals.containsKey(key))
