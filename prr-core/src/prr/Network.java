@@ -161,7 +161,7 @@ public class Network implements Serializable {
         Terminal newTerminal;
         if (type.equals("FANCY")) {
             newTerminal = new FancyTerminal(key, clients.get(client));
-        } else if (type.equals("FANCY")) {
+        } else if (type.equals("BASIC")) {
             newTerminal = new BasicTerminal(key, clients.get(client));
         } else {
             throw new UnrecognizedTerminalTypeException(type);
