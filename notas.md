@@ -14,3 +14,5 @@ fica tipo ponteiro para o atributo do Client e quando o atualizar aquilo tambem 
 o client todo (acho)
 
 Na entrega final trocar a utilizacao do .toString() nas classes para uma aplicacao do visitor
+
+Trocar Notification pra ser um record (verificar compatibilidade)
