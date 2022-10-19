@@ -48,7 +48,14 @@ public class Network implements Serializable {
     /**
      * Register that something changed
      */
-    private void changed() {
+    public void changed() {
+        this.unsaved = true;
+    }
+
+    /**
+     * Error saving, remains unsaved
+     */
+    public void failedSave() {
         this.unsaved = true;
     }
 

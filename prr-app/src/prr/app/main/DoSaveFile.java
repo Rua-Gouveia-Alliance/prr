@@ -21,6 +21,9 @@ class DoSaveFile extends Command<NetworkManager> {
         if (!_receiver.getNetwork().isUnsaved())
             return;
 
+        // If we changed the unsaved state after saving, the Network would always load
+        // with the unsaved state on
+        _receiver.getNetwork().saved();
         try {
             try {
                 _receiver.save();
@@ -28,12 +31,12 @@ class DoSaveFile extends Command<NetworkManager> {
                 try {
                     _receiver.saveAs(Form.requestString(Prompt.newSaveAs()));
                 } catch (MissingFileAssociationException e2) {
-                    return;
+                    // Empty string as filename
+                    _receiver.getNetwork().failedSave();
                 }
             }
         } catch (IOException e) {
-            return;
+            _receiver.getNetwork().failedSave();
         }
-        _receiver.getNetwork().saved();
     }
 }
