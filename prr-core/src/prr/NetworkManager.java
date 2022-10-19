@@ -5,8 +5,6 @@ import prr.exceptions.InvalidEntryException;
 import prr.exceptions.MissingFileAssociationException;
 import prr.exceptions.UnavailableFileException;
 import prr.exceptions.UnrecognizedEntryException;
-
-//FIXME add more import if needed (cannot import from pt.tecnico or prr.app)
 import java.io.*;
 
 /**
@@ -35,8 +33,6 @@ public class NetworkManager {
             _network = (Network) ois.readObject();
             _currentFile = filename;
         } catch (IOException | ClassNotFoundException e) {
-            // FIXME o compilador pede ClassNotFound aqui mas parece meio estranho lancar
-            // um UnavailableFile por nao encontrar a classe
             throw new UnavailableFileException(filename);
         }
     }

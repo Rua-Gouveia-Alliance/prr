@@ -12,7 +12,7 @@ import prr.terminals.states.*;
 /**
  * Abstract terminal.
  */
-abstract public class Terminal implements Serializable, Comparable<Terminal> /* FIXME maybe ad more interfaces */ {
+abstract public class Terminal implements Serializable, Comparable<Terminal> {
 
     /** Serial number for serialization. */
     @Serial

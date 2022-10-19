@@ -19,20 +19,22 @@ class DoSaveFile extends Command<NetworkManager> {
 
     @Override
     protected final void execute() {
+        if (!_receiver.getNetwork().isUnsaved())
+            return;
+
         try {
             try {
                 _receiver.save();
             } catch (MissingFileAssociationException e1) {
                 try {
                     _receiver.saveAs(Form.requestString(Prompt.newSaveAs()));
-                } catch (IOException | MissingFileAssociationException e2) {
-                    // Será que é para fazer isto???????????????????:
-                    // throw new FileOpenFailedException(e2);
+                } catch (MissingFileAssociationException e2) {
+                    return;
                 }
             }
         } catch (IOException e) {
-            // Será que é para fazer isto???????????????????:
-            // throw new FileOpenFailedException(e);
+            return;
         }
+        _receiver.getNetwork().saved();
     }
 }
