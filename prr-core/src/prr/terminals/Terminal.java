@@ -156,7 +156,7 @@ abstract public class Terminal implements Serializable, Comparable<Terminal> {
 
     @Override
     public int compareTo(Terminal o) {
-        return o.getKey().equals(this.getKey()) ? 1 : 0;
+        return o.getKey().compareTo(this.getKey());
     }
 
     @Override
