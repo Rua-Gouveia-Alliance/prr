@@ -7,9 +7,15 @@ import prr.communications.Communication;
 import prr.communications.CommunicationType;
 
 public abstract class ClientPlan implements Serializable {
-    
+
     @Serial
     private static final long serialVersionUID = 202217101700L;
+
+    protected final Client client;
+
+    public ClientPlan(Client client) {
+        this.client = client;
+    }
 
     protected abstract long getTextPrice(Communication communication);
 

@@ -26,22 +26,16 @@ abstract public class Terminal implements Serializable, Comparable<Terminal> /* 
     private ArrayList<String> friends = new ArrayList<>();
 
     // Terminal State
-    private TerminalState busyState;
-    private TerminalState idleState;
-    private TerminalState offState;
-    private TerminalState silenceState;
+    private final TerminalState busyState = new Busy(this);
+    private final TerminalState idleState = new Idle(this);
+    private final TerminalState offState = new Off(this);
+    private final TerminalState silenceState = new Silence(this);
     private TerminalState state;
 
     // contructor(s)
     public Terminal(String key, Client owner) {
         this.key = key;
         this.owner = owner;
-
-        // Setup states
-        this.busyState = new Busy(this);
-        this.idleState = new Idle(this);
-        this.offState = new Off(this);
-        this.silenceState = new Silence(this);
 
         // Default state
         this.state = idleState;

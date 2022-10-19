@@ -15,15 +15,15 @@ public class Client implements Serializable {
     private static final long serialVersionUID = 202217101700L;
 
     private String name;
-    private String key;
-    private int nif;
+    private final int nif;
+    private final String key;
     private ClientPlan plan = new BasePlan(this);
-    private ArrayList<Terminal> terminals = new ArrayList<>();
-    private boolean notifications = true;
+    private final ArrayList<Terminal> terminals = new ArrayList<>();
+    private final ClientType normal = new Normal(this);
+    private final ClientType gold = new Gold(this);
+    private final ClientType platinum = new Platinum(this);
     private ClientType type = new Normal(this);
-    private ClientType normal = new Normal(this);
-    private ClientType gold = new Gold(this);
-    private ClientType platinum = new Platinum(this);
+    private boolean notifications = true;
 
     public Client(String name, String key, int nif) {
         this.name = name;

@@ -3,11 +3,9 @@ package prr.clients;
 import prr.communications.Communication;
 
 public class BasePlan extends ClientPlan {
-
-    private Client client;
-
+    
     public BasePlan(Client client) {
-        this.client = client;
+        super(client);
     }
 
     @Override

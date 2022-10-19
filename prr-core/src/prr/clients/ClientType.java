@@ -8,7 +8,7 @@ public abstract class ClientType implements Serializable {
     @Serial
     private static final long serialVersionUID = 202217101700L;
 
-    protected Client client;
+    protected final Client client;
 
     public ClientType(Client client) {
         this.client = client;
