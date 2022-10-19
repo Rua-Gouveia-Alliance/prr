@@ -4,7 +4,6 @@ import prr.NetworkManager;
 import prr.app.exceptions.FileOpenFailedException;
 import pt.tecnico.uilib.forms.Form;
 import pt.tecnico.uilib.menus.Command;
-//FIXME add more imports if needed
 import java.io.IOException;
 import prr.exceptions.MissingFileAssociationException;
 

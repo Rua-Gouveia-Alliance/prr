@@ -85,6 +85,22 @@ abstract public class Terminal implements Serializable, Comparable<Terminal> {
         state.toIdle();
     }
 
+    public boolean isSilence() {
+        return getState().equals(getSilenceState());
+    }
+
+    public boolean isOff() {
+        return getState().equals(getOffState());
+    }
+
+    public boolean isBusy() {
+        return getState().equals(getBusyState());
+    }
+
+    public boolean isIdle() {
+        return getState().equals(getIdleState());
+    }
+
     public void addFriend(String friend) {
         if (!friends.contains(friend))
             friends.add(friend);
@@ -98,8 +114,7 @@ abstract public class Terminal implements Serializable, Comparable<Terminal> {
      *         it was the originator of this communication.
      **/
     public boolean canEndCurrentCommunication() {
-        // FIXME add implementation code
-        return false;
+        return isBusy(); // TODO && it was the originator of this communication.
     }
 
     /**
@@ -108,8 +123,7 @@ abstract public class Terminal implements Serializable, Comparable<Terminal> {
      * @return true if this terminal is neither off neither busy, false otherwise.
      **/
     public boolean canStartCommunication() {
-        // FIXME add implementation code
-        return true;
+        return !isBusy() && !isOff();
     }
 
     public long getBalance() {
@@ -142,8 +156,7 @@ abstract public class Terminal implements Serializable, Comparable<Terminal> {
 
     @Override
     public int compareTo(Terminal o) {
-        // TODO Auto-generated method stub
-        return 0;
+        return o.getKey().equals(this.getKey()) ? 1 : 0;
     }
 
     @Override
