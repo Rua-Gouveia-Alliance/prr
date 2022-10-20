@@ -1,7 +1,9 @@
-package prr.clients;
+package prr.clients.types;
 
 import java.io.Serial;
 import java.io.Serializable;
+
+import prr.clients.Client;
 
 public abstract class ClientType implements Serializable {
 

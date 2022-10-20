@@ -1,4 +1,6 @@
-package prr.clients;
+package prr.clients.types;
+
+import prr.clients.Client;
 
 public class Normal extends ClientType {
     public Normal(Client client) {
