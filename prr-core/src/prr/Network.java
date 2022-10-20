@@ -21,6 +21,8 @@ import prr.exceptions.ClientDoesntExistException;
 import prr.exceptions.ClientExistsException;
 import prr.exceptions.IncorrectTerminalKeyException;
 import prr.exceptions.InvalidEntryException;
+import prr.exceptions.NotificationsAlreadyDisabledException;
+import prr.exceptions.NotificationsAlreadyEnabledException;
 import prr.exceptions.TerminalDoesntExistException;
 import prr.exceptions.TerminalExistsException;
 
@@ -115,6 +117,58 @@ public class Network implements Serializable {
         if (!clients.containsKey(key))
             throw new ClientDoesntExistException(key);
         return clients.get(key);
+    }
+
+    /**
+     * Enables client notifications
+     * 
+     * @param key the key that identifies the client
+     * @throws ClientDoesntExistException           if the given key can't be found
+     * @throws NotificationsAlreadyEnabledException if the notifications are already
+     *                                              enabled
+     */
+    public void enableNotifications(String key)
+            throws ClientDoesntExistException, NotificationsAlreadyEnabledException {
+        Client client = getClient(key);
+        if (client.getNotifications())
+            throw new NotificationsAlreadyEnabledException();
+        client.setNotifications(true);
+    }
+
+    /**
+     * Disables client notifications
+     * 
+     * @param key the key that identifies the client
+     * @throws ClientDoesntExistException           if the given key can't be found
+     * @throws NotificationsAlreadyEnabledException if the notifications are already
+     *                                              disabled
+     */
+    public void disableNotifications(String key)
+            throws ClientDoesntExistException, NotificationsAlreadyDisabledException {
+        Client client = getClient(key);
+        if (!client.getNotifications())
+            throw new NotificationsAlreadyDisabledException();
+        client.setNotifications(false);
+    }
+
+    /**
+     * Gets client debt
+     * 
+     * @param key the key that identifies the client
+     * @throws ClientDoesntExistException if the given key can't be found
+     */
+    public long getClientDebt(String key) throws ClientDoesntExistException {
+        return getClient(key).getDebt();
+    }
+
+    /**
+     * Gets client debt
+     * 
+     * @param key the key that identifies the client
+     * @throws ClientDoesntExistException if the given key can't be found
+     */
+    public long getClientPayments(String key) throws ClientDoesntExistException {
+        return getClient(key).getPaid();
     }
 
     /**
