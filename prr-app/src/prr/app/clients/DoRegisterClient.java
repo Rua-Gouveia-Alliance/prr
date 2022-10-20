@@ -15,13 +15,13 @@ class DoRegisterClient extends Command<Network> {
         super(Label.REGISTER_CLIENT, receiver);
         addStringField("key", Prompt.key());
         addStringField("name", Prompt.name());
-        addStringField("nif", Prompt.taxId());
+        addIntegerField("nif", Prompt.taxId());
     }
 
     @Override
     protected final void execute() throws CommandException {
         try {
-            _receiver.registerClient(stringField("key"), stringField("name"), stringField("nif"));
+            _receiver.registerClient(stringField("key"), stringField("name"), integerField("nif"));
         } catch (ClientExistsException e) {
             throw new DuplicateClientKeyException(e.getKey());
         }

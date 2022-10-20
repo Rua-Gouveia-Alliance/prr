@@ -57,10 +57,10 @@ public class Network implements Serializable {
      * @param nif  new client's tax id
      * @throws ClientExistsException if the given key is already in use
      */
-    public void registerClient(String key, String name, String nif) throws ClientExistsException {
+    public void registerClient(String key, String name, int nif) throws ClientExistsException {
         if (clients.containsKey(key))
             throw new ClientExistsException(key);
-        clients.put(key, new Client(name, key, Integer.parseInt(nif)));
+        clients.put(key, new Client(name, key, nif));
     }
 
     /**
