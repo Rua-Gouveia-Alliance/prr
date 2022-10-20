@@ -6,22 +6,22 @@ public class Normal extends ClientType {
     }
 
     @Override
-    public void upgrade() {
+    protected void upgrade() {
         client.setType(client.getGold());
     }
 
     @Override
-    public void downgrade() {
+    protected void downgrade() {
         // empty
     }
 
     @Override
-    public boolean canDowngrade() {
+    protected boolean canDowngrade() {
         return false;
     }
 
     @Override
-    public boolean canUpgrade() {
+    protected boolean canUpgrade() {
         return client.getBalance() > 500;
     }
 

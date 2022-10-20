@@ -12,7 +12,7 @@ import prr.terminals.states.*;
 /**
  * Abstract terminal.
  */
-abstract public class Terminal implements Serializable, Comparable<Terminal> /* FIXME maybe ad more interfaces */ {
+abstract public class Terminal implements Serializable {
 
     /** Serial number for serialization. */
     @Serial
@@ -20,7 +20,7 @@ abstract public class Terminal implements Serializable, Comparable<Terminal> /* 
 
     // attributes
     private String key;
-    Client owner;
+    private Client owner;
     private ArrayList<Communication> receivedComms = new ArrayList<>();
     private ArrayList<Communication> madeComms = new ArrayList<>();
     private ArrayList<String> friends = new ArrayList<>();
@@ -144,12 +144,6 @@ abstract public class Terminal implements Serializable, Comparable<Terminal> /* 
 
     public int getCommCount() {
         return receivedComms.size() + madeComms.size();
-    }
-
-    @Override
-    public int compareTo(Terminal o) {
-        // TODO Auto-generated method stub
-        return 0;
     }
 
     @Override

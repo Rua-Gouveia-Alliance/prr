@@ -8,12 +8,12 @@ public class Platinum extends ClientType {
     }
 
     @Override
-    public void upgrade() {
+    protected void upgrade() {
         // empty
     }
 
     @Override
-    public void downgrade() {
+    protected void downgrade() {
         if (client.getBalance() < 0)
             client.setType(client.getNormal());
         else
@@ -21,7 +21,7 @@ public class Platinum extends ClientType {
     }
 
     @Override
-    public boolean canDowngrade() {
+    protected boolean canDowngrade() {
         return (client.getBalance() >= 0 && client.straightCommunications(CommunicationType.TEXT) == 2)
                 || client.getBalance() < 0;
         // a condicao pvv pode ser simplificada
@@ -29,7 +29,7 @@ public class Platinum extends ClientType {
     }
 
     @Override
-    public boolean canUpgrade() {
+    protected boolean canUpgrade() {
         return false;
     }
 

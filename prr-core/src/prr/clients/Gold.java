@@ -8,22 +8,22 @@ public class Gold extends ClientType {
     }
 
     @Override
-    public void upgrade() {
+    protected void upgrade() {
         client.setType(client.getPlatinum());
     }
 
     @Override
-    public void downgrade() {
+    protected void downgrade() {
         client.setType(client.getNormal());
     }
 
     @Override
-    public boolean canDowngrade() {
+    protected boolean canDowngrade() {
         return client.getBalance() < 0;
     }
 
     @Override
-    public boolean canUpgrade() {
+    protected boolean canUpgrade() {
         return client.getBalance() >= 0 && client.straightCommunications(CommunicationType.VIDEO) == 5;
         // a 5a ainda tem que ser considerado gold
     }
