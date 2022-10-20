@@ -64,7 +64,7 @@ public class Client implements Serializable {
     }
 
     public boolean getNotifications() {
-        return notifications;
+        return this.notifications;
     }
 
     public long getOwed() {
