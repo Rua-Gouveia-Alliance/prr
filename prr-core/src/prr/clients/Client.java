@@ -60,7 +60,11 @@ public class Client implements Serializable {
     }
 
     public String getKey() {
-        return key;
+        return this.key;
+    }
+
+    public boolean getNotifications() {
+        return notifications;
     }
 
     public long getOwed() {
