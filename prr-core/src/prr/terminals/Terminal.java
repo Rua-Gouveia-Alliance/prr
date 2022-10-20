@@ -12,7 +12,7 @@ import prr.terminals.states.*;
 /**
  * Abstract terminal.
  */
-abstract public class Terminal implements Serializable, Comparable<Terminal> {
+abstract public class Terminal implements Serializable {
 
     /** Serial number for serialization. */
     @Serial
@@ -152,11 +152,6 @@ abstract public class Terminal implements Serializable, Comparable<Terminal> {
 
     public int getCommCount() {
         return receivedComms.size() + madeComms.size();
-    }
-
-    @Override
-    public int compareTo(Terminal o) {
-        return o.getKey().compareTo(this.getKey());
     }
 
     @Override

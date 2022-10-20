@@ -229,8 +229,8 @@ public class Network implements Serializable {
         if (fields.length != 4)
             throw new UnrecognizedEntryException(String.join("|", fields));
         try {
-            registerClient(fields[1], fields[2], fields[3]);
-        } catch (ClientExistsException e) {
+            registerClient(fields[1], fields[2], Integer.parseInt(fields[3]));
+        } catch (ClientExistsException | NumberFormatException e) {
             throw new InvalidEntryException(String.join("|", fields), e);
         }
     }
