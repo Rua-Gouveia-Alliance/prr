@@ -1,5 +1,6 @@
-package prr.clients;
+package prr.clients.types;
 
+import prr.clients.Client;
 import prr.communications.CommunicationType;
 
 public class Platinum extends ClientType {
@@ -24,8 +25,6 @@ public class Platinum extends ClientType {
     protected boolean canDowngrade() {
         return (client.getBalance() >= 0 && client.straightCommunications(CommunicationType.TEXT) == 2)
                 || client.getBalance() < 0;
-        // a condicao pvv pode ser simplificada
-        // a 2a ainda tem que ser considerado plat
     }
 
     @Override

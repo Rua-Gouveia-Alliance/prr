@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.StringJoiner;
 
 import prr.terminals.Terminal;
+import prr.clients.types.ClientType;
+import prr.clients.types.Gold;
+import prr.clients.types.Normal;
+import prr.clients.types.Platinum;
 import prr.communications.Communication;
 import prr.communications.CommunicationType;
 
@@ -85,6 +89,7 @@ public class Client implements Serializable {
     }
 
     public int straightCommunications(CommunicationType type) {
+        // TODO implement
         return 0;
     }
 

@@ -10,6 +10,7 @@ public class TerminalExistsException extends KeyRelatedException {
     @Serial
     private static final long serialVersionUID = 202217101700L;
     
+    /** @param key the repeated key */
     public TerminalExistsException(String key) {
         super(key);
     }

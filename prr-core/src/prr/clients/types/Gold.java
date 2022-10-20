@@ -1,5 +1,6 @@
-package prr.clients;
+package prr.clients.types;
 
+import prr.clients.Client;
 import prr.communications.CommunicationType;
 
 public class Gold extends ClientType {
@@ -25,7 +26,6 @@ public class Gold extends ClientType {
     @Override
     protected boolean canUpgrade() {
         return client.getBalance() >= 0 && client.straightCommunications(CommunicationType.VIDEO) == 5;
-        // a 5a ainda tem que ser considerado gold
     }
 
     @Override
