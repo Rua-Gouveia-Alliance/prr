@@ -4,7 +4,6 @@ import prr.NetworkManager;
 import prr.app.exceptions.FileOpenFailedException;
 import pt.tecnico.uilib.forms.Form;
 import pt.tecnico.uilib.menus.Command;
-//FIXME add more imports if needed
 import java.io.IOException;
 import prr.exceptions.MissingFileAssociationException;
 
@@ -19,20 +18,25 @@ class DoSaveFile extends Command<NetworkManager> {
 
     @Override
     protected final void execute() {
+        if (!_receiver.getNetwork().isUnsaved())
+            return;
+
+        // If we changed the unsaved state after saving, the Network would always load
+        // with the unsaved state on
+        _receiver.getNetwork().saved();
         try {
             try {
                 _receiver.save();
             } catch (MissingFileAssociationException e1) {
                 try {
                     _receiver.saveAs(Form.requestString(Prompt.newSaveAs()));
-                } catch (IOException | MissingFileAssociationException e2) {
-                    // Será que é para fazer isto???????????????????:
-                    // throw new FileOpenFailedException(e2);
+                } catch (MissingFileAssociationException e2) {
+                    // Empty string as filename
+                    _receiver.getNetwork().failedSave();
                 }
             }
         } catch (IOException e) {
-            // Será que é para fazer isto???????????????????:
-            // throw new FileOpenFailedException(e);
+            _receiver.getNetwork().failedSave();
         }
     }
 }

@@ -42,6 +42,37 @@ public class Network implements Serializable {
     /** Communications counter, used for generating communication keys */
     private int communicationKey = 0;
 
+    /** Something as changed since last save */
+    private boolean unsaved = false;
+
+    /**
+     * Register that something changed
+     */
+    public void changed() {
+        this.unsaved = true;
+    }
+
+    /**
+     * Error saving, remains unsaved
+     */
+    public void failedSave() {
+        this.unsaved = true;
+    }
+
+    /**
+     * Register that all was saved
+     */
+    public void saved() {
+        this.unsaved = false;
+    }
+
+    /**
+     * Getter for unsaved variable
+     */
+    public boolean isUnsaved() {
+        return this.unsaved;
+    }
+
     /**
      * Get and increment the communication key tracker
      */
@@ -61,6 +92,7 @@ public class Network implements Serializable {
         if (clients.containsKey(key))
             throw new ClientExistsException(key);
         clients.put(key, new Client(name, key, nif));
+        changed();
     }
 
     /**
@@ -181,6 +213,8 @@ public class Network implements Serializable {
 
         owner.addTerminal(newTerminal);
         terminals.put(key, newTerminal);
+
+        changed();
     }
 
     /**
@@ -239,6 +273,8 @@ public class Network implements Serializable {
                 this.getTerminal(friend);
                 terminal.addFriend(friend);
             }
+
+            changed();
         } catch (TerminalDoesntExistException e) {
             throw new InvalidEntryException(String.join("|", fields), e);
         }
