@@ -42,6 +42,37 @@ public class Network implements Serializable {
     /** Communications counter, used for generating communication keys */
     private int communicationKey = 0;
 
+    /** Something as changed since last save */
+    private boolean unsaved = false;
+
+    /**
+     * Register that something changed
+     */
+    public void changed() {
+        this.unsaved = true;
+    }
+
+    /**
+     * Error saving, remains unsaved
+     */
+    public void failedSave() {
+        this.unsaved = true;
+    }
+
+    /**
+     * Register that all was saved
+     */
+    public void saved() {
+        this.unsaved = false;
+    }
+
+    /**
+     * Getter for unsaved variable
+     */
+    public boolean isUnsaved() {
+        return this.unsaved;
+    }
+
     /**
      * Get and increment the communication key tracker
      */
@@ -57,10 +88,11 @@ public class Network implements Serializable {
      * @param nif  new client's tax id
      * @throws ClientExistsException if the given key is already in use
      */
-    public void registerClient(String key, String name, String nif) throws ClientExistsException {
+    public void registerClient(String key, String name, int nif) throws ClientExistsException {
         if (clients.containsKey(key))
             throw new ClientExistsException(key);
-        clients.put(key, new Client(name, key, Integer.parseInt(nif)));
+        clients.put(key, new Client(name, key, nif));
+        changed();
     }
 
     /**
@@ -181,6 +213,8 @@ public class Network implements Serializable {
 
         owner.addTerminal(newTerminal);
         terminals.put(key, newTerminal);
+
+        changed();
     }
 
     /**
@@ -195,8 +229,8 @@ public class Network implements Serializable {
         if (fields.length != 4)
             throw new UnrecognizedEntryException(String.join("|", fields));
         try {
-            registerClient(fields[1], fields[2], fields[3]);
-        } catch (ClientExistsException e) {
+            registerClient(fields[1], fields[2], Integer.parseInt(fields[3]));
+        } catch (ClientExistsException | NumberFormatException e) {
             throw new InvalidEntryException(String.join("|", fields), e);
         }
     }
@@ -239,6 +273,8 @@ public class Network implements Serializable {
                 this.getTerminal(friend);
                 terminal.addFriend(friend);
             }
+
+            changed();
         } catch (TerminalDoesntExistException e) {
             throw new InvalidEntryException(String.join("|", fields), e);
         }

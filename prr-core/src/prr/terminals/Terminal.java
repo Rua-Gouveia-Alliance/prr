@@ -26,22 +26,16 @@ abstract public class Terminal implements Serializable {
     private ArrayList<String> friends = new ArrayList<>();
 
     // Terminal State
-    private TerminalState busyState;
-    private TerminalState idleState;
-    private TerminalState offState;
-    private TerminalState silenceState;
+    private final TerminalState busyState = new Busy(this);
+    private final TerminalState idleState = new Idle(this);
+    private final TerminalState offState = new Off(this);
+    private final TerminalState silenceState = new Silence(this);
     private TerminalState state;
 
     // contructor(s)
     public Terminal(String key, Client owner) {
         this.key = key;
         this.owner = owner;
-
-        // Setup states
-        this.busyState = new Busy(this);
-        this.idleState = new Idle(this);
-        this.offState = new Off(this);
-        this.silenceState = new Silence(this);
 
         // Default state
         this.state = idleState;
@@ -91,6 +85,22 @@ abstract public class Terminal implements Serializable {
         state.toIdle();
     }
 
+    public boolean isSilence() {
+        return getState().equals(getSilenceState());
+    }
+
+    public boolean isOff() {
+        return getState().equals(getOffState());
+    }
+
+    public boolean isBusy() {
+        return getState().equals(getBusyState());
+    }
+
+    public boolean isIdle() {
+        return getState().equals(getIdleState());
+    }
+
     public void addFriend(String friend) {
         if (!friends.contains(friend))
             friends.add(friend);
@@ -104,8 +114,7 @@ abstract public class Terminal implements Serializable {
      *         it was the originator of this communication.
      **/
     public boolean canEndCurrentCommunication() {
-        // FIXME add implementation code
-        return false;
+        return isBusy(); // TODO && it was the originator of this communication.
     }
 
     /**
@@ -114,8 +123,7 @@ abstract public class Terminal implements Serializable {
      * @return true if this terminal is neither off neither busy, false otherwise.
      **/
     public boolean canStartCommunication() {
-        // FIXME add implementation code
-        return true;
+        return !isBusy() && !isOff();
     }
 
     public long getBalance() {

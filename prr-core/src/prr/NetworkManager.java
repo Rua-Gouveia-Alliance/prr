@@ -14,7 +14,6 @@ public class NetworkManager {
 
     /** The network itself. */
     private Network _network = new Network();
-
     private String _currentFile = "";
 
     public Network getNetwork() {

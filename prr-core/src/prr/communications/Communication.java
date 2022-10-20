@@ -10,13 +10,13 @@ public class Communication implements Serializable {
     @Serial
     private static final long serialVersionUID = 202217101700L;
     
-    private int key;
-    private Terminal sender;
-    private Terminal receiver;
+    private final int key;
+    private final Terminal sender;
+    private final Terminal receiver;
     private int length = 0;
     private long price = 0;
     private boolean paid = false;
-    private CommunicationType type;
+    private final CommunicationType type;
     private CommunicationStatus status = CommunicationStatus.ONGOING;
 
     /* Video/Voice constructor */
