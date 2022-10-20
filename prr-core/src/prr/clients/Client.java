@@ -67,11 +67,11 @@ public class Client implements Serializable {
         return this.notifications;
     }
 
-    public long getOwed() {
-        long owed = 0;
+    public long getDebt() {
+        long debt = 0;
         for (Terminal terminal : this.terminals)
-            owed += terminal.getOwed();
-        return owed;
+            debt += terminal.getDebt();
+        return debt;
     }
 
     public long getPaid() {
@@ -112,7 +112,7 @@ public class Client implements Serializable {
                 .add(this.notifications ? "YES" : "NO")
                 .add(Integer.toString(this.terminals.size()))
                 .add(Long.toString(this.getPaid()))
-                .add(Long.toString(this.getOwed()))
+                .add(Long.toString(this.getDebt()))
                 .toString();
     }
 }

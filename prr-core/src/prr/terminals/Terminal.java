@@ -127,10 +127,10 @@ abstract public class Terminal implements Serializable {
     }
 
     public long getBalance() {
-        return getPaid() - getOwed();
+        return getPaid() - getDebt();
     }
 
-    public long getOwed() {
+    public long getDebt() {
         long total = 0;
         for (Communication c : madeComms) {
             if (!c.isPaid())
@@ -161,7 +161,7 @@ abstract public class Terminal implements Serializable {
                 .add(this.owner.getKey())
                 .add(this.state.toString())
                 .add(Long.toString(this.getPaid()))
-                .add(Long.toString(this.getOwed()))
+                .add(Long.toString(this.getDebt()))
                 .toString();
 
         if (friends.size() != 0) {
