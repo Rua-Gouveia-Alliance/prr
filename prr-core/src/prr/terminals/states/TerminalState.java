@@ -2,6 +2,10 @@ package prr.terminals.states;
 
 import java.io.Serial;
 import java.io.Serializable;
+
+import prr.exceptions.BusyTerminalException;
+import prr.exceptions.OffTerminalException;
+import prr.exceptions.SilencedTerminalException;
 import prr.terminals.Terminal;
 
 public abstract class TerminalState implements Serializable {
@@ -10,17 +14,22 @@ public abstract class TerminalState implements Serializable {
     private static final long serialVersionUID = 202217101700L;
 
     protected final Terminal terminal;
+    
+    protected TerminalState previousState;
 
     public TerminalState(Terminal terminal) {
         this.terminal = terminal;
     }
 
-    public abstract void toSilence();
+    public abstract void toSilence() throws SilencedTerminalException;
 
-    public abstract void toBusy();
+    public abstract void toOff() throws BusyTerminalException, OffTerminalException;
 
-    public abstract void toOff();
+    public abstract void startCommunication() throws BusyTerminalException, OffTerminalException;
 
-    public abstract void toIdle();
+    public abstract void receiveCommunication()
+            throws BusyTerminalException, OffTerminalException, SilencedTerminalException;
+
+    public abstract void endCommunication();
 
 }

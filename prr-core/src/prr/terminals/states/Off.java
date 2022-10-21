@@ -1,5 +1,8 @@
 package prr.terminals.states;
 
+import prr.exceptions.BusyTerminalException;
+import prr.exceptions.OffTerminalException;
+import prr.exceptions.SilencedTerminalException;
 import prr.terminals.Terminal;
 
 public class Off extends TerminalState {
@@ -19,17 +22,23 @@ public class Off extends TerminalState {
     }
 
     @Override
-    public void toBusy() {
-        // TODO Can't go to busy state
+    public void toOff() throws OffTerminalException {
+        throw new OffTerminalException();
     }
 
     @Override
-    public void toOff() {
-        // TODO Already off
+    public void receiveCommunication() throws BusyTerminalException, OffTerminalException, SilencedTerminalException {
+        // TODO Auto-generated method stub
+
     }
 
     @Override
-    public void toIdle() {
-        terminal.setState(terminal.getIdleState());
+    public void startCommunication() throws OffTerminalException {
+        throw new OffTerminalException();
+    }
+
+    @Override
+    public void endCommunication() {
+        // TODO Auto-generated method stub
     }
 }

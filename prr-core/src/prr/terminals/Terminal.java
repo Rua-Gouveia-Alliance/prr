@@ -7,6 +7,9 @@ import java.util.StringJoiner;
 
 import prr.clients.Client;
 import prr.communications.Communication;
+import prr.exceptions.BusyTerminalException;
+import prr.exceptions.OffTerminalException;
+import prr.exceptions.SilencedTerminalException;
 import prr.terminals.states.*;
 
 /**
@@ -23,6 +26,7 @@ abstract public class Terminal implements Serializable {
     private Client owner;
     private ArrayList<Communication> receivedComms = new ArrayList<>();
     private ArrayList<Communication> madeComms = new ArrayList<>();
+    private ArrayList<Client> failedContacts = new ArrayList<>();
     private ArrayList<String> friends = new ArrayList<>();
 
     // Terminal State
@@ -69,20 +73,12 @@ abstract public class Terminal implements Serializable {
         return this.silenceState;
     }
 
-    public void toSilence() {
+    public void toSilence() throws SilencedTerminalException {
         state.toSilence();
     }
 
-    public void toOff() {
+    public void toOff() throws BusyTerminalException, OffTerminalException {
         state.toOff();
-    }
-
-    public void toBusy() {
-        state.toBusy();
-    }
-
-    public void toIdle() {
-        state.toIdle();
     }
 
     public boolean isSilence() {
