@@ -214,26 +214,12 @@ public class Network implements Serializable {
      * @param key    new terminal's key
      * @param type   new terminal's type
      * @param client new terminal's owner
-     * @throws TerminalExistsException    if the given key is already in use
-     * @throws ClientDoenstExistException if the given client doesnt exist
-     */
-    public void registerTerminal(String key, String type, String client)
-            throws TerminalExistsException, IncorrectTerminalKeyException, ClientDoesntExistException,
-            UnrecognizedTerminalTypeException {
-        registerTerminal(key, type, client, "IDLE");
-    }
-
-    /**
-     * Register a new terminal in the network
-     * 
-     * @param key    new terminal's key
-     * @param type   new terminal's type
-     * @param client new terminal's owner
      * @param state  new terminal's initial state
+     * @return the newly created terminal
      * @throws TerminalExistsException    if the given key is already in use
      * @throws ClientDoesntExistException if the given client doesnt exist
      */
-    private void registerTerminal(String key, String type, String client, String state)
+    public Terminal registerTerminal(String key, String type, String client)
             throws TerminalExistsException, IncorrectTerminalKeyException, ClientDoesntExistException,
             UnrecognizedTerminalTypeException {
 
@@ -253,22 +239,12 @@ public class Network implements Serializable {
         else
             throw new UnrecognizedTerminalTypeException(type);
 
-        switch (state) {
-            case "ON":
-                newTerminal.toIdle();
-                break;
-            case "OFF":
-                newTerminal.toOff();
-                break;
-            case "SILENCE":
-                newTerminal.toSilence();
-                break;
-        }
-
         owner.addTerminal(newTerminal);
         terminals.put(key, newTerminal);
 
         changed();
+
+        return newTerminal;
     }
 
     /**
@@ -301,7 +277,19 @@ public class Network implements Serializable {
         if (fields.length != 4 | !fields[3].matches("^(ON|OFF|SILENCE)"))
             throw new UnrecognizedEntryException(String.join("|", fields));
         try {
-            registerTerminal(fields[1], fields[0], fields[2], fields[3]);
+            Terminal terminal = registerTerminal(fields[1], fields[0], fields[2]);
+            switch (fields[3]) {
+                case "ON":
+                    break;
+                case "OFF":
+                    terminal.setState(terminal.getOffState());
+                    break;
+                case "SILENCE":
+                    terminal.setState(terminal.getSilenceState());
+                    break;
+                default:
+                    throw new InvalidEntryException(String.join("|", fields));
+            }
         } catch (TerminalExistsException | IncorrectTerminalKeyException | ClientDoesntExistException
                 | UnrecognizedTerminalTypeException e) {
             throw new InvalidEntryException(String.join("|", fields), e);
