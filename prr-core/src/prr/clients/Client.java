@@ -12,6 +12,9 @@ import prr.clients.types.Normal;
 import prr.clients.types.Platinum;
 import prr.communications.Communication;
 import prr.communications.CommunicationType;
+import prr.notifications.Notification;
+import prr.notifications.DeliveryMethod;
+import prr.notifications.ViaApp;
 
 public class Client implements Serializable {
 
@@ -22,12 +25,14 @@ public class Client implements Serializable {
     private final int nif;
     private final String key;
     private ClientPlan plan = new BasePlan(this);
+    private final ArrayList<Notification> notifications = new ArrayList<>();
     private final ArrayList<Terminal> terminals = new ArrayList<>();
     private final ClientType normal = new Normal(this);
     private final ClientType gold = new Gold(this);
     private final ClientType platinum = new Platinum(this);
+    private DeliveryMethod deliveryMethod = new ViaApp(this);
     private ClientType type = new Normal(this);
-    private boolean notifications = true;
+    private boolean activeNotifications = true;
 
     public Client(String name, String key, int nif) {
         this.name = name;
@@ -39,8 +44,8 @@ public class Client implements Serializable {
         this.type = type;
     }
 
-    public void setNotifications(boolean notifications) {
-        this.notifications = notifications;
+    public void setActiveNotifications(boolean notifications) {
+        this.activeNotifications = notifications;
     }
 
     public ClientType getGold() {
@@ -63,8 +68,8 @@ public class Client implements Serializable {
         return this.key;
     }
 
-    public boolean getNotifications() {
-        return this.notifications;
+    public boolean getActiveNotifications() {
+        return this.activeNotifications;
     }
 
     public long getDebt() {
@@ -100,6 +105,14 @@ public class Client implements Serializable {
     public long getPrice(Communication communication) {
         return this.plan.getPrice(communication);
     }
+    
+    public void queueNotification(Notification notification) {
+        notifications.add(notification);
+    }
+
+    public void notify(Notification notification) {
+        deliveryMethod.deliver(notification);
+    }
 
     @Override
     public String toString() {
@@ -109,7 +122,7 @@ public class Client implements Serializable {
                 .add(this.name)
                 .add(Integer.toString(this.nif))
                 .add(this.type.toString())
-                .add(this.notifications ? "YES" : "NO")
+                .add(this.activeNotifications ? "YES" : "NO")
                 .add(Integer.toString(this.terminals.size()))
                 .add(Long.toString(this.getPaid()))
                 .add(Long.toString(this.getDebt()))
