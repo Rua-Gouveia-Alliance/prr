@@ -2,15 +2,22 @@ package prr.notifications;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
 
-public class ViaApp implements NotificationMethod, Serializable {
+import prr.clients.Client;
+
+public class ViaApp implements DeliveryMethod, Serializable {
     
     @Serial
     private static final long serialVersionUID = 202217101700L;
     
-    @Override
-    public void deliver(ArrayList<Notification> notifications) {
+    private final Client owner;
 
+    public ViaApp(Client owner) {
+        this.owner = owner;
+    }
+
+    @Override
+    public void deliver(Notification notification) {
+        owner.queueNotification(notification);
     }
 }
