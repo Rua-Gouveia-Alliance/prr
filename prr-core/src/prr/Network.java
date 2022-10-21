@@ -130,9 +130,9 @@ public class Network implements Serializable {
     public void enableNotifications(String key)
             throws ClientDoesntExistException, NotificationsAlreadyEnabledException {
         Client client = getClient(key);
-        if (client.getNotifications())
+        if (client.getActiveNotifications())
             throw new NotificationsAlreadyEnabledException();
-        client.setNotifications(true);
+        client.setActiveNotifications(true);
     }
 
     /**
@@ -146,9 +146,9 @@ public class Network implements Serializable {
     public void disableNotifications(String key)
             throws ClientDoesntExistException, NotificationsAlreadyDisabledException {
         Client client = getClient(key);
-        if (!client.getNotifications())
+        if (!client.getActiveNotifications())
             throw new NotificationsAlreadyDisabledException();
-        client.setNotifications(false);
+        client.setActiveNotifications(false);
     }
 
     /**
