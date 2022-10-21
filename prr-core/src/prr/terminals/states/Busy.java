@@ -32,12 +32,12 @@ public class Busy extends TerminalState {
     }
 
     @Override
-    public void receiveCommunication() throws BusyTerminalException, OffTerminalException, SilencedTerminalException {
-        // TODO Auto-generated method stub
-        
+    public void receiveCommunication() throws BusyTerminalException {
+        throw new BusyTerminalException();
     }
+
     @Override
     public void endCommunication() {
-        // TODO Auto-generated method stub
+        terminal.setState(terminal.getSavedState());
     }
 }

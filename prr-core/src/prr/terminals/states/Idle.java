@@ -28,14 +28,14 @@ public class Idle extends TerminalState {
 
     @Override
     public void startCommunication() {
-        // TODO Auto-generated method stub
-
+        terminal.saveState(this);
+        terminal.setState(terminal.getBusyState());
     }
 
     @Override
     public void receiveCommunication() throws BusyTerminalException, OffTerminalException, SilencedTerminalException {
-        // TODO Auto-generated method stub
-
+        terminal.saveState(this);
+        terminal.setState(terminal.getBusyState());
     }
 
     @Override

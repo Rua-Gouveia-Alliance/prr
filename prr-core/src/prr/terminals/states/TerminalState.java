@@ -14,8 +14,6 @@ public abstract class TerminalState implements Serializable {
     private static final long serialVersionUID = 202217101700L;
 
     protected final Terminal terminal;
-    
-    protected TerminalState previousState;
 
     public TerminalState(Terminal terminal) {
         this.terminal = terminal;

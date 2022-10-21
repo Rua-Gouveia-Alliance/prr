@@ -17,7 +17,7 @@ public class Silence extends TerminalState {
     }
 
     @Override
-    public void toSilence() throws SilencedTerminalException{
+    public void toSilence() throws SilencedTerminalException {
         throw new SilencedTerminalException();
     }
 
@@ -27,17 +27,18 @@ public class Silence extends TerminalState {
     }
 
     @Override
-    public void receiveCommunication() throws BusyTerminalException, OffTerminalException, SilencedTerminalException {
-        // TODO Auto-generated method stub
-        
+    public void receiveCommunication() throws SilencedTerminalException {
+        throw new SilencedTerminalException();
     }
+
     @Override
     public void startCommunication() {
+        terminal.saveState(this);
+        terminal.setState(terminal.getBusyState());
     }
 
     @Override
     public void endCommunication() {
-        // TODO Auto-generated method stub
 
     }
 }

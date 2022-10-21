@@ -34,6 +34,7 @@ abstract public class Terminal implements Serializable {
     private final TerminalState idleState = new Idle(this);
     private final TerminalState offState = new Off(this);
     private final TerminalState silenceState = new Silence(this);
+    private TerminalState savedState;
     private TerminalState state;
 
     // contructor(s)
@@ -51,6 +52,14 @@ abstract public class Terminal implements Serializable {
 
     public void setState(TerminalState state) {
         this.state = state;
+    }
+
+    public void saveState(TerminalState state) {
+        savedState = state;
+    }
+
+    public TerminalState getSavedState() {
+        return savedState;
     }
 
     public TerminalState getState() {
