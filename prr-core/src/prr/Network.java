@@ -243,7 +243,7 @@ public class Network implements Serializable {
         if (!key.matches("[0-9]{6}"))
             throw new IncorrectTerminalKeyException(key);
 
-        Client owner = this.getClient(client);
+        Client owner = getClient(client);
         Terminal newTerminal;
 
         if (type.equals("FANCY"))
@@ -321,10 +321,10 @@ public class Network implements Serializable {
             throw new UnrecognizedEntryException(String.join("|", fields));
 
         try {
-            Terminal terminal = this.getTerminal(fields[1]);
+            Terminal terminal = getTerminal(fields[1]);
             String[] friends = fields[2].split(",");
             for (String friend : friends) {
-                this.getTerminal(friend);
+                getTerminal(friend);
                 terminal.addFriend(friend);
             }
 
