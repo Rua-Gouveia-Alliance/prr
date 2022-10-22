@@ -1,8 +1,6 @@
 package prr.terminals.states;
 
 import prr.exceptions.BusyTerminalException;
-import prr.exceptions.OffTerminalException;
-import prr.exceptions.SilencedTerminalException;
 import prr.terminals.Terminal;
 
 public class Busy extends TerminalState {
