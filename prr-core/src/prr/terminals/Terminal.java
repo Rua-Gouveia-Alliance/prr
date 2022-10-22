@@ -7,7 +7,9 @@ import java.util.StringJoiner;
 
 import prr.clients.Client;
 import prr.communications.Communication;
+import prr.communications.Text;
 import prr.exceptions.BusyTerminalException;
+import prr.exceptions.FailedContactException;
 import prr.exceptions.OffTerminalException;
 import prr.exceptions.SilencedTerminalException;
 import prr.terminals.states.*;
@@ -24,8 +26,8 @@ abstract public class Terminal implements Serializable {
     // attributes
     private String key;
     private Client owner;
-    private ArrayList<Communication> receivedComms = new ArrayList<>();
-    private ArrayList<Communication> madeComms = new ArrayList<>();
+    private ArrayList<Communication> receivedCommunications = new ArrayList<>();
+    private ArrayList<Communication> madeCommunications = new ArrayList<>();
     private ArrayList<Client> failedContacts = new ArrayList<>();
     private ArrayList<String> friends = new ArrayList<>();
 
@@ -90,7 +92,7 @@ abstract public class Terminal implements Serializable {
         state.toOff();
     }
 
-    public boolean isSilence() {
+    public boolean isSilenced() {
         return getState().equals(getSilenceState());
     }
 
@@ -109,6 +111,18 @@ abstract public class Terminal implements Serializable {
     public void addFriend(String friend) {
         if (!friends.contains(friend))
             friends.add(friend);
+    }
+
+    public void sendText(Text text) {
+        madeCommunications.add(text);
+    }
+
+    public void receiveText(Client sender, Text text) throws FailedContactException {
+        if (isOff()) {
+            failedContacts.add(sender);
+            throw new FailedContactException();
+        }
+        receivedCommunications.add(text);
     }
 
     /**
@@ -137,7 +151,7 @@ abstract public class Terminal implements Serializable {
 
     public long getDebt() {
         long total = 0;
-        for (Communication c : madeComms) {
+        for (Communication c : madeCommunications) {
             if (!c.isPaid())
                 total += c.getPrice();
         }
@@ -147,7 +161,7 @@ abstract public class Terminal implements Serializable {
 
     public long getPaid() {
         long total = 0;
-        for (Communication c : madeComms) {
+        for (Communication c : madeCommunications) {
             if (c.isPaid())
                 total += c.getPrice();
         }
@@ -155,8 +169,8 @@ abstract public class Terminal implements Serializable {
         return total;
     }
 
-    public int getCommCount() {
-        return receivedComms.size() + madeComms.size();
+    public int getCommunicationCount() {
+        return receivedCommunications.size() + madeCommunications.size();
     }
 
     @Override
