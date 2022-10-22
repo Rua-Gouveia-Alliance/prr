@@ -202,7 +202,7 @@ public class Network implements Serializable {
         ArrayList<Terminal> unused = new ArrayList<Terminal>();
 
         for (Terminal t : terminals.values())
-            if (t.getCommCount() == 0)
+            if (t.getCommunicationCount() == 0)
                 unused.add(t);
 
         return unused;
