@@ -110,7 +110,7 @@ public class Client implements Serializable {
         notifications.add(notification);
     }
 
-    public void notify(Notification notification) {
+    public void deliver(Notification notification) {
         deliveryMethod.deliver(notification);
     }
 
