@@ -4,10 +4,6 @@ Ainda nao percebi como implementar o visitor nas notificacoes
 
 O plano tarifario esta implementado da melhor forma?
 
-Fazer do ClientType uma classe interna?
-
-Clients e terminais e cenas dessas que e preciso ordenar - Meter em TreeMap
-
 BasePlan - O base plan devia ter um atributo client ou clientType, como so precisa de saber o client
 type faria sentido guardar enquanto atributo so o client type. Se guardar o client type como atributo aquilo
 fica tipo ponteiro para o atributo do Client e quando o atualizar aquilo tambem muda só? Caso não, e preciso guardar
@@ -18,3 +14,5 @@ Na entrega final trocar a utilizacao do .toString() nas classes para uma aplicac
 Trocar Notification pra ser um record (verificar compatibilidade)
 
 Tirar os enums (sqe)
+
+Rever a maneira como se regista o terminal
