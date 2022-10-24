@@ -89,7 +89,7 @@ interface Message {
      * @return report message.
      */
     static String terminalPaymentsAndDebts(String key, long payments, long debts) {
-        return "Valores para o terminal '\" + key + \"':" + payments + " (pagamentos),  " + debts + " (dívidas).";
+        return "Valores para o terminal '" + key + "':" + payments + " (pagamentos),  " + debts + " (dívidas).";
     }
 
     /** @return status message. */
@@ -97,7 +97,7 @@ interface Message {
         return "Não existe nenhuma comunicação em curso.";
     }
 
-    /** @return status message */
+    /** @return status message. */
     static String invalidCommunication() {
         return "O identificador da comunicação é inválido.";
     }
