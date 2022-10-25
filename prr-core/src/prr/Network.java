@@ -273,6 +273,16 @@ public class Network implements Serializable {
         return newTerminal;
     }
 
+    public Collection<Terminal> getTerminalsWithPositiveBalance() {
+        ArrayList<Terminal> positiveTerminals = new ArrayList<Terminal>();
+        for (Terminal t : terminals.values()) {
+            if (t.getBalance() > 0) {
+                positiveTerminals.add(t);
+            }
+        }
+        return positiveTerminals;
+    }
+
     /**
      * Loads a client onto the network from an array of fields
      * 

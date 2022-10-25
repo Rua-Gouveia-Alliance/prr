@@ -3,7 +3,6 @@ package prr.app.lookups;
 import prr.Network;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
-//FIXME add more imports if needed
 
 /**
  * Show terminals with positive balance.
@@ -16,6 +15,6 @@ class DoShowTerminalsWithPositiveBalance extends Command<Network> {
 
     @Override
     protected final void execute() throws CommandException {
-        // FIXME implement command
+        _display.popup(_receiver.getTerminalsWithPositiveBalance());
     }
 }

@@ -5,7 +5,6 @@ import javax.sound.midi.Receiver;
 import prr.Network;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
-//FIXME add more imports if needed
 
 /**
  * Show global balance.
