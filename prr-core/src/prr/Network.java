@@ -172,6 +172,36 @@ public class Network implements Serializable {
     }
 
     /**
+     * Get all clients with debts
+     * 
+     * @return A {@link Collection} of terminals, sorted by their key
+     */
+    public Collection<Client> getClientsWithDebts() {
+        ArrayList<Client> clientsWithDebts = new ArrayList<Client>();
+        for (Client c : clients.values()) {
+            if (c.getDebt() > 0) {
+                clientsWithDebts.add(c);
+            }
+        }
+        return clientsWithDebts;
+    }
+
+    /**
+     * Get all clients without debts
+     * 
+     * @return A {@link Collection} of terminals, sorted by their key
+     */
+    public Collection<Client> getClientsWithoutDebts() {
+        ArrayList<Client> clientsWithDebts = new ArrayList<Client>();
+        for (Client c : clients.values()) {
+            if (c.getDebt() == 0) {
+                clientsWithDebts.add(c);
+            }
+        }
+        return clientsWithDebts;
+    }
+
+    /**
      * Gets global payments
      * 
      * @return Total payd by all clients
