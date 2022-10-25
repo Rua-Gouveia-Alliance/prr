@@ -172,6 +172,32 @@ public class Network implements Serializable {
     }
 
     /**
+     * Gets global payments
+     * 
+     * @return Total payd by all clients
+     */
+    public long getGlobalPayments() {
+        long total = 0;
+        for (Client c : clients.values()) {
+            total += c.getPaid();
+        }
+        return total;
+    }
+
+    /**
+     * Gets global debts
+     * 
+     * @return Total debt of all clients
+     */
+    public long getGlobalDebts() {
+        long total = 0;
+        for (Client c : clients.values()) {
+            total += c.getDebt();
+        }
+        return total;
+    }
+
+    /**
      * Get all terminals registered in the network
      * 
      * @return A {@link Collection} of terminals, sorted by their key

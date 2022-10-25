@@ -1,5 +1,7 @@
 package prr.app.main;
 
+import javax.sound.midi.Receiver;
+
 import prr.Network;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
@@ -16,6 +18,6 @@ class DoShowGlobalBalance extends Command<Network> {
 
     @Override
     protected final void execute() throws CommandException {
-        // FIXME implement command
+        _display.popup(Message.globalPaymentsAndDebts(_receiver.getGlobalPayments(), _receiver.getGlobalDebts()));
     }
 }
