@@ -12,7 +12,7 @@ public class InAppNotifications implements DeliveryMethod, Serializable {
     
     private final Client owner;
 
-    public ViaApp(Client owner) {
+    public InAppNotifications(Client owner) {
         this.owner = owner;
     }
 
