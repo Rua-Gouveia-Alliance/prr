@@ -273,6 +273,11 @@ public class Network implements Serializable {
         return newTerminal;
     }
 
+    /**
+     * Get all terminals with positive balance (payments > debts)
+     * 
+     * @return A {@link Collection} of terminals, sorted by their key
+     */
     public Collection<Terminal> getTerminalsWithPositiveBalance() {
         ArrayList<Terminal> positiveTerminals = new ArrayList<Terminal>();
         for (Terminal t : terminals.values()) {
