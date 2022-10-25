@@ -61,6 +61,10 @@ public class Client implements Serializable {
         return platinum;
     }
 
+    public int getTerminalCount() {
+        return terminals.size();
+    }
+
     public ClientType getType() {
         return this.type;
     }
@@ -119,18 +123,4 @@ public class Client implements Serializable {
         deliveryMethod.deliver(notification);
     }
 
-    @Override
-    public String toString() {
-        return new StringJoiner("|")
-                .add("CLIENT")
-                .add(this.key)
-                .add(this.name)
-                .add(Integer.toString(this.nif))
-                .add(this.type.toString())
-                .add(this.activeNotifications ? "YES" : "NO")
-                .add(Integer.toString(this.terminals.size()))
-                .add(Long.toString(this.getPaid()))
-                .add(Long.toString(this.getDebt()))
-                .toString();
-    }
 }
