@@ -13,6 +13,7 @@ import java.util.TreeMap;
 
 import prr.util.NaturalLanguageTextComparator;
 import prr.clients.Client;
+import prr.communications.Communication;
 import prr.terminals.FancyTerminal;
 import prr.terminals.BasicTerminal;
 import prr.terminals.Terminal;
@@ -235,6 +236,55 @@ public class Network implements Serializable {
             total += c.getDebt();
         }
         return total;
+    }
+
+    /**
+     * Get all communications on the network
+     * 
+     * @return A {@link Collection} of communications, sorted by their TODO: ????
+     */
+    public Collection<Communication> getAllCommunications() {
+        ArrayList<Communication> comms = new ArrayList<Communication>();
+        for (Terminal t : terminals.values()) {
+            comms.addAll(t.getMadeCommunications());
+        }
+        return comms;
+    }
+
+    /**
+     * Get all communications initialized by a client
+     * 
+     * @return A {@link Collection} of communications, sorted by their TODO: ????
+     * @param key the key that identifies the client
+     * @throws ClientDoesntExistException if the given key can't be found
+     */
+    public Collection<Communication> getCommunicationsFromClient(String key) throws ClientDoesntExistException {
+        if (!clients.containsKey(key))
+            throw new ClientDoesntExistException(key);
+
+        ArrayList<Communication> comms = new ArrayList<Communication>();
+        for (Terminal t : clients.get(key).getTerminals()) {
+            comms.addAll(t.getMadeCommunications());
+        }
+        return comms;
+    }
+
+    /**
+     * Get all communications received by a client
+     * 
+     * @return A {@link Collection} of communications, sorted by their TODO: ????
+     * @param key the key that identifies the client
+     * @throws ClientDoesntExistException if the given key can't be found
+     */
+    public Collection<Communication> getCommunicationsToClient(String key) throws ClientDoesntExistException {
+        if (!clients.containsKey(key))
+            throw new ClientDoesntExistException(key);
+
+        ArrayList<Communication> comms = new ArrayList<Communication>();
+        for (Terminal t : clients.get(key).getTerminals()) {
+            comms.addAll(t.getReceivedCommunications());
+        }
+        return comms;
     }
 
     /**

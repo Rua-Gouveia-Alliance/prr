@@ -3,6 +3,7 @@ package prr.clients;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.StringJoiner;
 
 import prr.terminals.Terminal;
@@ -93,6 +94,10 @@ public class Client implements Serializable {
         return balance;
     }
 
+    public Collection<Terminal> getTerminals() {
+        return terminals;
+    }
+
     public void addTerminal(Terminal terminal) {
         this.terminals.add(terminal);
     }
@@ -105,7 +110,7 @@ public class Client implements Serializable {
     public long getPrice(Communication communication) {
         return this.plan.getPrice(communication);
     }
-    
+
     public void queueNotification(Notification notification) {
         notifications.add(notification);
     }

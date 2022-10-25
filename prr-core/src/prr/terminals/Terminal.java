@@ -3,6 +3,7 @@ package prr.terminals;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.StringJoiner;
 
 import prr.clients.Client;
@@ -82,6 +83,14 @@ abstract public class Terminal implements Serializable {
 
     public TerminalState getSilenceState() {
         return this.silenceState;
+    }
+
+    public Collection<Communication> getReceivedCommunications() {
+        return receivedCommunications;
+    }
+
+    public Collection<Communication> getMadeCommunications() {
+        return madeCommunications;
     }
 
     public void toSilence() throws SilencedTerminalException {
