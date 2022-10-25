@@ -259,11 +259,8 @@ public class Network implements Serializable {
      * @throws ClientDoesntExistException if the given key can't be found
      */
     public Collection<Communication> getCommunicationsFromClient(String key) throws ClientDoesntExistException {
-        if (!clients.containsKey(key))
-            throw new ClientDoesntExistException(key);
-
         ArrayList<Communication> comms = new ArrayList<Communication>();
-        for (Terminal t : clients.get(key).getTerminals()) {
+        for (Terminal t : getClient(key).getTerminals()) {
             comms.addAll(t.getMadeCommunications());
         }
         return comms;
@@ -277,11 +274,8 @@ public class Network implements Serializable {
      * @throws ClientDoesntExistException if the given key can't be found
      */
     public Collection<Communication> getCommunicationsToClient(String key) throws ClientDoesntExistException {
-        if (!clients.containsKey(key))
-            throw new ClientDoesntExistException(key);
-
         ArrayList<Communication> comms = new ArrayList<Communication>();
-        for (Terminal t : clients.get(key).getTerminals()) {
+        for (Terminal t : getClient(key).getTerminals()) {
             comms.addAll(t.getReceivedCommunications());
         }
         return comms;
