@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -174,7 +175,7 @@ public class Network implements Serializable {
     /**
      * Get all clients with debts
      * 
-     * @return A {@link Collection} of terminals, sorted by their key
+     * @return A {@link Collection} of clients, sorted by their debt value
      */
     public Collection<Client> getClientsWithDebts() {
         ArrayList<Client> clientsWithDebts = new ArrayList<Client>();
@@ -183,13 +184,22 @@ public class Network implements Serializable {
                 clientsWithDebts.add(c);
             }
         }
+
+        // Sort by debt value
+        clientsWithDebts.sort(new Comparator<Client>() {
+            @Override
+            public int compare(Client c1, Client c2) {
+                return (int) (c1.getDebt() - c2.getDebt());
+            }
+        });
+
         return clientsWithDebts;
     }
 
     /**
      * Get all clients without debts
      * 
-     * @return A {@link Collection} of terminals, sorted by their key
+     * @return A {@link Collection} of clients, sorted by their key
      */
     public Collection<Client> getClientsWithoutDebts() {
         ArrayList<Client> clientsWithDebts = new ArrayList<Client>();
