@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import prr.clients.Client;
 
-public class ViaApp implements DeliveryMethod, Serializable {
+public class InAppNotifications implements DeliveryMethod, Serializable {
     
     @Serial
     private static final long serialVersionUID = 202217101700L;

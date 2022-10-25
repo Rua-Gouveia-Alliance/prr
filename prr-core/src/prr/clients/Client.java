@@ -15,7 +15,7 @@ import prr.communications.Communication;
 import prr.communications.CommunicationType;
 import prr.notifications.Notification;
 import prr.notifications.DeliveryMethod;
-import prr.notifications.ViaApp;
+import prr.notifications.InAppNotifications;
 
 public class Client implements Serializable {
 
@@ -31,8 +31,8 @@ public class Client implements Serializable {
     private final ClientType normal = new Normal(this);
     private final ClientType gold = new Gold(this);
     private final ClientType platinum = new Platinum(this);
-    private DeliveryMethod deliveryMethod = new ViaApp(this);
     private ClientType type = new Normal(this);
+    private DeliveryMethod deliveryMethod = new InAppNotifications(this);
     private boolean activeNotifications = true;
 
     public Client(String name, String key, int nif) {
