@@ -13,11 +13,12 @@ import prr.exceptions.FailedContactException;
 import prr.exceptions.OffTerminalException;
 import prr.exceptions.SilencedTerminalException;
 import prr.terminals.states.*;
+import prr.visitors.Printable;
 
 /**
  * Abstract terminal.
  */
-abstract public class Terminal implements Serializable {
+abstract public class Terminal implements Serializable, Printable {
 
     /** Serial number for serialization. */
     @Serial

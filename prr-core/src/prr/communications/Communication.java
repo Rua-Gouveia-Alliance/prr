@@ -4,8 +4,9 @@ import java.io.Serial;
 import java.io.Serializable;
 
 import prr.terminals.Terminal;
+import prr.visitors.Printable;
 
-public abstract class Communication implements Serializable {
+public abstract class Communication implements Serializable, Printable {
 
     @Serial
     private static final long serialVersionUID = 202217101700L;

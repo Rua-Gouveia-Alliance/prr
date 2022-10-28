@@ -1,6 +1,7 @@
 package prr.communications;
 
 import prr.terminals.Terminal;
+import prr.visitors.Printer;
 
 public class TextCommunication extends Communication {
 
@@ -8,4 +9,8 @@ public class TextCommunication extends Communication {
         super(key, sender, receiver, length);
     }
 
+    @Override
+    public String accept(Printer visitor) {
+        return visitor.visit(this);
+    }
 }
