@@ -49,8 +49,9 @@ public class Printer implements Visitor {
                 + terminal.getPaid() + "|" + terminal.getDebt();
     }
 
+    // TODO add state
     @Override
-    public String visit(BasicTerminal communication) {
+    public String visit(BasicTerminal terminal) {
         return Message.basicTerminal() + "|" + terminal.getKey() + "|" + terminal.getOwnerKey() + "|" + "" + "|"
                 + terminal.getPaid() + "|" + terminal.getDebt();
     }
