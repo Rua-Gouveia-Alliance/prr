@@ -34,8 +34,16 @@ public abstract class Communication implements Serializable {
         return sender;
     }
 
+    public String getSenderKey() {
+        return sender.getKey();
+    }
+
     public Terminal getReceiver() {
         return receiver;
+    }
+
+    public String getReceiverKey() {
+        return receiver.getKey();
     }
 
     public long getPrice() {
@@ -46,10 +54,6 @@ public abstract class Communication implements Serializable {
         return paid;
     }
 
-    public CommunicationType getType() {
-        return type;
-    }
-
     public boolean isFinished() {
         return finished;
     }
@@ -57,7 +61,7 @@ public abstract class Communication implements Serializable {
     public int getUnits() {
         return units;
     }
-    
+
     public void setUnits(int units) {
         this.units = units;
     }
