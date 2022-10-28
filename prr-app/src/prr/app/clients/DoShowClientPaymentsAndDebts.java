@@ -3,9 +3,6 @@ package prr.app.clients;
 import prr.Network;
 
 import prr.exceptions.ClientDoesntExistException;
-import prr.visitors.Collector;
-import prr.visitors.Selector;
-import prr.clients.Client;
 import prr.app.exceptions.UnknownClientKeyException;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
@@ -24,29 +21,9 @@ class DoShowClientPaymentsAndDebts extends Command<Network> {
     protected final void execute() throws CommandException {
         try {
             String key = stringField("key");
-            Collector<Long> paymentsCollector = new Collector<>() {
-                @Override
-                public void visit(Client client) {
-                    setInfo(client.getPaid());
-                }
-            };
-            Collector<Long> debtCollector = new Collector<>() {
-                @Override
-                public void visit(Client client) {
-                    setInfo(client.getDebt());
-                }
-            };
-            Selector<Client> selector = new Selector<>() {
-                @Override
-                public boolean ok(Client c) {
-                    return (c.getKey()).equals(key);
-                };
-            };
-            _receiver.checkClient(key);
-            _receiver.acceptPaymentsAndDebtsCollector(selector, paymentsCollector);
-            _receiver.acceptPaymentsAndDebtsCollector(selector, debtCollector);
             _display.popup(
-                    Message.clientPaymentsAndDebts(key, paymentsCollector.collected(), debtCollector.collected()));
+                    Message.clientPaymentsAndDebts(key, _receiver.getClientPayments(key),
+                            _receiver.getClientDebt(key)));
         } catch (ClientDoesntExistException e) {
             throw new UnknownClientKeyException(e.getKey());
         }

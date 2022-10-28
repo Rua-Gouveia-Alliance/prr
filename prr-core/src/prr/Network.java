@@ -7,11 +7,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
 
-import prr.visitors.Collector;
 import prr.util.NaturalLanguageTextComparator;
 import prr.visitors.Printer;
 import prr.visitors.Selector;
@@ -103,15 +101,6 @@ public class Network implements Serializable {
     }
 
     /**
-     * Get all clients registered in the network
-     * 
-     * @return A {@link Collection} of clients, sorted by their key
-     */
-    public Collection<Client> getAllClients() {
-        return clients.values();
-    }
-
-    /**
      * Checks if a client exists
      * 
      * @param key the key that identifies the client
@@ -130,8 +119,7 @@ public class Network implements Serializable {
      * @throws ClientDoesntExistException if the given key can't be found
      */
     public Client getClient(String key) throws ClientDoesntExistException {
-        if (!clients.containsKey(key))
-            throw new ClientDoesntExistException(key);
+        checkClient(key);
         return clients.get(key);
     }
 
@@ -178,7 +166,7 @@ public class Network implements Serializable {
     }
 
     /**
-     * Gets client debt
+     * Gets client payments
      * 
      * @param key the key that identifies the client
      * @throws ClientDoesntExistException if the given key can't be found
@@ -227,12 +215,33 @@ public class Network implements Serializable {
     }
 
     /**
-     * Get all terminals registered in the network
+     * Get all communications initialized by a client
      * 
-     * @return A {@link Collection} of terminals, sorted by their key
+     * @return A {@link Collection} of communications, sorted by their TODO: ????
+     * @param key the key that identifies the client
+     * @throws ClientDoesntExistException if the given key can't be found
      */
-    public Collection<Terminal> getAllTerminals() {
-        return terminals.values();
+    public Collection<Communication> getCommunicationsFromClient(String key) throws ClientDoesntExistException {
+        ArrayList<Communication> comms = new ArrayList<Communication>();
+        for (Terminal t : getClient(key).getTerminals()) {
+            comms.addAll(t.getMadeCommunications());
+        }
+        return comms;
+    }
+
+    /**
+     * Get all communications received by a client
+     * 
+     * @return A {@link Collection} of communications, sorted by their TODO: ????
+     * @param key the key that identifies the client
+     * @throws ClientDoesntExistException if the given key can't be found
+     */
+    public Collection<Communication> getCommunicationsToClient(String key) throws ClientDoesntExistException {
+        ArrayList<Communication> comms = new ArrayList<Communication>();
+        for (Terminal t : getClient(key).getTerminals()) {
+            comms.addAll(t.getReceivedCommunications());
+        }
+        return comms;
     }
 
     /**
@@ -246,21 +255,6 @@ public class Network implements Serializable {
         if (!terminals.containsKey(key))
             throw new TerminalDoesntExistException(key);
         return terminals.get(key);
-    }
-
-    /**
-     * Get all terminals with no communication history
-     * 
-     * @return A {@link Collection} of terminals, sorted by their key
-     */
-    public Collection<Terminal> getUnusedTerminals() {
-        ArrayList<Terminal> unused = new ArrayList<Terminal>();
-
-        for (Terminal t : terminals.values())
-            if (t.getCommunicationCount() == 0)
-                unused.add(t);
-
-        return unused;
     }
 
     /**
@@ -318,7 +312,7 @@ public class Network implements Serializable {
     }
 
     /**
-     * Visit selected agents with a printer
+     * Visit selected clients with a printer
      * 
      * @param selector
      * @param visitor
@@ -329,17 +323,6 @@ public class Network implements Serializable {
                 c.accept(visitor);
     }
 
-    /**
-     * Visit selected agents with a collector
-     * 
-     * @param selector
-     * @param visitor
-     */
-    public void acceptPaymentsAndDebtsCollector(Selector<Client> selector, Collector<Long> visitor) {
-        for (Client c : clients.values())
-            if (selector.ok(c))
-                c.accept(visitor);
-    }
     /**
      * Visit selected terminals with a printer
      * 

@@ -4,7 +4,8 @@ import prr.Network;
 import prr.terminals.Terminal;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
-import java.util.Collection;
+import prr.app.visitors.Renderer;
+import prr.visitors.Selector;
 
 /**
  * Show all terminals.
@@ -17,8 +18,11 @@ class DoShowAllTerminals extends Command<Network> {
 
     @Override
     protected final void execute() throws CommandException {
-        Collection<Terminal> terminals = _receiver.getAllTerminals();
-        for (Terminal t : terminals)
-            _display.popup(t.toString());
+        Renderer renderer = new Renderer();
+        Selector<Terminal> selector = new Selector<>() {
+        };
+        _receiver.acceptTerminalPrinter(selector, renderer);
+        _display.addAll(renderer.render());
+        _display.display();
     }
 }
