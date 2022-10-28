@@ -14,11 +14,10 @@ import prr.visitors.Visitor;
 
 public class Printer implements Visitor {
 
-    // TODO fix client.getType().tostring()
     @Override
     public String visit(Client client) {
         return Message.client() + "|" + client.getKey() + "|" + client.getName() + "|" + client.getNif() + "|"
-                + client.getType().toString() + "|"
+                + client.getTypeLabel() + "|"
                 + (client.getActiveNotifications() ? Message.activeNotifications() : Message.inactiveNotifications())
                 + "|" + client.getTerminalCount() + "|" + client.getPaid() + client.getDebt();
     }
@@ -45,14 +44,15 @@ public class Printer implements Visitor {
 
     @Override
     public String visit(FancyTerminal terminal) {
-        return Message.fancyTerminal() + "|" + terminal.getKey() + "|" + terminal.getOwnerKey() + "|" + "" + "|"
+        return Message.fancyTerminal() + "|" + terminal.getKey() + "|" + terminal.getOwnerKey() + "|"
+                + terminal.getStateLabel() + "|"
                 + terminal.getPaid() + "|" + terminal.getDebt();
     }
 
-    // TODO add state
     @Override
     public String visit(BasicTerminal terminal) {
-        return Message.basicTerminal() + "|" + terminal.getKey() + "|" + terminal.getOwnerKey() + "|" + "" + "|"
+        return Message.basicTerminal() + "|" + terminal.getKey() + "|" + terminal.getOwnerKey() + "|"
+                + terminal.getStateLabel() + "|"
                 + terminal.getPaid() + "|" + terminal.getDebt();
     }
 
