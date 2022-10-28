@@ -7,6 +7,8 @@ import java.util.Collection;
 import java.util.StringJoiner;
 
 import prr.terminals.Terminal;
+import prr.visitors.Printable;
+import prr.visitors.Printer;
 import prr.clients.types.ClientType;
 import prr.clients.types.Gold;
 import prr.clients.types.Normal;
@@ -19,7 +21,7 @@ import prr.notifications.Notification;
 import prr.notifications.DeliveryMethod;
 import prr.notifications.InAppNotifications;
 
-public class Client implements Serializable {
+public class Client implements Serializable, Printable {
 
     @Serial
     private static final long serialVersionUID = 202217101700L;
@@ -145,4 +147,8 @@ public class Client implements Serializable {
         deliveryMethod.deliver(notification);
     }
 
+    @Override
+    public String accept(Printer visitor) {
+        return visitor.visit(this);
+    }
 }
