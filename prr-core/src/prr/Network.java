@@ -38,10 +38,10 @@ public class Network implements Serializable {
     private static final long serialVersionUID = 202208091753L;
 
     /** Clients list, sorted by key */
-    private final Map<String, Client> clients = new TreeMap<>(new NaturalLanguageTextComparator());
+    private Map<String, Client> clients = new TreeMap<>(new NaturalLanguageTextComparator());
 
     /** Terminals list, sorted by key */
-    private final Map<String, Terminal> terminals = new TreeMap<>(new NaturalLanguageTextComparator());
+    private Map<String, Terminal> terminals = new TreeMap<>(new NaturalLanguageTextComparator());
 
     /** Communications counter, used for generating communication keys */
     private int communicationKey = 0;
