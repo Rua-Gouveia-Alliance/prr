@@ -12,6 +12,9 @@ import prr.clients.types.Gold;
 import prr.clients.types.Normal;
 import prr.clients.types.Platinum;
 import prr.communications.Communication;
+import prr.communications.TextCommunication;
+import prr.communications.VideoCommunication;
+import prr.communications.VoiceCommunication;
 import prr.notifications.Notification;
 import prr.notifications.DeliveryMethod;
 import prr.notifications.InAppNotifications;
@@ -71,7 +74,7 @@ public class Client implements Serializable {
     public String getKey() {
         return this.key;
     }
-    
+
     public int getNif() {
         return nif;
     }
@@ -118,7 +121,15 @@ public class Client implements Serializable {
         return 0;
     }
 
-    public long getPrice(Communication communication) {
+    public long getPrice(TextCommunication communication) {
+        return this.plan.getPrice(communication, this.type);
+    }
+
+    public long getPrice(VoiceCommunication communication) {
+        return this.plan.getPrice(communication, this.type);
+    }
+
+    public long getPrice(VideoCommunication communication) {
         return this.plan.getPrice(communication, this.type);
     }
 
