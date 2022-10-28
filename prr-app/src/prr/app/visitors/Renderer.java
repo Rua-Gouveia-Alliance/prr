@@ -12,7 +12,7 @@ import prr.terminals.BasicTerminal;
 import prr.terminals.FancyTerminal;
 import prr.visitors.Visitor;
 
-public class Printer implements Visitor {
+public class Renderer implements Visitor {
 
     @Override
     public String visit(Client client) {
