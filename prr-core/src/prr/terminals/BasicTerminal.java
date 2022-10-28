@@ -8,9 +8,4 @@ public class BasicTerminal extends Terminal {
         super(key, owner);
     }
 
-    @Override
-    public String toString() {
-        return "BASIC|" + super.toString();
-    }
-
 }

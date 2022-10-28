@@ -65,6 +65,10 @@ abstract public class Terminal implements Serializable {
         return savedState;
     }
 
+    public String getOwnerKey() {
+        return this.owner.getKey();
+    }
+
     public TerminalState getState() {
         return this.state;
     }
@@ -182,25 +186,4 @@ abstract public class Terminal implements Serializable {
         return receivedCommunications.size() + madeCommunications.size();
     }
 
-    @Override
-    public String toString() {
-        String s = new StringJoiner("|")
-                .add(this.key)
-                .add(this.owner.getKey())
-                .add(this.state.toString())
-                .add(Long.toString(this.getPaid()))
-                .add(Long.toString(this.getDebt()))
-                .toString();
-
-        if (friends.size() != 0) {
-            s += "|";
-            for (String f : friends)
-                s += f + ",";
-
-            // remove last comma
-            s = s.substring(0, s.length() - 1);
-        }
-
-        return s;
-    }
 }

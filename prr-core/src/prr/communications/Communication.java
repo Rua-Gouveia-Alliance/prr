@@ -70,18 +70,4 @@ public abstract class Communication implements Serializable {
         this.paid = true;
     }
 
-    @Override
-    public String toString() {
-        String s = new StringJoiner("|")
-                .add(this.type.toString())
-                .add(Integer.toString(this.key))
-                .add(this.sender.getKey())
-                .add(this.receiver.toString())
-                .add(Long.toString(this.getUnits()))
-                .add(Long.toString(this.price))
-                .add(this.status.toString())
-                .toString();
-
-        return s;
-    }
 }

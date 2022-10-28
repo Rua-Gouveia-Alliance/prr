@@ -8,9 +8,4 @@ public class FancyTerminal extends Terminal {
         super(key, owner);
     }
 
-    @Override
-    public String toString() {
-        return "FANCY|" + super.toString();
-    }
-
 }
