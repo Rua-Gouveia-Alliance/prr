@@ -10,9 +10,9 @@ import prr.notifications.OffToSilentNotification;
 import prr.notifications.SilentToIdleNotification;
 import prr.terminals.BasicTerminal;
 import prr.terminals.FancyTerminal;
-import prr.visitors.Visitor;
+import prr.visitors.Printer;
 
-public class Renderer implements Visitor {
+public class Renderer implements Printer {
 
     @Override
     public String visit(Client client) {

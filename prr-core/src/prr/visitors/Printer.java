@@ -11,7 +11,7 @@ import prr.notifications.SilentToIdleNotification;
 import prr.terminals.BasicTerminal;
 import prr.terminals.FancyTerminal;
 
-public interface Visitor {
+public interface Printer {
 
     public String visit(Client client);
 
