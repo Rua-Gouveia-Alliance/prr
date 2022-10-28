@@ -1,7 +1,6 @@
 package prr.clients.types;
 
 import prr.clients.Client;
-import prr.communications.CommunicationType;
 
 public class Platinum extends ClientType {
     public Platinum(Client client) {
