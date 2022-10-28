@@ -3,6 +3,9 @@ package prr.app.lookups;
 import prr.Network;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
+import prr.app.visitors.Renderer;
+import prr.visitors.Selector;
+import prr.clients.Client;
 
 /**
  * Show clients with negative balance.
@@ -15,6 +18,15 @@ class DoShowClientsWithDebts extends Command<Network> {
 
     @Override
     protected final void execute() throws CommandException {
-        _display.popup(_receiver.getClientsWithDebts());
+        Renderer renderer = new Renderer();
+        Selector<Client> selector = new Selector<>() {
+            @Override
+            public boolean ok(Client client) {
+                return client.getDebt() > 0;
+            };
+        };
+        _receiver.acceptClientPrinter(selector, renderer);
+        _display.addAll(renderer.render());
+        _display.display();
     }
 }

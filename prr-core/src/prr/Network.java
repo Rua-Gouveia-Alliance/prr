@@ -11,7 +11,10 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
 
+import prr.visitors.Collector;
 import prr.util.NaturalLanguageTextComparator;
+import prr.visitors.Printer;
+import prr.visitors.Selector;
 import prr.clients.Client;
 import prr.communications.Communication;
 import prr.terminals.FancyTerminal;
@@ -109,6 +112,17 @@ public class Network implements Serializable {
     }
 
     /**
+     * Checks if a client exists
+     * 
+     * @param key the key that identifies the client
+     * @throws ClientDoesntExistException if the given key can't be found
+     */
+    public void checkClient(String key) throws ClientDoesntExistException {
+        if (!clients.containsKey(key))
+            throw new ClientDoesntExistException(key);
+    }
+
+    /**
      * Get a client
      * 
      * @param key the key that identifies the client
@@ -174,45 +188,6 @@ public class Network implements Serializable {
     }
 
     /**
-     * Get all clients with debts
-     * 
-     * @return A {@link Collection} of clients, sorted by their debt value
-     */
-    public Collection<Client> getClientsWithDebts() {
-        ArrayList<Client> clientsWithDebts = new ArrayList<Client>();
-        for (Client c : clients.values()) {
-            if (c.getDebt() > 0) {
-                clientsWithDebts.add(c);
-            }
-        }
-
-        // Sort by debt value
-        clientsWithDebts.sort(new Comparator<Client>() {
-            @Override
-            public int compare(Client c1, Client c2) {
-                return (int) (c1.getDebt() - c2.getDebt());
-            }
-        });
-
-        return clientsWithDebts;
-    }
-
-    /**
-     * Get all clients without debts
-     * 
-     * @return A {@link Collection} of clients, sorted by their key
-     */
-    public Collection<Client> getClientsWithoutDebts() {
-        ArrayList<Client> clientsWithDebts = new ArrayList<Client>();
-        for (Client c : clients.values()) {
-            if (c.getDebt() == 0) {
-                clientsWithDebts.add(c);
-            }
-        }
-        return clientsWithDebts;
-    }
-
-    /**
      * Gets global payments
      * 
      * @return Total payd by all clients
@@ -247,36 +222,6 @@ public class Network implements Serializable {
         ArrayList<Communication> comms = new ArrayList<Communication>();
         for (Terminal t : terminals.values()) {
             comms.addAll(t.getMadeCommunications());
-        }
-        return comms;
-    }
-
-    /**
-     * Get all communications initialized by a client
-     * 
-     * @return A {@link Collection} of communications, sorted by their TODO: ????
-     * @param key the key that identifies the client
-     * @throws ClientDoesntExistException if the given key can't be found
-     */
-    public Collection<Communication> getCommunicationsFromClient(String key) throws ClientDoesntExistException {
-        ArrayList<Communication> comms = new ArrayList<Communication>();
-        for (Terminal t : getClient(key).getTerminals()) {
-            comms.addAll(t.getMadeCommunications());
-        }
-        return comms;
-    }
-
-    /**
-     * Get all communications received by a client
-     * 
-     * @return A {@link Collection} of communications, sorted by their TODO: ????
-     * @param key the key that identifies the client
-     * @throws ClientDoesntExistException if the given key can't be found
-     */
-    public Collection<Communication> getCommunicationsToClient(String key) throws ClientDoesntExistException {
-        ArrayList<Communication> comms = new ArrayList<Communication>();
-        for (Terminal t : getClient(key).getTerminals()) {
-            comms.addAll(t.getReceivedCommunications());
         }
         return comms;
     }
@@ -370,6 +315,41 @@ public class Network implements Serializable {
             }
         }
         return positiveTerminals;
+    }
+
+    /**
+     * Visit selected agents with a printer
+     * 
+     * @param selector
+     * @param visitor
+     */
+    public void acceptClientPrinter(Selector<Client> selector, Printer visitor) {
+        for (Client c : clients.values())
+            if (selector.ok(c))
+                c.accept(visitor);
+    }
+
+    /**
+     * Visit selected agents with a collector
+     * 
+     * @param selector
+     * @param visitor
+     */
+    public void acceptPaymentsAndDebtsCollector(Selector<Client> selector, Collector<Long> visitor) {
+        for (Client c : clients.values())
+            if (selector.ok(c))
+                c.accept(visitor);
+    }
+    /**
+     * Visit selected terminals with a printer
+     * 
+     * @param selector
+     * @param visitor
+     */
+    public void acceptTerminalPrinter(Selector<Terminal> selector, Printer visitor) {
+        for (Terminal t : terminals.values())
+            if (selector.ok(t))
+                t.accept(visitor);
     }
 
     /**

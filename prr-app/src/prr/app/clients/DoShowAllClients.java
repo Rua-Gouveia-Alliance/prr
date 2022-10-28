@@ -4,7 +4,9 @@ import prr.Network;
 import prr.clients.Client;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
-import java.util.Collection;
+
+import prr.visitors.Selector;
+import prr.app.visitors.Renderer;
 
 /**
  * Show all clients.
@@ -17,8 +19,12 @@ class DoShowAllClients extends Command<Network> {
 
     @Override
     protected final void execute() throws CommandException {
-        Collection<Client> clients = _receiver.getAllClients();
-        for (Client c : clients)
-            _display.popup(c.toString());
+
+        Renderer renderer = new Renderer();
+        Selector<Client> selector = new Selector<>() {
+        };
+        _receiver.acceptClientPrinter(selector, renderer);
+        _display.addAll(renderer.render());
+        _display.display();
     }
 }

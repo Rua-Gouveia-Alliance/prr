@@ -10,7 +10,7 @@ public class FancyTerminal extends Terminal {
     }
 
     @Override
-    public String accept(Printer visitor) {
-        return visitor.visit(this);
+    public void accept(Printer visitor) {
+        visitor.visit(this);
     }
 }

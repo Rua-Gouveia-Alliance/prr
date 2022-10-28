@@ -1,5 +1,5 @@
 package prr.visitors;
 
 public interface Printable {
-    public String accept(Printer visitor);
+    public void accept(Printer visitor);
 }

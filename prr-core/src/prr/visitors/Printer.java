@@ -13,23 +13,23 @@ import prr.terminals.FancyTerminal;
 
 public interface Printer {
 
-    public String visit(Client client);
+    public void visit(Client client);
 
-    public String visit(FancyTerminal terminal);
+    public void visit(FancyTerminal terminal);
 
-    public String visit(BasicTerminal terminal);
+    public void visit(BasicTerminal terminal);
 
-    public String visit(TextCommunication communication);
+    public void visit(TextCommunication communication);
 
-    public String visit(VoiceCommunication communication);
+    public void visit(VoiceCommunication communication);
 
-    public String visit(VideoCommunication communication);
+    public void visit(VideoCommunication communication);
 
-    public String visit(OffToIdleNotification notification);
+    public void visit(OffToIdleNotification notification);
 
-    public String visit(OffToSilentNotification notification);
+    public void visit(OffToSilentNotification notification);
 
-    public String visit(BusyToIdleNotification notification);
+    public void visit(BusyToIdleNotification notification);
 
-    public String visit(SilentToIdleNotification notification);
+    public void visit(SilentToIdleNotification notification);
 }

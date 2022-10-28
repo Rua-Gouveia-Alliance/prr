@@ -5,6 +5,9 @@ import prr.app.exceptions.UnknownClientKeyException;
 import prr.exceptions.ClientDoesntExistException;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
+import prr.app.visitors.Renderer;
+import prr.clients.Client;
+import prr.visitors.Selector;
 
 /**
  * Show specific client: also show previous notifications.
@@ -19,7 +22,18 @@ class DoShowClient extends Command<Network> {
     @Override
     protected final void execute() throws CommandException {
         try {
-            _display.popup(_receiver.getClient(stringField("key")).toString());
+            String key = stringField("key");
+            Renderer renderer = new Renderer();
+            Selector<Client> selector = new Selector<>() {
+                @Override
+                public boolean ok(Client c) {
+                    return (c.getKey()).equals(key);
+                };
+            };
+            _receiver.checkClient(key);
+            _receiver.acceptClientPrinter(selector, renderer);
+            _display.addAll(renderer.render());
+            _display.display();
         } catch (ClientDoesntExistException e) {
             throw new UnknownClientKeyException(e.getKey());
         }
