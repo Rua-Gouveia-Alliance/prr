@@ -2,25 +2,22 @@ package prr.clients;
 
 import java.io.Serializable;
 
+import prr.clients.types.ClientType;
 import prr.communications.Communication;
+import prr.communications.TextCommunication;
 import prr.communications.InteractiveCommunication;
-import prr.communications.Text;
 
 public abstract class ClientPlan implements Serializable {
 
-    protected final Client client;
+    protected abstract long getTextPrice(Text communication, ClientType type);
 
-    public ClientPlan(Client client) {
-        this.client = client;
+    protected abstract long getInteractiveCommunicationPrice(InteractiveCommunication communication, ClientType type);
+
+    public long getPrice(TextCommunication communication, ClientType type) {
+        return getTextPrice(communication, type);
     }
 
-    protected abstract long getTextPrice(Text communication);
-
-    protected abstract long getInteractiveCommunicationPrice(InteractiveCommunication communication);
-
-    public long getPrice(Communication communication) {
-        if (communication instanceof Text)
-            return getTextPrice((Text) communication);
-        return getInteractiveCommunicationPrice((InteractiveCommunication) communication);
+    public long getPrice(InteractiveCommunication communication, ClientType type) {
+        return getInteractiveCommunicationPrice(communication, type);
     }
 }

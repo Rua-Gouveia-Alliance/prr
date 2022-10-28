@@ -6,6 +6,8 @@ import prr.clients.types.Gold;
 import prr.clients.types.Normal;
 import prr.clients.types.Platinum;
 import prr.communications.Text;
+import prr.communications.VideoCommunication;
+import prr.communications.VoiceCommunication;
 import prr.communications.CommunicationType;
 import prr.communications.InteractiveCommunication;
 
@@ -14,41 +16,61 @@ public class BasePlan extends ClientPlan {
     @Serial
     private static final long serialVersionUID = 202222102220L;
 
-    public BasePlan(Client client) {
-        super(client);
+    private long getCallPrice(InteractiveCommunication communication, Normal type) {
+        return 20;
     }
 
-    private long getCallPrice(InteractiveCommunication communication) {
-        return (client.getType() instanceof Normal) ? 20 : 10;
+    private long getCallPrice(InteractiveCommunication communication, Gold type) {
+        return 10;
     }
 
-    private long getVideoPrice(InteractiveCommunication communication) {
-        if (client.getType() instanceof Normal)
-            return 30;
-        if (client.getType() instanceof Gold)
-            return 20;
+    private long getCallPrice(InteractiveCommunication communication, Platinum type) {
+        return 10;
+    }
+
+    private long getVideoPrice(InteractiveCommunication communication, Normal type) {
+        return 30;
+    }
+
+    private long getVideoPrice(InteractiveCommunication communication, Gold type) {
+        return 20;
+    }
+
+    private long getVideoPrice(InteractiveCommunication communication, Platinum type) {
         return 10;
     }
 
     @Override
-    protected long getInteractiveCommunicationPrice(InteractiveCommunication communication) {
-        if (communication.getType() == CommunicationType.CALL)
-            return getCallPrice(communication);
-        return getVideoPrice(communication);
+    protected long getInteractiveCommunicationPrice(VoiceCommunication communication, ClientType type) {
+        return getCallPrice(communication, type);
     }
 
     @Override
-    protected long getTextPrice(Text text) {
+    protected long getInteractiveCommunicationPrice(VideoCommunication communication, ClientType type) {
+        return getVideoPrice(communication, type);
+    }
+
+    @Override
+    protected long getTextPrice(Text text, Normal type) {
         if (text.getLength() < 50)
-            return (client.getType() instanceof Platinum) ? 0 : 10;
-        if (text.getLength() < 100) {
-            if (client.getType() instanceof Gold)
-                return 10;
-            if (client.getType() instanceof Normal)
-                return 16;
-            return 4;
-        }
-        return (client.getType() instanceof Platinum) ? 4 : 2 * text.getLength();
+            return 10;
+        if (text.getLength() < 100)
+            return 16;
+        return 2 * text.getUnits();
+    }
+
+    @Override
+    protected long getTextPrice(Text text, Gold type) {
+        if (text.getLength() < 100)
+            return 10;
+        return 2 * text.getLength();
+    }
+
+    @Override
+    protected long getTextPrice(Text text, Platinum type) {
+        if (text.getLength() < 50)
+            return 0;
+        return 4;
     }
 
 }
