@@ -4,7 +4,6 @@ import java.io.Serial;
 import java.io.Serializable;
 
 import prr.terminals.Terminal;
-import java.util.StringJoiner;
 
 public abstract class Communication implements Serializable {
 
