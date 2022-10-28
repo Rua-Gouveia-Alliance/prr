@@ -12,7 +12,6 @@ import prr.clients.types.Gold;
 import prr.clients.types.Normal;
 import prr.clients.types.Platinum;
 import prr.communications.Communication;
-import prr.communications.CommunicationType;
 import prr.notifications.Notification;
 import prr.notifications.DeliveryMethod;
 import prr.notifications.InAppNotifications;
@@ -25,7 +24,7 @@ public class Client implements Serializable {
     private String name;
     private final int nif;
     private final String key;
-    private ClientPlan plan = new BasePlan(this);
+    private ClientPlan plan = new BasePlan();
     private final ArrayList<Notification> notifications = new ArrayList<>();
     private final ArrayList<Terminal> terminals = new ArrayList<>();
     private final ClientType normal = new Normal(this);
@@ -72,6 +71,14 @@ public class Client implements Serializable {
     public String getKey() {
         return this.key;
     }
+    
+    public int getNif() {
+        return nif;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     public boolean getActiveNotifications() {
         return this.activeNotifications;
@@ -112,7 +119,7 @@ public class Client implements Serializable {
     }
 
     public long getPrice(Communication communication) {
-        return this.plan.getPrice(communication);
+        return this.plan.getPrice(communication, this.type);
     }
 
     public void queueNotification(Notification notification) {
