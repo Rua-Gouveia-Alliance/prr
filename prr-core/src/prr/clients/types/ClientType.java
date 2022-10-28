@@ -16,6 +16,8 @@ public abstract class ClientType implements Serializable {
         this.client = client;
     }
 
+    abstract public String getLabel();
+
     abstract protected void upgrade();
 
     abstract protected void downgrade();

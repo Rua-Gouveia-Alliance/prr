@@ -12,11 +12,6 @@ public class Idle extends TerminalState {
     }
 
     @Override
-    public String toString() {
-        return "IDLE";
-    }
-
-    @Override
     public void toSilence() {
         terminal.setState(terminal.getSilenceState());
     }
@@ -43,4 +38,10 @@ public class Idle extends TerminalState {
         // TODO Auto-generated method stub
         //
     }
+
+    @Override
+    public String getLabel() {
+        return "IDLE";
+    }
+
 }

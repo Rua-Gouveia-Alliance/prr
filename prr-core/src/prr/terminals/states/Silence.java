@@ -10,11 +10,6 @@ public class Silence extends TerminalState {
     }
 
     @Override
-    public String toString() {
-        return "SILENCE";
-    }
-
-    @Override
     public void toSilence() throws SilencedTerminalException {
         throw new SilencedTerminalException();
     }
@@ -39,4 +34,10 @@ public class Silence extends TerminalState {
     public void endCommunication() {
 
     }
+
+    @Override
+    public String getLabel() {
+        return "SILENCE";
+    }
+
 }

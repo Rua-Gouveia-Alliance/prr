@@ -12,11 +12,6 @@ public class Off extends TerminalState {
     }
 
     @Override
-    public String toString() {
-        return "OFF";
-    }
-
-    @Override
     public void toSilence() {
         terminal.setState(terminal.getSilenceState());
     }
@@ -41,4 +36,10 @@ public class Off extends TerminalState {
     public void endCommunication() {
         // TODO Auto-generated method stub
     }
+
+    @Override
+    public String getLabel() {
+        return "OFF";
+    }
+
 }

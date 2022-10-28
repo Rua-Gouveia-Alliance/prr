@@ -10,11 +10,6 @@ public class Busy extends TerminalState {
     }
 
     @Override
-    public String toString() {
-        return "BUSY";
-    }
-
-    @Override
     public void toSilence() {
         terminal.setState(terminal.getSilenceState());
     }
@@ -38,4 +33,10 @@ public class Busy extends TerminalState {
     public void endCommunication() {
         terminal.setState(terminal.getSavedState());
     }
+
+    @Override
+    public String getLabel() {
+        return "BUSY";
+    }
+
 }

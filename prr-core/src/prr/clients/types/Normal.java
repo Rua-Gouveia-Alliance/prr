@@ -28,7 +28,7 @@ public class Normal extends ClientType {
     }
 
     @Override
-    public String toString() {
+    public String getLabel() {
         return "NORMAL";
     }
 }

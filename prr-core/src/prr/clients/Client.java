@@ -70,6 +70,10 @@ public class Client implements Serializable {
     public ClientType getType() {
         return this.type;
     }
+    
+    public String getTypeLabel() {
+        return this.type.getLabel();
+    }
 
     public String getKey() {
         return this.key;

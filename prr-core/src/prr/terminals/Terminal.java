@@ -4,7 +4,6 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.StringJoiner;
 
 import prr.clients.Client;
 import prr.communications.Communication;
@@ -71,6 +70,10 @@ abstract public class Terminal implements Serializable {
 
     public TerminalState getState() {
         return this.state;
+    }
+
+    public String getStateLabel() {
+        return this.state.getLabel();
     }
 
     public TerminalState getBusyState() {

@@ -32,7 +32,7 @@ public class Platinum extends ClientType {
     }
 
     @Override
-    public String toString() {
+    public String getLabel() {
         return "PLATINUM";
     }
 }

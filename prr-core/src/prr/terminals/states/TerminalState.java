@@ -30,4 +30,6 @@ public abstract class TerminalState implements Serializable {
 
     public abstract void endCommunication();
 
+    public abstract String getLabel();
+
 }
