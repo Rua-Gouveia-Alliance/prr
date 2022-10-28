@@ -8,7 +8,7 @@ import java.util.StringJoiner;
 
 import prr.clients.Client;
 import prr.communications.Communication;
-import prr.communications.Text;
+import prr.communications.TextCommunication;
 import prr.exceptions.BusyTerminalException;
 import prr.exceptions.FailedContactException;
 import prr.exceptions.OffTerminalException;
@@ -126,11 +126,11 @@ abstract public class Terminal implements Serializable {
             friends.add(friend);
     }
 
-    public void sendText(Text text) {
+    public void sendText(TextCommunication text) {
         madeCommunications.add(text);
     }
 
-    public void receiveText(Client sender, Text text) throws FailedContactException {
+    public void receiveText(Client sender, TextCommunication text) throws FailedContactException {
         if (isOff()) {
             failedContacts.add(sender);
             throw new FailedContactException();
