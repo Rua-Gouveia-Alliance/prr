@@ -5,8 +5,6 @@ import java.io.Serializable;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -202,49 +200,6 @@ public class Network implements Serializable {
     }
 
     /**
-     * Get all communications on the network
-     * 
-     * @return A {@link Collection} of communications, sorted by their TODO: ????
-     */
-    public Collection<Communication> getAllCommunications() {
-        ArrayList<Communication> comms = new ArrayList<Communication>();
-        for (Terminal t : terminals.values()) {
-            comms.addAll(t.getMadeCommunications());
-        }
-        return comms;
-    }
-
-    /**
-     * Get all communications initialized by a client
-     * 
-     * @return A {@link Collection} of communications, sorted by their TODO: ????
-     * @param key the key that identifies the client
-     * @throws ClientDoesntExistException if the given key can't be found
-     */
-    public Collection<Communication> getCommunicationsFromClient(String key) throws ClientDoesntExistException {
-        ArrayList<Communication> comms = new ArrayList<Communication>();
-        for (Terminal t : getClient(key).getTerminals()) {
-            comms.addAll(t.getMadeCommunications());
-        }
-        return comms;
-    }
-
-    /**
-     * Get all communications received by a client
-     * 
-     * @return A {@link Collection} of communications, sorted by their TODO: ????
-     * @param key the key that identifies the client
-     * @throws ClientDoesntExistException if the given key can't be found
-     */
-    public Collection<Communication> getCommunicationsToClient(String key) throws ClientDoesntExistException {
-        ArrayList<Communication> comms = new ArrayList<Communication>();
-        for (Terminal t : getClient(key).getTerminals()) {
-            comms.addAll(t.getReceivedCommunications());
-        }
-        return comms;
-    }
-
-    /**
      * Get a terminal
      * 
      * @param key the key that identifies the terminal
@@ -297,18 +252,28 @@ public class Network implements Serializable {
     }
 
     /**
-     * Get all terminals with positive balance (payments > debts)
+     * Visit the communications made by all selected client with a printer
      * 
-     * @return A {@link Collection} of terminals, sorted by their key
+     * @param selector
+     * @param visitor
      */
-    public Collection<Terminal> getTerminalsWithPositiveBalance() {
-        ArrayList<Terminal> positiveTerminals = new ArrayList<Terminal>();
-        for (Terminal t : terminals.values()) {
-            if (t.getBalance() > 0) {
-                positiveTerminals.add(t);
-            }
-        }
-        return positiveTerminals;
+    public void acceptReceivedCommunicationsPrinter(Selector<Client> selector, Printer visitor) {
+        for (Client client : clients.values())
+            if (selector.ok(client))
+                for (Communication communication : client.getReceivedCommunications())
+                    communication.accept(visitor);
+    }
+    /**
+     * Visit the communications made by all selected client with a printer
+     * 
+     * @param selector
+     * @param visitor
+     */
+    public void acceptMadeCommunicationsPrinter(Selector<Client> selector, Printer visitor) {
+        for (Client client : clients.values())
+            if (selector.ok(client))
+                for (Communication communication : client.getMadeCommunications())
+                    communication.accept(visitor);
     }
 
     /**
