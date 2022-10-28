@@ -25,50 +25,55 @@ public class Printer implements Visitor {
 
     @Override
     public String visit(OffToSilentNotification notification) {
-        // TODO Auto-generated method stub
-        return null;
+        return Message.offToSilent() + "|" + notification.getId();
     }
 
     @Override
     public String visit(OffToIdleNotification notification) {
-        // TODO Auto-generated method stub
-        return null;
+        return Message.offToIdle() + "|" + notification.getId();
     }
 
     @Override
     public String visit(BusyToIdleNotification notification) {
-        // TODO Auto-generated method stub
-        return null;
+        return Message.busyToIdle() + "|" + notification.getId();
     }
 
     @Override
     public String visit(SilentToIdleNotification notification) {
-        // TODO Auto-generated method stub
-        return null;
+        return Message.silentToIdle() + "|" + notification.getId();
     }
 
     @Override
     public String visit(FancyTerminal terminal) {
-        // TODO Auto-generated method stub
-        return null;
+        return Message.fancyTerminal() + "|" + terminal.getKey() + "|" + terminal.getOwnerKey() + "|" + "" + "|"
+                + terminal.getPaid() + "|" + terminal.getDebt();
     }
 
     @Override
     public String visit(BasicTerminal communication) {
-        // TODO Auto-generated method stub
-        return null;
+        return Message.basicTerminal() + "|" + terminal.getKey() + "|" + terminal.getOwnerKey() + "|" + "" + "|"
+                + terminal.getPaid() + "|" + terminal.getDebt();
+    }
+
+    @Override
+    public String visit(TextCommunication communication) {
+        return Message.textCommunication() + "|" + communication.getKey() + "|" + communication.getSenderKey() + "|"
+                + communication.getReceiverKey() + "|" + communication.getUnits() + "|" + communication.getPrice() + "|"
+                + (communication.isFinished() ? Message.ongoingCommunication() : Message.finishedCommunication());
     }
 
     @Override
     public String visit(VideoCommunication communication) {
-        // TODO Auto-generated method stub
-        return null;
+        return Message.videoCommunication() + "|" + communication.getKey() + "|" + communication.getSenderKey() + "|"
+                + communication.getReceiverKey() + "|" + communication.getUnits() + "|" + communication.getPrice() + "|"
+                + (communication.isFinished() ? Message.ongoingCommunication() : Message.finishedCommunication());
     }
 
     @Override
     public String visit(VoiceCommunication communication) {
-        // TODO Auto-generated method stub
-        return null;
+        return Message.voiceCommunication() + "|" + communication.getKey() + "|" + communication.getSenderKey() + "|"
+                + communication.getReceiverKey() + "|" + communication.getUnits() + "|" + communication.getPrice() + "|"
+                + (communication.isFinished() ? Message.ongoingCommunication() : Message.finishedCommunication());
     }
 
 }

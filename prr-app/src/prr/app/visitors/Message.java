@@ -55,6 +55,27 @@ interface Message {
   }
 
   /**
+   * @return tag for text communications
+   */
+  static String textCommunication() {
+    return "TEXT";
+  }
+
+  /**
+   * @return tag for voice communications
+   */
+  static String voiceCommunication() {
+    return "VOICE";
+  }
+
+  /**
+   * @return tag for video communications
+   */
+  static String videoCommunication() {
+    return "VIDEO";
+  }
+
+  /**
    * @return tag for off to silent notifications
    */
   static String offToSilent() {
