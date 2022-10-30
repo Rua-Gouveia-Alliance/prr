@@ -155,12 +155,17 @@ abstract public class Terminal implements Serializable, Printable {
             friends.remove(friend);
     }
 
-    public void sendText(String receiverKey, String text, Network network) throws TerminalDoesntExistException, FailedContactException {
+    public void sendText(String receiverKey, String text, Network network)
+            throws TerminalDoesntExistException {
         Terminal receiver = network.getTerminal(receiverKey);
         TextCommunication communication = network.newTextCommunication(this, receiver, text);
-        receiver.receiveText(communication);
-        madeCommunications.put(communication.getKey(), communication);
-        owner.increaseTextCount();
+        try {
+            receiver.receiveText(communication);
+            madeCommunications.put(communication.getKey(), communication);
+            owner.increaseTextCount();
+        } catch (FailedContactException e) {
+            // Silent failure
+        }
     }
 
     public void receiveText(TextCommunication text) throws FailedContactException {

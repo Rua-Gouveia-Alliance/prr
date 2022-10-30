@@ -1,6 +1,9 @@
 package prr.app.lookups;
 
 import prr.Network;
+import prr.clients.Client;
+import prr.app.visitors.Renderer;
+import prr.visitors.Selector;
 import prr.app.exceptions.UnknownClientKeyException;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
@@ -19,7 +22,17 @@ class DoShowCommunicationsFromClient extends Command<Network> {
     @Override
     protected final void execute() throws CommandException {
         try {
-            _display.popup(_receiver.getCommunicationsFromClient(stringField("key")));
+            String key = stringField("key");
+            Renderer renderer = new Renderer();
+            Selector<Client> selector = new Selector<>() {
+                public boolean ok(Client c) {
+                    return (c.getKey()).equals(key);
+                };
+            };
+            _receiver.checkClient(key);
+            _receiver.acceptMadeCommunicationsPrinter(selector, renderer);
+            _display.addAll(renderer.render());
+            _display.display();
         } catch (ClientDoesntExistException e) {
             throw new UnknownClientKeyException(e.getKey());
         }
