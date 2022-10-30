@@ -22,7 +22,7 @@ public class Platinum extends ClientType {
 
     @Override
     protected boolean canDowngrade() {
-        return (client.getBalance() >= 0 && client.straightCommunications(CommunicationType.TEXT) == 2)
+        return (client.getBalance() >= 0 && client.getTextCount() == 2)
                 || client.getBalance() < 0;
     }
 

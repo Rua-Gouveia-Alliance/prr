@@ -24,7 +24,7 @@ public class Gold extends ClientType {
 
     @Override
     protected boolean canUpgrade() {
-        return client.getBalance() >= 0 && client.straightCommunications(CommunicationType.VIDEO) == 5;
+        return client.getBalance() >= 0 && client.getVideoCount() == 5;
     }
 
     @Override

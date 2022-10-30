@@ -30,14 +30,16 @@ public class Client implements Serializable, Printable {
     private final int nif;
     private final String key;
     private ClientPlan plan = new BasePlan();
-    private final ArrayList<Notification> notifications = new ArrayList<>();
-    private final ArrayList<Terminal> terminals = new ArrayList<>();
+    private ArrayList<Notification> notifications = new ArrayList<>();
+    private ArrayList<Terminal> terminals = new ArrayList<>();
     private final ClientType normal = new Normal(this);
     private final ClientType gold = new Gold(this);
     private final ClientType platinum = new Platinum(this);
     private ClientType type = new Normal(this);
     private DeliveryMethod deliveryMethod = new InAppNotifications(this);
     private boolean activeNotifications = true;
+    private int textCount = 0;
+    private int videoCount = 0;
 
     public Client(String name, String key, int nif) {
         this.name = name;
@@ -136,9 +138,29 @@ public class Client implements Serializable, Printable {
         this.terminals.add(terminal);
     }
 
-    public int straightCommunications(CommunicationType type) {
-        // TODO implement
-        return 0;
+    public void increaseTextCount() {
+        if (textCount == 0)
+            videoCount = 0;
+        textCount++;
+    }
+
+    public void increaseVideoCount() {
+        if (videoCount == 0)
+            textCount = 0;
+        videoCount++;
+    }
+    
+    public void resetCount() {
+        textCount = 0;
+        videoCount = 0;
+    }
+
+    public int getTextCount() {
+        return textCount;
+    }
+
+    public int getVideoCount() {
+        return videoCount;
     }
 
     public long getPrice(TextCommunication communication) {

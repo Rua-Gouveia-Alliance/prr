@@ -160,6 +160,7 @@ abstract public class Terminal implements Serializable, Printable {
         TextCommunication communication = network.newTextCommunication(this, receiver, text);
         receiver.receiveText(communication);
         madeCommunications.put(communication.getKey(), communication);
+        owner.increaseTextCount();
     }
 
     public void receiveText(TextCommunication text) throws FailedContactException {

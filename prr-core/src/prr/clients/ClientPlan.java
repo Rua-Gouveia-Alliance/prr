@@ -10,6 +10,7 @@ import prr.communications.VideoCommunication;
 import prr.communications.VoiceCommunication;
 
 public abstract class ClientPlan implements Serializable {
+
     public abstract long getPrice(TextCommunication text, Normal type);
 
     public abstract long getPrice(TextCommunication text, Gold type);
