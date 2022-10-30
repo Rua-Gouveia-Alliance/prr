@@ -117,14 +117,14 @@ public class Client implements Serializable, Printable {
     public Collection<Communication> getReceivedCommunications() {
         Collection<Communication> communications = new ArrayList<>();
         for (Terminal terminal : terminals)
-            terminal.getReceivedCommunications().forEach(communications::add);
+            (terminal.getReceivedCommunications()).forEach(communications::add);
         return communications;
     }
 
     public Collection<Communication> getMadeCommunications() {
         Collection<Communication> communications = new ArrayList<>();
         for (Terminal terminal : terminals)
-            terminal.getMadeCommunications().forEach(communications::add);
+            (terminal.getMadeCommunications()).forEach(communications::add);
         return communications;
     }
 
