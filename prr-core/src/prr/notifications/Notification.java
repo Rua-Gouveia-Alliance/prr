@@ -6,13 +6,13 @@ import prr.visitors.Printable;
 
 public abstract class Notification implements Serializable, Printable {
 
-    private final int terminalId;
+    private final String terminalId;
 
-    public Notification(int terminalId) {
+    public Notification(String terminalId) {
         this.terminalId = terminalId;
     }
 
-    public int getId() {
+    public String getId() {
         return terminalId;
     }
 }

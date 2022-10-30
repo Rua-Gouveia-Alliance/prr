@@ -1,6 +1,7 @@
 package prr.terminals.states;
 
 import prr.exceptions.SilencedTerminalException;
+import prr.notifications.SilentToIdleNotification;
 import prr.terminals.Terminal;
 
 public class Silence extends TerminalState {
@@ -21,6 +22,7 @@ public class Silence extends TerminalState {
 
     @Override
     public void toOn() throws SilencedTerminalException {
+        terminal.notifyFailedContacts(new SilentToIdleNotification(terminal.getKey()));
         throw new SilencedTerminalException();
     }
 

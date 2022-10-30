@@ -1,6 +1,7 @@
 package prr.terminals.states;
 
 import prr.exceptions.BusyTerminalException;
+import prr.notifications.BusyToIdleNotification;
 import prr.terminals.Terminal;
 
 public class Busy extends TerminalState {
@@ -21,6 +22,7 @@ public class Busy extends TerminalState {
 
     @Override
     public void toOn() throws BusyTerminalException {
+        terminal.notifyFailedContacts(new BusyToIdleNotification(terminal.getKey()));
         throw new BusyTerminalException();
     }
 

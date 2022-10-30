@@ -3,6 +3,8 @@ package prr.terminals.states;
 import prr.exceptions.BusyTerminalException;
 import prr.exceptions.OffTerminalException;
 import prr.exceptions.SilencedTerminalException;
+import prr.notifications.OffToIdleNotification;
+import prr.notifications.OffToSilentNotification;
 import prr.terminals.Terminal;
 
 public class Off extends TerminalState {
@@ -13,6 +15,7 @@ public class Off extends TerminalState {
 
     @Override
     public void toSilence() {
+        terminal.notifyFailedContacts(new OffToSilentNotification(terminal.getKey()));
         terminal.setState(terminal.getSilenceState());
     }
 
@@ -23,6 +26,7 @@ public class Off extends TerminalState {
 
     @Override
     public void toOn() {
+        terminal.notifyFailedContacts(new OffToIdleNotification(terminal.getKey()));
         terminal.setState(terminal.getIdleState());
     }
 

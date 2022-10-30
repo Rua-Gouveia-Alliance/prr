@@ -8,6 +8,7 @@ import java.util.TreeMap;
 
 import prr.Network;
 import prr.clients.Client;
+import prr.notifications.Notification;
 import prr.communications.Communication;
 import prr.communications.InteractiveCommunication;
 import prr.communications.TextCommunication;
@@ -162,6 +163,10 @@ abstract public class Terminal implements Serializable, Printable {
         receivedCommunications.put(text.getKey(), text);
     }
 
+    public void notifyFailedContacts(Notification notification) {
+        for (Client client : failedContacts)
+            client.deliver(notification);
+    }
     
     /**
      * Checks if this terminal can end the current interactive communication.
