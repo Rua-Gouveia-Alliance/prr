@@ -3,7 +3,7 @@ package prr.notifications;
 import prr.visitors.Printer;
 
 public class OffToSilentNotification extends Notification {
-    public OffToSilentNotification(int terminalId) {
+    public OffToSilentNotification(String terminalId) {
         super(terminalId);
     }
     

@@ -381,7 +381,8 @@ public class Network implements Serializable {
             Terminal terminal = getTerminal(fields[1]);
             String[] friends = fields[2].split(",");
             for (String friend : friends) {
-                terminal.addFriend(getTerminal(friend));
+                checkTerminal(friend);
+                terminal.addFriend(friend);
             }
 
             changed();

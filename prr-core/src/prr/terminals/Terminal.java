@@ -138,6 +138,11 @@ abstract public class Terminal implements Serializable, Printable {
         return getState().equals(getIdleState());
     }
 
+    public void addFriend(String friend) {
+        if (!friends.contains(friend))
+            friends.add(friend);
+    }
+
     public void addFriend(String friend, Network network) throws TerminalDoesntExistException {
         network.checkTerminal(friend);
         if (!friends.contains(friend))
@@ -150,9 +155,9 @@ abstract public class Terminal implements Serializable, Printable {
             friends.remove(friend);
     }
 
-    public void sendText(String receiverKey, String text, Network network) throws TerminalDoesntExistException {
+    public void sendText(String receiverKey, String text, Network network) throws TerminalDoesntExistException, FailedContactException {
         Terminal receiver = network.getTerminal(receiverKey);
-        Communication communication = network.newTextCommunication(this, receiver, text);
+        TextCommunication communication = network.newTextCommunication(this, receiver, text);
         receiver.receiveText(communication);
         madeCommunications.put(communication.getKey(), communication);
     }

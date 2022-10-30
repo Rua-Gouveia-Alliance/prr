@@ -3,7 +3,7 @@ package prr.notifications;
 import prr.visitors.Printer;
 
 public class SilentToIdleNotification extends Notification {
-    public SilentToIdleNotification(int terminalId) {
+    public SilentToIdleNotification(String terminalId) {
         super(terminalId);
     }
     
