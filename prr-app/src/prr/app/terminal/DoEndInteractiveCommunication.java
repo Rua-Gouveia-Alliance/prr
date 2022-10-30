@@ -4,7 +4,6 @@ import prr.Network;
 import prr.terminals.Terminal;
 import pt.tecnico.uilib.forms.Form;
 import pt.tecnico.uilib.menus.CommandException;
-//FIXME add more imports if needed
 
 /**
  * Command for ending communication.
@@ -18,6 +17,6 @@ class DoEndInteractiveCommunication extends TerminalCommand {
 
     @Override
     protected final void execute() throws CommandException {
-        // FIXME implement command
+        _receiver.endCommunication(Form.requestInteger(Prompt.duration()));
     }
 }

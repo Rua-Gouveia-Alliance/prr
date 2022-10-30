@@ -20,6 +20,11 @@ public class Silence extends TerminalState {
     }
 
     @Override
+    public void toOn() throws SilencedTerminalException {
+        throw new SilencedTerminalException();
+    }
+
+    @Override
     public void receiveCommunication() throws SilencedTerminalException {
         throw new SilencedTerminalException();
     }

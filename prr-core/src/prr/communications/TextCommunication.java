@@ -5,12 +5,20 @@ import prr.visitors.Printer;
 
 public class TextCommunication extends Communication {
 
-    public TextCommunication(int key, Terminal sender, Terminal receiver, int length) {
-        super(key, sender, receiver, length);
+    private String message;
+
+    public TextCommunication(int key, Terminal sender, Terminal receiver, String message) {
+        super(key, sender, receiver, message.length());
+        this.message = message;
     }
 
     @Override
     public void accept(Printer visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public void updatePrice() {
+        setPrice(getSender().getOwner().getPrice(this));
     }
 }

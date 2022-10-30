@@ -4,6 +4,7 @@ import java.io.Serial;
 import java.io.Serializable;
 
 import prr.exceptions.BusyTerminalException;
+import prr.exceptions.IdleTerminalException;
 import prr.exceptions.OffTerminalException;
 import prr.exceptions.SilencedTerminalException;
 import prr.terminals.Terminal;
@@ -22,6 +23,8 @@ public abstract class TerminalState implements Serializable {
     public abstract void toSilence() throws SilencedTerminalException;
 
     public abstract void toOff() throws BusyTerminalException, OffTerminalException;
+
+    public abstract void toOn() throws IdleTerminalException, BusyTerminalException, SilencedTerminalException;
 
     public abstract void startCommunication() throws BusyTerminalException, OffTerminalException;
 

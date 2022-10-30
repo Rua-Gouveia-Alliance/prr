@@ -22,6 +22,11 @@ public class Off extends TerminalState {
     }
 
     @Override
+    public void toOn() {
+        terminal.setState(terminal.getIdleState());
+    }
+
+    @Override
     public void receiveCommunication() throws BusyTerminalException, OffTerminalException, SilencedTerminalException {
         // TODO Auto-generated method stub
 

@@ -20,6 +20,11 @@ public class Busy extends TerminalState {
     }
 
     @Override
+    public void toOn() throws BusyTerminalException {
+        throw new BusyTerminalException();
+    }
+
+    @Override
     public void startCommunication() throws BusyTerminalException {
         throw new BusyTerminalException();
     }

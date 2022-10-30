@@ -13,6 +13,7 @@ import prr.visitors.Printer;
 import prr.visitors.Selector;
 import prr.clients.Client;
 import prr.communications.Communication;
+import prr.communications.TextCommunication;
 import prr.terminals.FancyTerminal;
 import prr.terminals.BasicTerminal;
 import prr.terminals.Terminal;
@@ -81,6 +82,10 @@ public class Network implements Serializable {
      */
     public int getCommunicationKey() {
         return communicationKey++;
+    }
+
+    public TextCommunication newTextCommunication(Terminal sender, Terminal receiver, String message) {
+        return new TextCommunication(getCommunicationKey(), sender, receiver, message);
     }
 
     /**
@@ -263,6 +268,7 @@ public class Network implements Serializable {
                 for (Communication communication : client.getReceivedCommunications())
                     communication.accept(visitor);
     }
+
     /**
      * Visit the communications made by all selected client with a printer
      * 
@@ -365,8 +371,7 @@ public class Network implements Serializable {
             Terminal terminal = getTerminal(fields[1]);
             String[] friends = fields[2].split(",");
             for (String friend : friends) {
-                getTerminal(friend);
-                terminal.addFriend(friend);
+                terminal.addFriend(getTerminal(friend));
             }
 
             changed();

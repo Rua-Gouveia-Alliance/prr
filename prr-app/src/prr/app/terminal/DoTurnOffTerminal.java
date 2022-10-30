@@ -22,7 +22,7 @@ class DoTurnOffTerminal extends TerminalCommand {
         } catch (OffTerminalException e) {
             _display.popup(Message.alreadyOff());
         } catch (BusyTerminalException e) {
-            // TODO: do nothing right?
+            // empty
         }
     }
 }

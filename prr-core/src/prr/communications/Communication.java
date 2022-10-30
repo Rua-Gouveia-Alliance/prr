@@ -74,4 +74,10 @@ public abstract class Communication implements Serializable, Printable {
         this.paid = true;
     }
 
+    public void setPrice(long price) {
+        this.price = price;
+    }
+
+    public abstract void updatePrice();
+
 }

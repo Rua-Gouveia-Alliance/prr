@@ -18,6 +18,7 @@ class DoStartInteractiveCommunication extends TerminalCommand {
 
     @Override
     protected final void execute() throws CommandException {
-        // FIXME implement command
+        // TODO: finish command
+        _receiver.startCommunication(null);
     }
 }

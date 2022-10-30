@@ -12,4 +12,9 @@ public class VoiceCommunication extends InteractiveCommunication {
     public void accept(Printer visitor) {
         visitor.visit(this);
     }
+
+    @Override
+    public void updatePrice() {
+        setPrice(getSender().getOwner().getPrice(this));
+    }
 }

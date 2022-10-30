@@ -1,6 +1,10 @@
 package prr.app.terminal;
 
 import prr.Network;
+import prr.exceptions.BusyTerminalException;
+import prr.exceptions.IdleTerminalException;
+import prr.exceptions.OffTerminalException;
+import prr.exceptions.SilencedTerminalException;
 import prr.terminals.Terminal;
 import pt.tecnico.uilib.menus.CommandException;
 
@@ -15,13 +19,12 @@ class DoTurnOnTerminal extends TerminalCommand {
 
     @Override
     protected final void execute() throws CommandException {
-        // TODO: IMPLEMENT toIDLE (turn on terminal)
         try {
-            _receiver.toIdle();
-        } catch ( e) {
+            _receiver.toOn();
+        } catch (IdleTerminalException e) {
             _display.popup(Message.alreadyOn());
-        } catch ( e) {
-            // TODO: do nothing right?
+        } catch (BusyTerminalException | SilencedTerminalException e) {
+            // empty
         }
     }
 }

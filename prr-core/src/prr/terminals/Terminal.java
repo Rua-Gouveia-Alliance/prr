@@ -4,12 +4,16 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.TreeMap;
 
 import prr.clients.Client;
 import prr.communications.Communication;
+import prr.communications.InteractiveCommunication;
 import prr.communications.TextCommunication;
 import prr.exceptions.BusyTerminalException;
 import prr.exceptions.FailedContactException;
+import prr.exceptions.IdleTerminalException;
+import prr.exceptions.InvalidCommunicationException;
 import prr.exceptions.OffTerminalException;
 import prr.exceptions.SilencedTerminalException;
 import prr.terminals.states.*;
@@ -27,10 +31,12 @@ abstract public class Terminal implements Serializable, Printable {
     // attributes
     private String key;
     private Client owner;
-    private ArrayList<Communication> receivedCommunications = new ArrayList<>();
-    private ArrayList<Communication> madeCommunications = new ArrayList<>();
+    private TreeMap<Integer, Communication> receivedCommunications = new TreeMap<>();
+    private TreeMap<Integer, Communication> madeCommunications = new TreeMap<>();
     private ArrayList<Client> failedContacts = new ArrayList<>();
     private ArrayList<Terminal> friends = new ArrayList<>();
+
+    private InteractiveCommunication currentCommunication;
 
     // Terminal State
     private final TerminalState busyState = new Busy(this);
@@ -65,6 +71,10 @@ abstract public class Terminal implements Serializable, Printable {
         return savedState;
     }
 
+    public Client getOwner() {
+        return this.owner;
+    }
+
     public String getOwnerKey() {
         return this.owner.getKey();
     }
@@ -94,11 +104,11 @@ abstract public class Terminal implements Serializable, Printable {
     }
 
     public Collection<Communication> getReceivedCommunications() {
-        return receivedCommunications;
+        return receivedCommunications.values();
     }
 
     public Collection<Communication> getMadeCommunications() {
-        return madeCommunications;
+        return madeCommunications.values();
     }
 
     public void toSilence() throws SilencedTerminalException {
@@ -107,6 +117,10 @@ abstract public class Terminal implements Serializable, Printable {
 
     public void toOff() throws BusyTerminalException, OffTerminalException {
         state.toOff();
+    }
+
+    public void toOn() throws BusyTerminalException, SilencedTerminalException, IdleTerminalException {
+        state.toOn();
     }
 
     public boolean isSilenced() {
@@ -135,7 +149,7 @@ abstract public class Terminal implements Serializable, Printable {
     }
 
     public void sendText(TextCommunication text) {
-        madeCommunications.add(text);
+        madeCommunications.put(text.getKey(), text);
     }
 
     public void receiveText(Client sender, TextCommunication text) throws FailedContactException {
@@ -143,7 +157,7 @@ abstract public class Terminal implements Serializable, Printable {
             failedContacts.add(sender);
             throw new FailedContactException();
         }
-        receivedCommunications.add(text);
+        receivedCommunications.put(text.getKey(), text);
     }
 
     /**
@@ -154,7 +168,7 @@ abstract public class Terminal implements Serializable, Printable {
      *         it was the originator of this communication.
      **/
     public boolean canEndCurrentCommunication() {
-        return isBusy(); // TODO && it was the originator of this communication.
+        return isBusy() && madeCommunications.containsValue(currentCommunication);
     }
 
     /**
@@ -166,13 +180,25 @@ abstract public class Terminal implements Serializable, Printable {
         return !isBusy() && !isOff();
     }
 
+    public long endCommunication(int units) {
+        return currentCommunication.endCommunication(units);
+    }
+
+    public void startCommunication(InteractiveCommunication com) {
+        // TODO: implement
+    }
+
+    public InteractiveCommunication getCurrentCommunication() {
+        return this.currentCommunication;
+    }
+
     public long getBalance() {
         return getPaid() - getDebt();
     }
 
     public long getDebt() {
         long total = 0;
-        for (Communication c : madeCommunications) {
+        for (Communication c : madeCommunications.values()) {
             if (!c.isPaid())
                 total += c.getPrice();
         }
@@ -182,12 +208,21 @@ abstract public class Terminal implements Serializable, Printable {
 
     public long getPaid() {
         long total = 0;
-        for (Communication c : madeCommunications) {
+        for (Communication c : madeCommunications.values()) {
             if (c.isPaid())
                 total += c.getPrice();
         }
 
         return total;
+    }
+
+    public void payCommunication(int commKey) throws InvalidCommunicationException {
+        Communication comm = madeCommunications.get(commKey);
+
+        if (comm == null || comm.equals(currentCommunication) || comm.isPaid())
+            throw new InvalidCommunicationException();
+
+        comm.payCommunication();
     }
 
     public int getCommunicationCount() {
