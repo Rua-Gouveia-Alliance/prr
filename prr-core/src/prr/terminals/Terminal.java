@@ -30,7 +30,7 @@ abstract public class Terminal implements Serializable, Printable {
     private ArrayList<Communication> receivedCommunications = new ArrayList<>();
     private ArrayList<Communication> madeCommunications = new ArrayList<>();
     private ArrayList<Client> failedContacts = new ArrayList<>();
-    private ArrayList<String> friends = new ArrayList<>();
+    private ArrayList<Terminal> friends = new ArrayList<>();
 
     // Terminal State
     private final TerminalState busyState = new Busy(this);
@@ -125,9 +125,13 @@ abstract public class Terminal implements Serializable, Printable {
         return getState().equals(getIdleState());
     }
 
-    public void addFriend(String friend) {
+    public void addFriend(Terminal friend) {
         if (!friends.contains(friend))
             friends.add(friend);
+    }
+
+    public void removeFriend(Terminal friend) {
+        friends.remove(friend);
     }
 
     public void sendText(TextCommunication text) {
