@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.TreeMap;
 
+import prr.Network;
 import prr.clients.Client;
 import prr.communications.Communication;
 import prr.communications.InteractiveCommunication;
@@ -16,6 +17,7 @@ import prr.exceptions.IdleTerminalException;
 import prr.exceptions.InvalidCommunicationException;
 import prr.exceptions.OffTerminalException;
 import prr.exceptions.SilencedTerminalException;
+import prr.exceptions.TerminalDoesntExistException;
 import prr.terminals.states.*;
 import prr.visitors.Printable;
 
@@ -135,22 +137,25 @@ abstract public class Terminal implements Serializable, Printable {
         return getState().equals(getIdleState());
     }
 
-    public void addFriend(String friend) {
+    public void addFriend(String friend, Network network) throws TerminalDoesntExistException {
+        network.checkTerminal(friend);
         if (!friends.contains(friend))
             friends.add(friend);
     }
 
-    public void removeFriend(String friend) {
-        if(friends.contains(friend))
+    public void removeFriend(String friend, Network network) throws TerminalDoesntExistException {
+        network.checkTerminal(friend);
+        if (friends.contains(friend))
             friends.remove(friend);
     }
 
-    public void sendText(TextCommunication text) {
+    public void sendText(String receiver, TextCommunication text, Network network) {
+        network.sendText(receiver, text);
         madeCommunications.put(text.getKey(), text);
     }
 
     public void receiveText(Client sender, TextCommunication text) throws FailedContactException {
-        if (isOff()) {
+        if (isOff() || isBusy()) {
             failedContacts.add(sender);
             throw new FailedContactException();
         }

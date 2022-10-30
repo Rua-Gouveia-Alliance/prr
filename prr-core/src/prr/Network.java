@@ -115,6 +115,17 @@ public class Network implements Serializable {
     }
 
     /**
+     * Checks if a terminal exists
+     * 
+     * @param key the key that identifies the client
+     * @throws TerminalDoesntExistException if the given key can't be found
+     */
+    public void checkTerminal(String key) throws TerminalDoesntExistException {
+        if (!terminals.containsKey(key))
+            throw new TerminalDoesntExistException(key);
+    }
+
+    /**
      * Get a client
      * 
      * @param key the key that identifies the client
