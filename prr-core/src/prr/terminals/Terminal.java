@@ -155,13 +155,14 @@ abstract public class Terminal implements Serializable, Printable {
     }
 
     public void receiveText(Client sender, TextCommunication text) throws FailedContactException {
-        if (isOff() || isBusy()) {
+        if (isOff()) {
             failedContacts.add(sender);
             throw new FailedContactException();
         }
         receivedCommunications.put(text.getKey(), text);
     }
 
+    
     /**
      * Checks if this terminal can end the current interactive communication.
      *
