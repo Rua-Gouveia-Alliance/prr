@@ -150,14 +150,16 @@ abstract public class Terminal implements Serializable, Printable {
             friends.remove(friend);
     }
 
-    public void sendText(String receiver, TextCommunication text, Network network) {
-        network.sendText(receiver, text);
-        madeCommunications.put(text.getKey(), text);
+    public void sendText(String receiverKey, String text, Network network) throws TerminalDoesntExistException {
+        Terminal receiver = network.getTerminal(receiverKey);
+        Communication communication = network.newTextCommunication(this, receiver, text);
+        receiver.receiveText(communication);
+        madeCommunications.put(communication.getKey(), communication);
     }
 
-    public void receiveText(Client sender, TextCommunication text) throws FailedContactException {
+    public void receiveText(TextCommunication text) throws FailedContactException {
         if (isOff()) {
-            failedContacts.add(sender);
+            failedContacts.add((text.getSender()).getOwner());
             throw new FailedContactException();
         }
         receivedCommunications.put(text.getKey(), text);
@@ -167,7 +169,7 @@ abstract public class Terminal implements Serializable, Printable {
         for (Client client : failedContacts)
             client.deliver(notification);
     }
-    
+
     /**
      * Checks if this terminal can end the current interactive communication.
      *

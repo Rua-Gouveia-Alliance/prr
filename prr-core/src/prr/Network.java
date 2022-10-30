@@ -223,8 +223,7 @@ public class Network implements Serializable {
      * @throws TerminalDoesntExistException if the given key can't be found
      */
     public Terminal getTerminal(String key) throws TerminalDoesntExistException {
-        if (!terminals.containsKey(key))
-            throw new TerminalDoesntExistException(key);
+        checkTerminal(key);
         return terminals.get(key);
     }
 
