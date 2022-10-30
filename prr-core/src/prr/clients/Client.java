@@ -162,17 +162,21 @@ public class Client implements Serializable, Printable {
     public int getVideoCount() {
         return videoCount;
     }
+    
+    public ClientPlan getPlan() {
+        return plan;
+    }
 
     public long getPrice(TextCommunication communication) {
-        return this.plan.getPrice(communication, this.type);
+        return this.type.getPrice(communication);
     }
 
     public long getPrice(VoiceCommunication communication) {
-        return this.plan.getPrice(communication, this.type);
+        return this.type.getPrice(communication);
     }
 
     public long getPrice(VideoCommunication communication) {
-        return this.plan.getPrice(communication, this.type);
+        return this.type.getPrice(communication);
     }
 
     public void queueNotification(Notification notification) {

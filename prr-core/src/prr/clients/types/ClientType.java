@@ -4,6 +4,9 @@ import java.io.Serial;
 import java.io.Serializable;
 
 import prr.clients.Client;
+import prr.communications.TextCommunication;
+import prr.communications.VideoCommunication;
+import prr.communications.VoiceCommunication;
 
 public abstract class ClientType implements Serializable {
 
@@ -15,6 +18,12 @@ public abstract class ClientType implements Serializable {
     public ClientType(Client client) {
         this.client = client;
     }
+
+    abstract public long getPrice(TextCommunication communication);
+
+    abstract public long getPrice(VoiceCommunication communication);
+
+    abstract public long getPrice(VideoCommunication communication);
 
     abstract public String getLabel();
 
