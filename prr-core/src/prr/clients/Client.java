@@ -135,6 +135,10 @@ public class Client implements Serializable, Printable, Observer {
         return terminals;
     }
 
+    public Collection<Notification> getNotifications() {
+        return notifications;
+    }
+
     public void addTerminal(Terminal terminal) {
         this.terminals.add(terminal);
     }
