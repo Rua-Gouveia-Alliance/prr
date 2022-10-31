@@ -211,8 +211,8 @@ abstract public class Terminal implements Serializable, Printable, Subject {
     private void startVoiceCommunication(Terminal receiver, Network network)
             throws OffTerminalException, BusyTerminalException, SilencedTerminalException {
         VoiceCommunication communication = network.newVoiceCommunication(this, receiver);
-        getState().startCommunication();
         receiver.receiveVoiceCommunication(communication);
+        getState().startCommunication();
         setCurrentCommunication(communication);
         registerMadeCommunication(communication);
         getOwner().resetCount();
