@@ -150,7 +150,7 @@ public class Client implements Serializable, Printable, Observer {
             textCount = 0;
         videoCount++;
     }
-    
+
     public void resetCount() {
         textCount = 0;
         videoCount = 0;
@@ -163,7 +163,7 @@ public class Client implements Serializable, Printable, Observer {
     public int getVideoCount() {
         return videoCount;
     }
-    
+
     public ClientPlan getPlan() {
         return plan;
     }
@@ -186,7 +186,8 @@ public class Client implements Serializable, Printable, Observer {
 
     @Override
     public void update(Notification notification) {
-        deliveryMethod.deliver(notification);
+        if (activeNotifications)
+            deliveryMethod.deliver(notification);
     }
 
     @Override
