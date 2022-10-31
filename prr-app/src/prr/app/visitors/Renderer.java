@@ -67,7 +67,7 @@ public class Renderer implements Printer {
         screen.add(Message.textCommunication() + "|" + communication.getKey() + "|" + communication.getSenderKey() + "|"
                 + communication.getReceiverKey() + "|" + communication.getUnits() + "|"
                 + Math.round(communication.getPrice()) + "|"
-                + (communication.isFinished() ? Message.ongoingCommunication() : Message.finishedCommunication()));
+                + (communication.isFinished() ? Message.finishedCommunication() : Message.ongoingCommunication()));
     }
 
     @Override
@@ -76,7 +76,7 @@ public class Renderer implements Printer {
                 + "|"
                 + communication.getReceiverKey() + "|" + communication.getUnits() + "|"
                 + Math.round(communication.getPrice()) + "|"
-                + (communication.isFinished() ? Message.ongoingCommunication() : Message.finishedCommunication()));
+                + (communication.isFinished() ? Message.finishedCommunication() : Message.ongoingCommunication()));
     }
 
     @Override
@@ -85,7 +85,7 @@ public class Renderer implements Printer {
                 + "|"
                 + communication.getReceiverKey() + "|" + communication.getUnits() + "|"
                 + Math.round(communication.getPrice()) + "|"
-                + (communication.isFinished() ? Message.ongoingCommunication() : Message.finishedCommunication()));
+                + (communication.isFinished() ? Message.finishedCommunication() : Message.ongoingCommunication()));
     }
 
     public Collection<String> render() {
