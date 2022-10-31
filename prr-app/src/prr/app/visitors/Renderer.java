@@ -13,6 +13,7 @@ import prr.notifications.OffToSilentNotification;
 import prr.notifications.SilentToIdleNotification;
 import prr.terminals.BasicTerminal;
 import prr.terminals.FancyTerminal;
+import prr.terminals.Terminal;
 import prr.visitors.Printer;
 
 public class Renderer implements Printer {
@@ -50,16 +51,34 @@ public class Renderer implements Printer {
 
     @Override
     public void visit(FancyTerminal terminal) {
+        Collection<String> terminalFriends = terminal.getFriends();
+        String friends = "";
+        if (!terminalFriends.isEmpty()) {
+            friends += "|";
+            for (String friend : terminalFriends)
+                friends += friend + ",";
+            friends = friends.substring(0, friends.length() - 1);
+        }
+
         screen.add(Message.fancyTerminal() + "|" + terminal.getKey() + "|" + terminal.getOwnerKey() + "|"
                 + terminal.getStateLabel() + "|"
-                + Math.round(terminal.getPaid()) + "|" + Math.round(terminal.getDebt()));
+                + Math.round(terminal.getPaid()) + "|" + Math.round(terminal.getDebt()) + friends);
     }
 
     @Override
     public void visit(BasicTerminal terminal) {
+        Collection<String> terminalFriends = terminal.getFriends();
+        String friends = "";
+        if (!terminalFriends.isEmpty()) {
+            friends += "|";
+            for (String friend : terminalFriends)
+                friends += friend + ",";
+            friends = friends.substring(0, friends.length() - 1);
+        }
+
         screen.add(Message.basicTerminal() + "|" + terminal.getKey() + "|" + terminal.getOwnerKey() + "|"
                 + terminal.getStateLabel() + "|"
-                + Math.round(terminal.getPaid()) + "|" + Math.round(terminal.getDebt()));
+                + Math.round(terminal.getPaid()) + "|" + Math.round(terminal.getDebt()) + friends);
     }
 
     @Override
