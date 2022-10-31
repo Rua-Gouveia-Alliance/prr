@@ -24,7 +24,8 @@ public class Renderer implements Printer {
         screen.add(Message.client() + "|" + client.getKey() + "|" + client.getName() + "|" + client.getNif() + "|"
                 + client.getTypeLabel() + "|"
                 + (client.getActiveNotifications() ? Message.activeNotifications() : Message.inactiveNotifications())
-                + "|" + client.getTerminalCount() + "|" + client.getPaid() + "|" + client.getDebt());
+                + "|" + client.getTerminalCount() + "|" + Math.round(client.getPaid()) + "|"
+                + Math.round(client.getDebt()));
     }
 
     @Override
@@ -51,20 +52,21 @@ public class Renderer implements Printer {
     public void visit(FancyTerminal terminal) {
         screen.add(Message.fancyTerminal() + "|" + terminal.getKey() + "|" + terminal.getOwnerKey() + "|"
                 + terminal.getStateLabel() + "|"
-                + terminal.getPaid() + "|" + terminal.getDebt());
+                + Math.round(terminal.getPaid()) + "|" + Math.round(terminal.getDebt()));
     }
 
     @Override
     public void visit(BasicTerminal terminal) {
         screen.add(Message.basicTerminal() + "|" + terminal.getKey() + "|" + terminal.getOwnerKey() + "|"
                 + terminal.getStateLabel() + "|"
-                + terminal.getPaid() + "|" + terminal.getDebt());
+                + Math.round(terminal.getPaid()) + "|" + Math.round(terminal.getDebt()));
     }
 
     @Override
     public void visit(TextCommunication communication) {
         screen.add(Message.textCommunication() + "|" + communication.getKey() + "|" + communication.getSenderKey() + "|"
-                + communication.getReceiverKey() + "|" + communication.getUnits() + "|" + communication.getPrice() + "|"
+                + communication.getReceiverKey() + "|" + communication.getUnits() + "|"
+                + Math.round(communication.getPrice()) + "|"
                 + (communication.isFinished() ? Message.ongoingCommunication() : Message.finishedCommunication()));
     }
 
@@ -72,7 +74,8 @@ public class Renderer implements Printer {
     public void visit(VideoCommunication communication) {
         screen.add(Message.videoCommunication() + "|" + communication.getKey() + "|" + communication.getSenderKey()
                 + "|"
-                + communication.getReceiverKey() + "|" + communication.getUnits() + "|" + communication.getPrice() + "|"
+                + communication.getReceiverKey() + "|" + communication.getUnits() + "|"
+                + Math.round(communication.getPrice()) + "|"
                 + (communication.isFinished() ? Message.ongoingCommunication() : Message.finishedCommunication()));
     }
 
@@ -80,7 +83,8 @@ public class Renderer implements Printer {
     public void visit(VoiceCommunication communication) {
         screen.add(Message.voiceCommunication() + "|" + communication.getKey() + "|" + communication.getSenderKey()
                 + "|"
-                + communication.getReceiverKey() + "|" + communication.getUnits() + "|" + communication.getPrice() + "|"
+                + communication.getReceiverKey() + "|" + communication.getUnits() + "|"
+                + Math.round(communication.getPrice()) + "|"
                 + (communication.isFinished() ? Message.ongoingCommunication() : Message.finishedCommunication()));
     }
 

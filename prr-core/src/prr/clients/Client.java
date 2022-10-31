@@ -95,22 +95,22 @@ public class Client implements Serializable, Printable, Observer {
         return this.activeNotifications;
     }
 
-    public long getDebt() {
-        long debt = 0;
+    public double getDebt() {
+        double debt = 0;
         for (Terminal terminal : this.terminals)
             debt += terminal.getDebt();
         return debt;
     }
 
-    public long getPaid() {
-        long paid = 0;
+    public double getPaid() {
+        double paid = 0;
         for (Terminal terminal : this.terminals)
             paid += terminal.getPaid();
         return paid;
     }
 
-    public long getBalance() {
-        long balance = 0;
+    public double getBalance() {
+        double balance = 0;
         for (Terminal terminal : this.terminals)
             balance += terminal.getBalance();
         return balance;

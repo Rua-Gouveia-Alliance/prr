@@ -186,7 +186,7 @@ public class Network implements Serializable {
      * @param key the key that identifies the client
      * @throws ClientDoesntExistException if the given key can't be found
      */
-    public long getClientDebt(String key) throws ClientDoesntExistException {
+    public double getClientDebt(String key) throws ClientDoesntExistException {
         return getClient(key).getDebt();
     }
 
@@ -196,7 +196,7 @@ public class Network implements Serializable {
      * @param key the key that identifies the client
      * @throws ClientDoesntExistException if the given key can't be found
      */
-    public long getClientPayments(String key) throws ClientDoesntExistException {
+    public double getClientPayments(String key) throws ClientDoesntExistException {
         return getClient(key).getPaid();
     }
 

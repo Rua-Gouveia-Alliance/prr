@@ -270,12 +270,12 @@ abstract public class Terminal implements Serializable, Printable, Subject {
         return this.currentCommunication;
     }
 
-    public long getBalance() {
+    public double getBalance() {
         return getPaid() - getDebt();
     }
 
-    public long getDebt() {
-        long total = 0;
+    public double getDebt() {
+        double total = 0;
         for (Communication c : madeCommunications.values()) {
             if (!c.isPaid())
                 total += c.getPrice();
@@ -284,8 +284,8 @@ abstract public class Terminal implements Serializable, Printable, Subject {
         return total;
     }
 
-    public long getPaid() {
-        long total = 0;
+    public double getPaid() {
+        double total = 0;
         for (Communication c : madeCommunications.values()) {
             if (c.isPaid())
                 total += c.getPrice();
