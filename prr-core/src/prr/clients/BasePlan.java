@@ -14,6 +14,14 @@ public class BasePlan extends ClientPlan {
     @Serial
     private static final long serialVersionUID = 202222102220L;
 
+    private final int NORMAL_VOICE = 20;
+    private final int GOLD_VOICE = 10;
+    private final int PLATINUM_VOICE = 10;
+
+    private final int NORMAL_VIDEO = 30;
+    private final int GOLD_VIDEO = 20;
+    private final int PLATINUM_VIDEO = 10;
+
     @Override
     public long getPrice(TextCommunication text, Normal type, boolean isFriend) {
         if (text.getUnits() < 50)
@@ -39,32 +47,44 @@ public class BasePlan extends ClientPlan {
 
     @Override
     public long getPrice(VoiceCommunication communication, Normal type, boolean isFriend) {
-        return 20;
+        if (isFriend)
+            return NORMAL_VOICE * 0.5;
+        return NORMAL_VOICE;
     }
 
     @Override
     public long getPrice(VoiceCommunication communication, Gold type, boolean isFriend) {
-        return 10;
+        if (isFriend)
+            return GOLD_VOICE * 0.5;
+        return GOLD_VOICE;
     }
 
     @Override
     public long getPrice(VoiceCommunication communication, Platinum type, boolean isFriend) {
-        return 10;
+        if (isFriend)
+            return PLATINUM_VOICE * 0.5;
+        return PLATINUM_VOICE;
     }
 
     @Override
     public long getPrice(VideoCommunication communication, Normal type, boolean isFriend) {
-        return 30;
+        if (isFriend)
+            return NORMAL_VIDEO * 0.5;
+        return NORMAL_VIDEO;
     }
 
     @Override
     public long getPrice(VideoCommunication communication, Gold type, boolean isFriend) {
-        return 20;
+        if (isFriend)
+            return GOLD_VIDEO * 0.5;
+        return GOLD_VIDEO;
     }
 
     @Override
     public long getPrice(VideoCommunication communication, Platinum type, boolean isFriend) {
-        return 10;
+        if (isFriend)
+            return PLATINUM_VIDEO * 0.5;
+        return PLATINUM_VIDEO;
     }
 
 }
