@@ -15,7 +15,7 @@ public class Off extends TerminalState {
 
     @Override
     public void toSilence() {
-        terminal.notifyFailedContacts(new OffToSilentNotification(terminal.getKey()));
+        terminal.notifyObservers(new OffToSilentNotification(terminal.getKey()));
         terminal.setState(terminal.getSilenceState());
     }
 
@@ -26,7 +26,7 @@ public class Off extends TerminalState {
 
     @Override
     public void toOn() {
-        terminal.notifyFailedContacts(new OffToIdleNotification(terminal.getKey()));
+        terminal.notifyObservers(new OffToIdleNotification(terminal.getKey()));
         terminal.setState(terminal.getIdleState());
     }
 

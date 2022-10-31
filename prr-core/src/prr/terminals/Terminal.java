@@ -9,6 +9,8 @@ import java.util.TreeMap;
 import prr.Network;
 import prr.clients.Client;
 import prr.notifications.Notification;
+import prr.observers.Observer;
+import prr.observers.Subject;
 import prr.communications.Communication;
 import prr.communications.InteractiveCommunication;
 import prr.communications.TextCommunication;
@@ -27,7 +29,7 @@ import prr.visitors.Printer;
 /**
  * Abstract terminal.
  */
-abstract public class Terminal implements Serializable, Printable {
+abstract public class Terminal implements Serializable, Printable, Subject {
 
     /** Serial number for serialization. */
     @Serial
@@ -37,8 +39,8 @@ abstract public class Terminal implements Serializable, Printable {
     private Client owner;
     private TreeMap<Integer, Communication> receivedCommunications = new TreeMap<>();
     private TreeMap<Integer, Communication> madeCommunications = new TreeMap<>();
-    private ArrayList<Client> failedContacts = new ArrayList<>();
     private ArrayList<String> friends = new ArrayList<>();
+    private ArrayList<Observer> observers = new ArrayList<>();
     private InteractiveCommunication currentCommunication;
 
     private final TerminalState busyState = new Busy(this);
@@ -172,15 +174,10 @@ abstract public class Terminal implements Serializable, Printable {
 
     public void receiveText(TextCommunication text) throws FailedContactException {
         if (isOff()) {
-            failedContacts.add((text.getSender()).getOwner());
+            register((text.getSender()).getOwner());
             throw new FailedContactException();
         }
         receivedCommunications.put(text.getKey(), text);
-    }
-
-    public void notifyFailedContacts(Notification notification) {
-        for (Client client : failedContacts)
-            client.deliver(notification);
     }
 
     /**
@@ -257,4 +254,16 @@ abstract public class Terminal implements Serializable, Printable {
             throw new NoOngoingCommunicationException();
         currentCommunication.accept(printer);
     }
+
+    @Override
+    public void register(Observer observer) {
+        observers.add(observer);
+    }
+    
+    @Override
+    public void notifyObservers(Notification notification) {
+        for (Observer observer : observers)
+            observer.update(notification);
+    }
+
 }

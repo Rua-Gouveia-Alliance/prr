@@ -4,6 +4,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Observer;
 import java.util.StringJoiner;
 
 import prr.terminals.Terminal;
@@ -21,7 +22,7 @@ import prr.notifications.Notification;
 import prr.notifications.DeliveryMethod;
 import prr.notifications.InAppNotifications;
 
-public class Client implements Serializable, Printable {
+public class Client implements Serializable, Printable, Observer {
 
     @Serial
     private static final long serialVersionUID = 202217101700L;
@@ -183,7 +184,8 @@ public class Client implements Serializable, Printable {
         notifications.add(notification);
     }
 
-    public void deliver(Notification notification) {
+    @Override
+    public void update(Notification notification) {
         deliveryMethod.deliver(notification);
     }
 
