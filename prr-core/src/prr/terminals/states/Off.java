@@ -15,7 +15,7 @@ public class Off extends TerminalState {
 
     @Override
     public void toSilence() {
-        terminal.notifyObservers(new OffToSilentNotification(terminal.getKey()));
+        terminal.notifyTextCommunicationObservers(new OffToSilentNotification(terminal.getKey()));
         terminal.setState(terminal.getSilenceState());
     }
 
@@ -26,14 +26,13 @@ public class Off extends TerminalState {
 
     @Override
     public void toOn() {
-        terminal.notifyObservers(new OffToIdleNotification(terminal.getKey()));
+        terminal.notifyAllObservers(new OffToIdleNotification(terminal.getKey()));
         terminal.setState(terminal.getIdleState());
     }
 
     @Override
     public void receiveCommunication() throws BusyTerminalException, OffTerminalException, SilencedTerminalException {
         // TODO Auto-generated method stub
-
     }
 
     @Override

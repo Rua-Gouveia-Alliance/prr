@@ -40,7 +40,8 @@ abstract public class Terminal implements Serializable, Printable, Subject {
     private TreeMap<Integer, Communication> receivedCommunications = new TreeMap<>();
     private TreeMap<Integer, Communication> madeCommunications = new TreeMap<>();
     private ArrayList<String> friends = new ArrayList<>();
-    private ArrayList<Observer> observers = new ArrayList<>();
+    private ArrayList<Observer> textCommunicationObservers = new ArrayList<>();
+    private ArrayList<Observer> interactiveCommunicationObservers = new ArrayList<>();
     private InteractiveCommunication currentCommunication;
 
     private final TerminalState busyState = new Busy(this);
@@ -174,7 +175,7 @@ abstract public class Terminal implements Serializable, Printable, Subject {
 
     public void receiveText(TextCommunication text) throws FailedContactException {
         if (isOff()) {
-            register((text.getSender()).getOwner());
+            registerTextCommunicationObserver((text.getSender()).getOwner());
             throw new FailedContactException();
         }
         receivedCommunications.put(text.getKey(), text);
@@ -255,15 +256,47 @@ abstract public class Terminal implements Serializable, Printable, Subject {
         currentCommunication.accept(printer);
     }
 
-    @Override
-    public void register(Observer observer) {
-        observers.add(observer);
+    private void clearInteractiveCommunicationObservers() {
+        interactiveCommunicationObservers.clear();
     }
-    
+
+    private void clearTextCommunicationObservers() {
+        textCommunicationObservers.clear();
+    }
+
     @Override
-    public void notifyObservers(Notification notification) {
-        for (Observer observer : observers)
+    public void registerInteractiveCommunicationObserver(Observer observer) {
+        interactiveCommunicationObservers.add(observer);
+    }
+
+    @Override
+    public void registerTextCommunicationObserver(Observer observer) {
+        textCommunicationObservers.add(observer);
+    }
+
+    @Override
+    public void notifyAllObservers(Notification notification) {
+        for (Observer observer : textCommunicationObservers)
             observer.update(notification);
+        for (Observer observer : interactiveCommunicationObservers)
+            if (!textCommunicationObservers.contains(observer))
+                observer.update(notification);
+        clearTextCommunicationObservers();
+        clearInteractiveCommunicationObservers();
+    }
+
+    @Override
+    public void notifyInteractiveCommunicationObservers(Notification notification) {
+        for (Observer observer : interactiveCommunicationObservers)
+            observer.update(notification);
+        clearInteractiveCommunicationObservers();
+    }
+
+    @Override
+    public void notifyTextCommunicationObservers(Notification notification) {
+        for (Observer observer : textCommunicationObservers)
+            observer.update(notification);
+        clearTextCommunicationObservers();
     }
 
 }

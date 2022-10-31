@@ -22,7 +22,7 @@ public class Busy extends TerminalState {
 
     @Override
     public void toOn() throws BusyTerminalException {
-        terminal.notifyObservers(new BusyToIdleNotification(terminal.getKey()));
+        terminal.notifyInteractiveCommunicationObservers(new BusyToIdleNotification(terminal.getKey()));
         throw new BusyTerminalException();
     }
 

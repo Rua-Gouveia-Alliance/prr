@@ -4,7 +4,13 @@ import prr.notifications.Notification;
 
 public interface Subject {
 
-    public void register(Observer observer);
+    public void registerInteractiveCommunicationObserver(Observer observer);
 
-    public void notifyObservers(Notification notification);
+    public void registerTextCommunicationObserver(Observer observer);
+
+    public void notifyAllObservers(Notification notification);
+
+    public void notifyInteractiveCommunicationObservers(Notification notification);
+
+    public void notifyTextCommunicationObservers(Notification notification);
 }
