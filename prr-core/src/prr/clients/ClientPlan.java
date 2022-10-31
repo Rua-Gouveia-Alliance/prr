@@ -11,21 +11,21 @@ import prr.communications.VoiceCommunication;
 
 public abstract class ClientPlan implements Serializable {
 
-    public abstract long getPrice(TextCommunication text, Normal type);
+    public abstract long getPrice(TextCommunication text, Normal type, boolean isFriend);
 
-    public abstract long getPrice(TextCommunication text, Gold type);
+    public abstract long getPrice(TextCommunication text, Gold type, boolean isFriend);
 
-    public abstract long getPrice(TextCommunication text, Platinum type);
+    public abstract long getPrice(TextCommunication text, Platinum type, boolean isFriend);
 
-    public abstract long getPrice(VoiceCommunication communication, Normal type);
+    public abstract long getPrice(VoiceCommunication communication, Normal type, boolean isFriend);
 
-    public abstract long getPrice(VoiceCommunication communication, Gold type);
+    public abstract long getPrice(VoiceCommunication communication, Gold type, boolean isFriend);
 
-    public abstract long getPrice(VoiceCommunication communication, Platinum type);
+    public abstract long getPrice(VoiceCommunication communication, Platinum type, boolean isFriend);
 
-    public abstract long getPrice(VideoCommunication communication, Normal type);
+    public abstract long getPrice(VideoCommunication communication, Normal type, boolean isFriend);
 
-    public abstract long getPrice(VideoCommunication communication, Gold type);
+    public abstract long getPrice(VideoCommunication communication, Gold type, boolean isFriend);
 
-    public abstract long getPrice(VideoCommunication communication, Platinum type);
+    public abstract long getPrice(VideoCommunication communication, Platinum type, boolean isFriend);
 }
