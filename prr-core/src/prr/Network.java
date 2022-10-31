@@ -82,7 +82,7 @@ public class Network implements Serializable {
      * Get and increment the communication key tracker
      */
     public int getCommunicationKey() {
-        return communicationKey++;
+        return ++communicationKey;
     }
 
     public TextCommunication newTextCommunication(Terminal sender, Terminal receiver, String message) {
