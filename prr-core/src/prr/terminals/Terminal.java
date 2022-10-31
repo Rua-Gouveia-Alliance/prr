@@ -246,8 +246,14 @@ abstract public class Terminal implements Serializable, Printable, Subject {
             throws OffTerminalException, SilencedTerminalException, BusyTerminalException, InvalidDestinationException;
 
     public double endCommunication(int units) {
+        Terminal receiver = currentCommunication.getReceiver();
         getState().endCommunication();
-        return currentCommunication.endCommunication(units, isFriend(currentCommunication.getReceiver().getKey()));
+        receiver.notifyEndedCommunication();
+        return currentCommunication.endCommunication(units, isFriend(receiver.getKey()));
+    }
+    
+    public void notifyEndedCommunication() {
+        getState().endCommunication();
     }
 
     /**
