@@ -31,7 +31,7 @@ class DoShowClient extends Command<Network> {
                 };
             };
             _receiver.checkClient(key);
-            _receiver.acceptClientPrinter(selector, renderer);
+            _receiver.acceptVerboseClientPrinter(selector, renderer);
             _display.addAll(renderer.render());
             _display.display();
         } catch (ClientDoesntExistException e) {

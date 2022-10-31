@@ -19,6 +19,7 @@ import prr.terminals.BasicTerminal;
 import prr.terminals.Terminal;
 import prr.exceptions.UnrecognizedEntryException;
 import prr.exceptions.UnrecognizedTerminalTypeException;
+import prr.notifications.Notification;
 import prr.exceptions.ClientDoesntExistException;
 import prr.exceptions.ClientExistsException;
 import prr.exceptions.IncorrectTerminalKeyException;
@@ -298,10 +299,25 @@ public class Network implements Serializable {
      * @param selector
      * @param visitor
      */
-    public void acceptClientPrinter(Selector<Client> selector, Printer visitor) {
+    public void acceptSimpleClientPrinter(Selector<Client> selector, Printer visitor) {
         for (Client c : clients.values())
             if (selector.ok(c))
                 c.accept(visitor);
+    }
+
+    /**
+     * Visit selected clients and it's in app notifications with a printer
+     * 
+     * @param selector
+     * @param visitor
+     */
+    public void acceptVerboseClientPrinter(Selector<Client> selector, Printer visitor) {
+        for (Client c : clients.values())
+            if (selector.ok(c)) {
+                c.accept(visitor);
+                for (Notification n : c.getNotifications())
+                    n.accept(visitor);
+            }
     }
 
     /**
