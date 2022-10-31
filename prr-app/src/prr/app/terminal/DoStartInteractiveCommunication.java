@@ -25,7 +25,8 @@ class DoStartInteractiveCommunication extends TerminalCommand {
     @Override
     protected final void execute() throws CommandException {
         try {
-            _receiver.startInteractiveCommunication(Prompt.terminalKey(), Prompt.commType(), _network);
+            _receiver.startInteractiveCommunication(Form.requestString(Prompt.terminalKey()),
+                    Form.requestOption(Prompt.commType(), new String[] { "VOICE", "VIDEO" }), _network);
         } catch (TerminalDoesntExistException e) {
             throw new UnknownTerminalKeyException(e.getKey());
         } catch (InvalidOriginException e) {

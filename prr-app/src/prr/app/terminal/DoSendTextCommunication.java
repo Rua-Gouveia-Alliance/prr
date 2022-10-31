@@ -20,7 +20,7 @@ class DoSendTextCommunication extends TerminalCommand {
     @Override
     protected final void execute() throws CommandException {
         try {
-            _receiver.sendText(Prompt.terminalKey(), Prompt.textMessage(), _network);
+            _receiver.sendText(Form.requestString(Prompt.terminalKey()), Form.requestString(Prompt.textMessage()), _network);
         } catch (TerminalDoesntExistException e) {
             throw new UnknownTerminalKeyException(e.getKey());
         } catch (OffTerminalException e) {
