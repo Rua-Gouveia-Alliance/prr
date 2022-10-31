@@ -17,7 +17,7 @@ public abstract class Communication implements Serializable, Printable {
     private boolean paid = false;
     private boolean finished = false;
     private int units;
-    private long price = 0;
+    private double price = 0;
 
     public Communication(int key, Terminal sender, Terminal receiver, int units) {
         this.key = key;
@@ -46,7 +46,7 @@ public abstract class Communication implements Serializable, Printable {
         return receiver.getKey();
     }
 
-    public long getPrice() {
+    public double getPrice() {
         return price;
     }
 
@@ -74,7 +74,7 @@ public abstract class Communication implements Serializable, Printable {
         this.paid = true;
     }
 
-    public void setPrice(long price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

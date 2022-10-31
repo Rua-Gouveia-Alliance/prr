@@ -171,15 +171,15 @@ public class Client implements Serializable, Printable, Observer {
         return plan;
     }
     
-    public long getPrice(TextCommunication communication, boolean isFriend) {
+    public double getPrice(TextCommunication communication, boolean isFriend) {
         return this.type.getPrice(communication, isFriend);
     }
 
-    public long getPrice(VoiceCommunication communication, boolean isFriend) {
+    public double getPrice(VoiceCommunication communication, boolean isFriend) {
         return this.type.getPrice(communication, isFriend);
     }
 
-    public long getPrice(VideoCommunication communication, boolean isFriend) {
+    public double getPrice(VideoCommunication communication, boolean isFriend) {
         return this.type.getPrice(communication, isFriend);
     }
 

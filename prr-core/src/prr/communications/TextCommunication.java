@@ -5,7 +5,7 @@ import prr.visitors.Printer;
 
 public class TextCommunication extends Communication {
 
-    private String message;
+    private final String message;
 
     public TextCommunication(int key, Terminal sender, Terminal receiver, String message) {
         super(key, sender, receiver, message.length());

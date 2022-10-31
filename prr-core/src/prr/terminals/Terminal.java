@@ -239,7 +239,7 @@ abstract public class Terminal implements Serializable, Printable, Subject {
     public abstract void receiveVideoCommunication(VideoCommunication communication)
             throws OffTerminalException, SilencedTerminalException, BusyTerminalException, InvalidDestinationException;
 
-    public long endCommunication(int units) {
+    public double endCommunication(int units) {
         state.endCommunication();
         return currentCommunication.endCommunication(units, isFriend(currentCommunication.getReceiver().getKey()));
     }

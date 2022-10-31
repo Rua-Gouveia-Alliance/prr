@@ -11,17 +11,17 @@ public class Gold extends ClientType {
     }
     
     @Override
-    public long getPrice(TextCommunication communication, boolean isFriend) {
+    public double getPrice(TextCommunication communication, boolean isFriend) {
         return client.getPlan().getPrice(communication, this, isFriend);
     }
 
     @Override
-    public long getPrice(VideoCommunication communication, boolean isFriend) {
+    public double getPrice(VideoCommunication communication, boolean isFriend) {
         return client.getPlan().getPrice(communication, this, isFriend);
     }
 
     @Override
-    public long getPrice(VoiceCommunication communication, boolean isFriend) {
+    public double getPrice(VoiceCommunication communication, boolean isFriend) {
         return client.getPlan().getPrice(communication, this, isFriend);
     }
 
