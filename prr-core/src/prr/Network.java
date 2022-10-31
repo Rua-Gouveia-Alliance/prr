@@ -87,8 +87,8 @@ public class Network implements Serializable {
         return ++communicationKey;
     }
 
-    public TextCommunication newTextCommunication(Terminal sender, Terminal receiver, String message) {
-        return new TextCommunication(getCommunicationKey(), sender, receiver, message);
+    public TextCommunication newTextCommunication(Terminal sender, Terminal receiver, String message, boolean isFriend) {
+        return new TextCommunication(getCommunicationKey(), sender, receiver, message, isFriend);
     }
 
     public VoiceCommunication newVoiceCommunication(Terminal sender, Terminal receiver) {

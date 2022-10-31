@@ -182,7 +182,7 @@ abstract public class Terminal implements Serializable, Printable, Subject {
     public void sendText(String receiverKey, String text, Network network)
             throws TerminalDoesntExistException, OffTerminalException {
         Terminal receiver = network.getTerminal(receiverKey);
-        TextCommunication communication = network.newTextCommunication(this, receiver, text);
+        TextCommunication communication = network.newTextCommunication(this, receiver, text, isFriend(receiverKey));
         receiver.receiveText(communication);
         registerMadeCommunication(communication);
         getOwner().increaseTextCount();

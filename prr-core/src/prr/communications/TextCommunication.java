@@ -7,9 +7,10 @@ public class TextCommunication extends Communication {
 
     private final String message;
 
-    public TextCommunication(int key, Terminal sender, Terminal receiver, String message) {
+    public TextCommunication(int key, Terminal sender, Terminal receiver, String message, boolean isFriend) {
         super(key, sender, receiver, message.length());
         this.message = message;
+        updatePrice(isFriend);
     }
 
     @Override
