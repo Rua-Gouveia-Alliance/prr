@@ -2,6 +2,7 @@ package prr.app.visitors;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 import prr.clients.Client;
 import prr.communications.TextCommunication;
@@ -51,7 +52,8 @@ public class Renderer implements Printer {
 
     @Override
     public void visit(FancyTerminal terminal) {
-        Collection<String> terminalFriends = terminal.getFriends();
+        ArrayList<String> terminalFriends = terminal.getFriends();
+        Collections.sort(terminalFriends);
         String friends = "";
         if (!terminalFriends.isEmpty()) {
             friends += "|";
@@ -67,7 +69,9 @@ public class Renderer implements Printer {
 
     @Override
     public void visit(BasicTerminal terminal) {
-        Collection<String> terminalFriends = terminal.getFriends();
+        //TODO faz sentido? Melhorar codigo tmb Acho que sqe os terminal friends tao a ser alterados e isso e mau
+        ArrayList<String> terminalFriends = terminal.getFriends();
+        Collections.sort(terminalFriends);
         String friends = "";
         if (!terminalFriends.isEmpty()) {
             friends += "|";
