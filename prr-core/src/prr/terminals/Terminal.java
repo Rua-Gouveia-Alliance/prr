@@ -126,6 +126,10 @@ abstract public class Terminal implements Serializable, Printable, Subject {
         madeCommunications.put(communication.getKey(), communication);
     }
 
+    public void setCurrentCommunication(InteractiveCommunication currentCommunication) {
+        this.currentCommunication = currentCommunication;
+    }
+
     public void toSilence() throws SilencedTerminalException {
         state.toSilence();
     }
@@ -209,6 +213,7 @@ abstract public class Terminal implements Serializable, Printable, Subject {
         VoiceCommunication communication = network.newVoiceCommunication(this, receiver);
         getState().startCommunication();
         receiver.receiveVoiceCommunication(communication);
+        setCurrentCommunication(communication);
         registerMadeCommunication(communication);
         getOwner().resetCount();
     }
@@ -229,6 +234,7 @@ abstract public class Terminal implements Serializable, Printable, Subject {
             throw new SilencedTerminalException(getKey());
         }
         getState().startCommunication();
+        setCurrentCommunication(communication);
         registerReceivedCommunication(communication);
     }
 
@@ -240,7 +246,7 @@ abstract public class Terminal implements Serializable, Printable, Subject {
             throws OffTerminalException, SilencedTerminalException, BusyTerminalException, InvalidDestinationException;
 
     public double endCommunication(int units) {
-        state.endCommunication();
+        getState().endCommunication();
         return currentCommunication.endCommunication(units, isFriend(currentCommunication.getReceiver().getKey()));
     }
 

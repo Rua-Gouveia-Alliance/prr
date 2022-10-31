@@ -26,6 +26,7 @@ public class FancyTerminal extends Terminal {
         VideoCommunication communication = network.newVideoCommunication(this, receiver);
         getState().startCommunication();
         receiver.receiveVideoCommunication(communication);
+        setCurrentCommunication(communication);
         registerMadeCommunication(communication);
         getOwner().increaseVideoCount();
 
@@ -47,6 +48,7 @@ public class FancyTerminal extends Terminal {
             throw new SilencedTerminalException(getKey());
         }
         getState().startCommunication();
+        setCurrentCommunication(communication);
         registerReceivedCommunication(communication);
     }
 }
