@@ -24,6 +24,7 @@ public class FancyTerminal extends Terminal {
     protected void startVideoCommunication(Terminal receiver, Network network) throws InvalidDestinationException,
             BusyTerminalException, OffTerminalException, SilencedTerminalException {
         VideoCommunication communication = network.newVideoCommunication(this, receiver);
+        getState().startCommunication();
         receiver.receiveVideoCommunication(communication);
         registerMadeCommunication(communication);
         getOwner().increaseVideoCount();
@@ -45,6 +46,7 @@ public class FancyTerminal extends Terminal {
             registerInteractiveCommunicationObserver((communication.getSender()).getOwner());
             throw new SilencedTerminalException(getKey());
         }
+        getState().startCommunication();
         registerReceivedCommunication(communication);
     }
 }

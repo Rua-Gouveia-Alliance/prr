@@ -207,6 +207,7 @@ abstract public class Terminal implements Serializable, Printable, Subject {
     private void startVoiceCommunication(Terminal receiver, Network network)
             throws OffTerminalException, BusyTerminalException, SilencedTerminalException {
         VoiceCommunication communication = network.newVoiceCommunication(this, receiver);
+        getState().startCommunication();
         receiver.receiveVoiceCommunication(communication);
         registerMadeCommunication(communication);
         getOwner().resetCount();
@@ -214,6 +215,7 @@ abstract public class Terminal implements Serializable, Printable, Subject {
 
     public void receiveVoiceCommunication(VoiceCommunication communication)
             throws OffTerminalException, SilencedTerminalException, BusyTerminalException {
+        // TODO esta merda n esta la mto bem
         if (isOff()) {
             registerInteractiveCommunicationObserver((communication.getSender()).getOwner());
             throw new OffTerminalException(getKey());
@@ -226,6 +228,7 @@ abstract public class Terminal implements Serializable, Printable, Subject {
             registerInteractiveCommunicationObserver((communication.getSender()).getOwner());
             throw new SilencedTerminalException(getKey());
         }
+        getState().startCommunication();
         registerReceivedCommunication(communication);
     }
 
@@ -237,6 +240,7 @@ abstract public class Terminal implements Serializable, Printable, Subject {
             throws OffTerminalException, SilencedTerminalException, BusyTerminalException, InvalidDestinationException;
 
     public long endCommunication(int units) {
+        state.endCommunication();
         return currentCommunication.endCommunication(units, isFriend(currentCommunication.getReceiver().getKey()));
     }
 
@@ -248,6 +252,8 @@ abstract public class Terminal implements Serializable, Printable, Subject {
      *         it was the originator of this communication.
      **/
     public boolean canEndCurrentCommunication() {
+        if (currentCommunication == null)
+            return false;
         return isBusy() && madeCommunications.keySet().contains(currentCommunication.getKey());
     }
 
