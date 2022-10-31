@@ -1,6 +1,8 @@
 package prr.app.terminal;
 
 import prr.Network;
+import prr.app.visitors.Renderer;
+import prr.exceptions.NoOngoingCommunicationException;
 import prr.terminals.Terminal;
 import pt.tecnico.uilib.menus.CommandException;
 
@@ -15,6 +17,13 @@ class DoShowOngoingCommunication extends TerminalCommand {
 
     @Override
     protected final void execute() throws CommandException {
-        _display.popup(_receiver.getCurrentCommunication());
+        try {
+            Renderer renderer = new Renderer();
+            _receiver.acceptCurrentCommunicationPrinter(renderer);
+            _display.addAll(renderer.render());
+            _display.display();
+        } catch (NoOngoingCommunicationException e) {
+            _display.popup(Message.noOngoingCommunication());
+        }
     }
 }

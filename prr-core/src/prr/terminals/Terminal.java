@@ -16,11 +16,13 @@ import prr.exceptions.BusyTerminalException;
 import prr.exceptions.FailedContactException;
 import prr.exceptions.IdleTerminalException;
 import prr.exceptions.InvalidCommunicationException;
+import prr.exceptions.NoOngoingCommunicationException;
 import prr.exceptions.OffTerminalException;
 import prr.exceptions.SilencedTerminalException;
 import prr.exceptions.TerminalDoesntExistException;
 import prr.terminals.states.*;
 import prr.visitors.Printable;
+import prr.visitors.Printer;
 
 /**
  * Abstract terminal.
@@ -250,4 +252,9 @@ abstract public class Terminal implements Serializable, Printable {
         return receivedCommunications.size() + madeCommunications.size();
     }
 
+    public void acceptCurrentCommunicationPrinter(Printer printer) throws NoOngoingCommunicationException {
+        if (currentCommunication == null || currentCommunication.isFinished())
+            throw new NoOngoingCommunicationException();
+        currentCommunication.accept(printer);
+    }
 }
