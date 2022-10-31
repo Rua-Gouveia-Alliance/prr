@@ -12,7 +12,7 @@ public class Silence extends TerminalState {
 
     @Override
     public void toSilence() throws SilencedTerminalException {
-        throw new SilencedTerminalException();
+        throw new SilencedTerminalException(terminal.getKey());
     }
 
     @Override
@@ -23,12 +23,12 @@ public class Silence extends TerminalState {
     @Override
     public void toOn() throws SilencedTerminalException {
         terminal.notifyInteractiveCommunicationObservers(new SilentToIdleNotification(terminal.getKey()));
-        throw new SilencedTerminalException();
+        throw new SilencedTerminalException(terminal.getKey());
     }
 
     @Override
     public void receiveCommunication() throws SilencedTerminalException {
-        throw new SilencedTerminalException();
+        throw new SilencedTerminalException(terminal.getKey());
     }
 
     @Override

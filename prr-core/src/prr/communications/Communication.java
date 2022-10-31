@@ -78,6 +78,6 @@ public abstract class Communication implements Serializable, Printable {
         this.price = price;
     }
 
-    public abstract void updatePrice();
+    public abstract void updatePrice(boolean isFriend);
 
 }

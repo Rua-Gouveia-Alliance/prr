@@ -19,11 +19,11 @@ public abstract class ClientType implements Serializable {
         this.client = client;
     }
 
-    abstract public long getPrice(TextCommunication communication);
+    abstract public long getPrice(TextCommunication communication, boolean isFriend);
 
-    abstract public long getPrice(VoiceCommunication communication);
+    abstract public long getPrice(VoiceCommunication communication, boolean isFriend);
 
-    abstract public long getPrice(VideoCommunication communication);
+    abstract public long getPrice(VideoCommunication communication, boolean isFriend);
 
     abstract public String getLabel();
 

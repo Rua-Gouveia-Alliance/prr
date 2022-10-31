@@ -21,7 +21,7 @@ public class Off extends TerminalState {
 
     @Override
     public void toOff() throws OffTerminalException {
-        throw new OffTerminalException();
+        throw new OffTerminalException(terminal.getKey());
     }
 
     @Override
@@ -37,7 +37,7 @@ public class Off extends TerminalState {
 
     @Override
     public void startCommunication() throws OffTerminalException {
-        throw new OffTerminalException();
+        throw new OffTerminalException(terminal.getKey());
     }
 
     @Override
