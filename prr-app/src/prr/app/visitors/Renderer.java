@@ -24,7 +24,7 @@ public class Renderer implements Printer {
         screen.add(Message.client() + "|" + client.getKey() + "|" + client.getName() + "|" + client.getNif() + "|"
                 + client.getTypeLabel() + "|"
                 + (client.getActiveNotifications() ? Message.activeNotifications() : Message.inactiveNotifications())
-                + "|" + client.getTerminalCount() + "|" + client.getPaid() + client.getDebt());
+                + "|" + client.getTerminalCount() + "|" + client.getPaid() + "|" + client.getDebt());
     }
 
     @Override
@@ -70,14 +70,16 @@ public class Renderer implements Printer {
 
     @Override
     public void visit(VideoCommunication communication) {
-        screen.add(Message.videoCommunication() + "|" + communication.getKey() + "|" + communication.getSenderKey() + "|"
+        screen.add(Message.videoCommunication() + "|" + communication.getKey() + "|" + communication.getSenderKey()
+                + "|"
                 + communication.getReceiverKey() + "|" + communication.getUnits() + "|" + communication.getPrice() + "|"
                 + (communication.isFinished() ? Message.ongoingCommunication() : Message.finishedCommunication()));
     }
 
     @Override
     public void visit(VoiceCommunication communication) {
-        screen.add(Message.voiceCommunication() + "|" + communication.getKey() + "|" + communication.getSenderKey() + "|"
+        screen.add(Message.voiceCommunication() + "|" + communication.getKey() + "|" + communication.getSenderKey()
+                + "|"
                 + communication.getReceiverKey() + "|" + communication.getUnits() + "|" + communication.getPrice() + "|"
                 + (communication.isFinished() ? Message.ongoingCommunication() : Message.finishedCommunication()));
     }
