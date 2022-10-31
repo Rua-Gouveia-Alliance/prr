@@ -26,7 +26,6 @@ class DoShowTerminalsWithPositiveBalance extends Command<Network> {
             };
         };
         _receiver.acceptTerminalPrinter(selector, renderer);
-        _display.addAll(renderer.render());
-        _display.display();
+        _display.popup(renderer.render());
     }
 }

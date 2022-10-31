@@ -4,10 +4,9 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Observer;
-import java.util.StringJoiner;
 
 import prr.terminals.Terminal;
+import prr.observers.Observer;
 import prr.visitors.Printable;
 import prr.visitors.Printer;
 import prr.clients.types.ClientType;
@@ -171,17 +170,17 @@ public class Client implements Serializable, Printable, Observer {
     public ClientPlan getPlan() {
         return plan;
     }
-
-    public long getPrice(TextCommunication communication) {
-        return this.type.getPrice(communication);
+    
+    public long getPrice(TextCommunication communication, boolean isFriend) {
+        return this.type.getPrice(communication, isFriend);
     }
 
-    public long getPrice(VoiceCommunication communication) {
-        return this.type.getPrice(communication);
+    public long getPrice(VoiceCommunication communication, boolean isFriend) {
+        return this.type.getPrice(communication, isFriend);
     }
 
-    public long getPrice(VideoCommunication communication) {
-        return this.type.getPrice(communication);
+    public long getPrice(VideoCommunication communication, boolean isFriend) {
+        return this.type.getPrice(communication, isFriend);
     }
 
     public void queueNotification(Notification notification) {

@@ -31,8 +31,7 @@ class DoShowCommunicationsFromClient extends Command<Network> {
             };
             _receiver.checkClient(key);
             _receiver.acceptMadeCommunicationsPrinter(selector, renderer);
-            _display.addAll(renderer.render());
-            _display.display();
+            _display.popup(renderer.render());
         } catch (ClientDoesntExistException e) {
             throw new UnknownClientKeyException(e.getKey());
         }

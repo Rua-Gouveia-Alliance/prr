@@ -17,23 +17,23 @@ public class Busy extends TerminalState {
 
     @Override
     public void toOff() throws BusyTerminalException {
-        throw new BusyTerminalException();
+        throw new BusyTerminalException(terminal.getKey());
     }
 
     @Override
     public void toOn() throws BusyTerminalException {
         terminal.notifyInteractiveCommunicationObservers(new BusyToIdleNotification(terminal.getKey()));
-        throw new BusyTerminalException();
+        throw new BusyTerminalException(terminal.getKey());
     }
 
     @Override
     public void startCommunication() throws BusyTerminalException {
-        throw new BusyTerminalException();
+        throw new BusyTerminalException(terminal.getKey());
     }
 
     @Override
     public void receiveCommunication() throws BusyTerminalException {
-        throw new BusyTerminalException();
+        throw new BusyTerminalException(terminal.getKey());
     }
 
     @Override

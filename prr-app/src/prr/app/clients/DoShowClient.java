@@ -32,8 +32,7 @@ class DoShowClient extends Command<Network> {
             };
             _receiver.checkClient(key);
             _receiver.acceptVerboseClientPrinter(selector, renderer);
-            _display.addAll(renderer.render());
-            _display.display();
+            _display.popup(renderer.render());
         } catch (ClientDoesntExistException e) {
             throw new UnknownClientKeyException(e.getKey());
         }

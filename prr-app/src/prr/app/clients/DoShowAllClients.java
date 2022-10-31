@@ -24,7 +24,6 @@ class DoShowAllClients extends Command<Network> {
         Selector<Client> selector = new Selector<>() {
         };
         _receiver.acceptSimpleClientPrinter(selector, renderer);
-        _display.addAll(renderer.render());
-        _display.display();
+        _display.popup(renderer.render());
     }
 }

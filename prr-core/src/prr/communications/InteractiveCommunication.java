@@ -8,10 +8,10 @@ public abstract class InteractiveCommunication extends Communication {
         super(key, sender, receiver, 0);
     }
 
-    public long endCommunication(int duration) {
+    public long endCommunication(int duration, boolean isFriend) {
         this.finish();
         this.setUnits(duration);
-        this.updatePrice();
+        this.updatePrice(isFriend);
         return getPrice();
     }
 

@@ -24,7 +24,7 @@ public class Idle extends TerminalState {
 
     @Override
     public void toOn() throws IdleTerminalException {
-        throw new IdleTerminalException();
+        throw new IdleTerminalException(terminal.getKey());
     }
 
     @Override

@@ -14,6 +14,8 @@ import prr.visitors.Selector;
 import prr.clients.Client;
 import prr.communications.Communication;
 import prr.communications.TextCommunication;
+import prr.communications.VideoCommunication;
+import prr.communications.VoiceCommunication;
 import prr.terminals.FancyTerminal;
 import prr.terminals.BasicTerminal;
 import prr.terminals.Terminal;
@@ -87,6 +89,14 @@ public class Network implements Serializable {
 
     public TextCommunication newTextCommunication(Terminal sender, Terminal receiver, String message) {
         return new TextCommunication(getCommunicationKey(), sender, receiver, message);
+    }
+
+    public VoiceCommunication newVoiceCommunication(Terminal sender, Terminal receiver) {
+        return new VoiceCommunication(getCommunicationKey(), sender, receiver);
+    }
+
+    public VideoCommunication newVideoCommunication(Terminal sender, Terminal receiver) {
+        return new VideoCommunication(getCommunicationKey(), sender, receiver);
     }
 
     /**

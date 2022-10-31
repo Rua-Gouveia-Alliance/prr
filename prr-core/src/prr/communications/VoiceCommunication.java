@@ -14,7 +14,7 @@ public class VoiceCommunication extends InteractiveCommunication {
     }
 
     @Override
-    public void updatePrice() {
-        setPrice(getSender().getOwner().getPrice(this));
+    public void updatePrice(boolean isFriend) {
+        setPrice(getSender().getOwner().getPrice(this, isFriend));
     }
 }

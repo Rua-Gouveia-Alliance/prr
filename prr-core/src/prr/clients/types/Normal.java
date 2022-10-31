@@ -11,18 +11,18 @@ public class Normal extends ClientType {
     }
 
     @Override
-    public long getPrice(TextCommunication communication) {
-        return client.getPlan().getPrice(communication, this);
+    public long getPrice(TextCommunication communication, boolean isFriend) {
+        return client.getPlan().getPrice(communication, this, isFriend);
     }
 
     @Override
-    public long getPrice(VoiceCommunication communication) {
-        return client.getPlan().getPrice(communication, this);
+    public long getPrice(VoiceCommunication communication, boolean isFriend) {
+        return client.getPlan().getPrice(communication, this, isFriend);
     }
 
     @Override
-    public long getPrice(VideoCommunication communication) {
-        return client.getPlan().getPrice(communication, this);
+    public long getPrice(VideoCommunication communication, boolean isFriend) {
+        return client.getPlan().getPrice(communication, this, isFriend);
     }
 
     @Override

@@ -22,7 +22,6 @@ class DoShowAllCommunications extends Command<Network> {
         Selector<Client> selector = new Selector<>() {
         };
         _receiver.acceptMadeCommunicationsPrinter(selector, renderer);
-        _display.addAll(renderer.render());
-        _display.display();
+        _display.popup(renderer.render());
     }
 }

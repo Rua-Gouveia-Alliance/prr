@@ -3,6 +3,7 @@ package prr.app.terminal;
 import prr.Network;
 import prr.terminals.Terminal;
 import prr.app.exceptions.UnknownTerminalKeyException;
+import prr.exceptions.OffTerminalException;
 import prr.exceptions.TerminalDoesntExistException;
 import pt.tecnico.uilib.forms.Form;
 import pt.tecnico.uilib.menus.CommandException;
@@ -19,9 +20,11 @@ class DoSendTextCommunication extends TerminalCommand {
     @Override
     protected final void execute() throws CommandException {
         try {
-            _receiver.sendText(Prompt.terminalKey(), Prompt.textMessage(), _network);
+            _receiver.sendText(Form.requestString(Prompt.terminalKey()), Form.requestString(Prompt.textMessage()), _network);
         } catch (TerminalDoesntExistException e) {
             throw new UnknownTerminalKeyException(e.getKey());
+        } catch (OffTerminalException e) {
+            _display.popup(Message.destinationIsOff(e.getKey()));
         }
     }
 }

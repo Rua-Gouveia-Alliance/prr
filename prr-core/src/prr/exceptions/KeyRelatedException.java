@@ -1,7 +1,7 @@
 package prr.exceptions;
 
 /**
- * Basic exception class for client key related issues.
+ * Basic exception class for key related issues.
  * Mustn't be instaciated.
  */
 public abstract class KeyRelatedException extends Exception {

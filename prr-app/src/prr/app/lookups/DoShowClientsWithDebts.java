@@ -25,8 +25,7 @@ class DoShowClientsWithDebts extends Command<Network> {
                 return client.getDebt() > 0;
             };
         };
-        _receiver.acceptClientPrinter(selector, renderer);
-        _display.addAll(renderer.render());
-        _display.display();
+        _receiver.acceptSimpleClientPrinter(selector, renderer);
+        _display.popup(renderer.render());
     }
 }

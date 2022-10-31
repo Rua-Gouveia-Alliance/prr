@@ -20,8 +20,7 @@ class DoShowOngoingCommunication extends TerminalCommand {
         try {
             Renderer renderer = new Renderer();
             _receiver.acceptCurrentCommunicationPrinter(renderer);
-            _display.addAll(renderer.render());
-            _display.display();
+            _display.popup(renderer.render());
         } catch (NoOngoingCommunicationException e) {
             _display.popup(Message.noOngoingCommunication());
         }

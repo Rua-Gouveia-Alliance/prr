@@ -14,10 +14,13 @@ import prr.observers.Subject;
 import prr.communications.Communication;
 import prr.communications.InteractiveCommunication;
 import prr.communications.TextCommunication;
+import prr.communications.VideoCommunication;
+import prr.communications.VoiceCommunication;
 import prr.exceptions.BusyTerminalException;
-import prr.exceptions.FailedContactException;
 import prr.exceptions.IdleTerminalException;
 import prr.exceptions.InvalidCommunicationException;
+import prr.exceptions.InvalidDestinationException;
+import prr.exceptions.InvalidOriginException;
 import prr.exceptions.NoOngoingCommunicationException;
 import prr.exceptions.OffTerminalException;
 import prr.exceptions.SilencedTerminalException;
@@ -115,6 +118,14 @@ abstract public class Terminal implements Serializable, Printable, Subject {
         return madeCommunications.values();
     }
 
+    public void registerReceivedCommunication(Communication communication) {
+        receivedCommunications.put(communication.getKey(), communication);
+    }
+
+    public void registerMadeCommunication(Communication communication) {
+        madeCommunications.put(communication.getKey(), communication);
+    }
+
     public void toSilence() throws SilencedTerminalException {
         state.toSilence();
     }
@@ -143,6 +154,10 @@ abstract public class Terminal implements Serializable, Printable, Subject {
         return getState().equals(getIdleState());
     }
 
+    public boolean isFriend(String key) {
+        return friends.contains(key);
+    }
+
     public void addFriend(String friend) {
         if (!friends.contains(friend))
             friends.add(friend);
@@ -161,24 +176,72 @@ abstract public class Terminal implements Serializable, Printable, Subject {
     }
 
     public void sendText(String receiverKey, String text, Network network)
-            throws TerminalDoesntExistException {
+            throws TerminalDoesntExistException, OffTerminalException {
         Terminal receiver = network.getTerminal(receiverKey);
         TextCommunication communication = network.newTextCommunication(this, receiver, text);
-        try {
-            receiver.receiveText(communication);
-            madeCommunications.put(communication.getKey(), communication);
-            owner.increaseTextCount();
-        } catch (FailedContactException e) {
-            // Silent failure
-        }
+        receiver.receiveText(communication);
+        registerMadeCommunication(communication);
+        getOwner().increaseTextCount();
     }
 
-    public void receiveText(TextCommunication text) throws FailedContactException {
+    public void receiveText(TextCommunication text) throws OffTerminalException {
         if (isOff()) {
             registerTextCommunicationObserver((text.getSender()).getOwner());
-            throw new FailedContactException();
+            throw new OffTerminalException(getKey());
         }
-        receivedCommunications.put(text.getKey(), text);
+        registerReceivedCommunication(text);
+    }
+
+    public void startInteractiveCommunication(String receiverKey, String type, Network network)
+            throws TerminalDoesntExistException, InvalidOriginException,
+            InvalidDestinationException, BusyTerminalException, OffTerminalException, SilencedTerminalException {
+        Terminal receiver = network.getTerminal(receiverKey);
+        if (type.equals("VOICE"))
+            startVoiceCommunication(receiver, network);
+        else if (type.equals("VIDEO"))
+            startVideoCommunication(receiver, network);
+        else
+            throw new InvalidOriginException(getKey(), type);
+    }
+
+    private void startVoiceCommunication(Terminal receiver, Network network)
+            throws OffTerminalException, BusyTerminalException, SilencedTerminalException {
+        VoiceCommunication communication = network.newVoiceCommunication(this, receiver);
+        getState().startCommunication();
+        receiver.receiveVoiceCommunication(communication);
+        registerMadeCommunication(communication);
+        getOwner().resetCount();
+    }
+
+    public void receiveVoiceCommunication(VoiceCommunication communication)
+            throws OffTerminalException, SilencedTerminalException, BusyTerminalException {
+        // TODO esta merda n esta la mto bem
+        if (isOff()) {
+            registerInteractiveCommunicationObserver((communication.getSender()).getOwner());
+            throw new OffTerminalException(getKey());
+        }
+        if (isBusy()) {
+            registerInteractiveCommunicationObserver((communication.getSender()).getOwner());
+            throw new BusyTerminalException(getKey());
+        }
+        if (isSilenced()) {
+            registerInteractiveCommunicationObserver((communication.getSender()).getOwner());
+            throw new SilencedTerminalException(getKey());
+        }
+        getState().startCommunication();
+        registerReceivedCommunication(communication);
+    }
+
+    protected abstract void startVideoCommunication(Terminal receiver, Network network)
+            throws InvalidOriginException, InvalidDestinationException, BusyTerminalException,
+            SilencedTerminalException, OffTerminalException;
+
+    public abstract void receiveVideoCommunication(VideoCommunication communication)
+            throws OffTerminalException, SilencedTerminalException, BusyTerminalException, InvalidDestinationException;
+
+    public long endCommunication(int units) {
+        state.endCommunication();
+        return currentCommunication.endCommunication(units, isFriend(currentCommunication.getReceiver().getKey()));
     }
 
     /**
@@ -189,6 +252,8 @@ abstract public class Terminal implements Serializable, Printable, Subject {
      *         it was the originator of this communication.
      **/
     public boolean canEndCurrentCommunication() {
+        if (currentCommunication == null)
+            return false;
         return isBusy() && madeCommunications.keySet().contains(currentCommunication.getKey());
     }
 
@@ -199,14 +264,6 @@ abstract public class Terminal implements Serializable, Printable, Subject {
      **/
     public boolean canStartCommunication() {
         return !isBusy() && !isOff();
-    }
-
-    public long endCommunication(int units) {
-        return currentCommunication.endCommunication(units);
-    }
-
-    public void startCommunication(InteractiveCommunication com) {
-        // TODO: implement
     }
 
     public InteractiveCommunication getCurrentCommunication() {
