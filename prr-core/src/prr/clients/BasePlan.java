@@ -48,43 +48,43 @@ public class BasePlan extends ClientPlan {
     @Override
     public double getPrice(VoiceCommunication communication, Normal type, boolean isFriend) {
         if (isFriend)
-            return NORMAL_VOICE * 0.5;
-        return NORMAL_VOICE;
+            return (NORMAL_VOICE*0.5)*communication.getUnits();
+        return NORMAL_VOICE*communication.getUnits();
     }
 
     @Override
     public double getPrice(VoiceCommunication communication, Gold type, boolean isFriend) {
         if (isFriend)
-            return GOLD_VOICE * 0.5;
-        return GOLD_VOICE;
+            return (GOLD_VOICE*0.5)*communication.getUnits();
+        return GOLD_VOICE*communication.getUnits();
     }
 
     @Override
     public double getPrice(VoiceCommunication communication, Platinum type, boolean isFriend) {
         if (isFriend)
-            return PLATINUM_VOICE * 0.5;
-        return PLATINUM_VOICE;
+            return (PLATINUM_VOICE*0.5)*communication.getUnits();
+        return PLATINUM_VOICE*communication.getUnits();
     }
 
     @Override
     public double getPrice(VideoCommunication communication, Normal type, boolean isFriend) {
         if (isFriend)
-            return NORMAL_VIDEO * 0.5;
-        return NORMAL_VIDEO;
+            return (NORMAL_VIDEO*0.5)*communication.getUnits();
+        return NORMAL_VIDEO*communication.getUnits();
     }
 
     @Override
     public double getPrice(VideoCommunication communication, Gold type, boolean isFriend) {
         if (isFriend)
-            return GOLD_VIDEO * 0.5;
-        return GOLD_VIDEO;
+            return (GOLD_VIDEO*0.5)*communication.getUnits();
+        return GOLD_VIDEO*communication.getUnits();
     }
 
     @Override
     public double getPrice(VideoCommunication communication, Platinum type, boolean isFriend) {
         if (isFriend)
-            return PLATINUM_VIDEO * 0.5;
-        return PLATINUM_VIDEO;
+            return (PLATINUM_VIDEO*0.5)*communication.getUnits();
+        return PLATINUM_VIDEO*communication.getUnits();
     }
 
 }

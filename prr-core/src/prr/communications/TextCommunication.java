@@ -11,6 +11,7 @@ public class TextCommunication extends Communication {
         super(key, sender, receiver, message.length());
         this.message = message;
         updatePrice(isFriend);
+        finish();
     }
 
     @Override
