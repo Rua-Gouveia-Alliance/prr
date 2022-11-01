@@ -12,17 +12,17 @@ public class Platinum extends ClientType {
 
     @Override
     public double getPrice(TextCommunication communication, boolean isFriend) {
-        return client.getPlan().getPrice(communication, this, isFriend);
+        return client.getCalculator().getPrice(communication, this, isFriend);
     }
 
     @Override
     public double getPrice(VoiceCommunication communication, boolean isFriend) {
-        return client.getPlan().getPrice(communication, this, isFriend);
+        return client.getCalculator().getPrice(communication, this, isFriend);
     }
 
     @Override
     public double getPrice(VideoCommunication communication, boolean isFriend) {
-        return client.getPlan().getPrice(communication, this, isFriend);
+        return client.getCalculator().getPrice(communication, this, isFriend);
     }
 
     @Override

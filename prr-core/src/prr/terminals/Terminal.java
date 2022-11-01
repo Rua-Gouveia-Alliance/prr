@@ -134,7 +134,7 @@ abstract public class Terminal implements Serializable, Printable, Subject {
         this.currentCommunication = currentCommunication;
     }
 
-    public void toSilence() throws SilencedTerminalException {
+    public void toSilence() throws SilencedTerminalException, BusyTerminalException {
         state.toSilence();
     }
 

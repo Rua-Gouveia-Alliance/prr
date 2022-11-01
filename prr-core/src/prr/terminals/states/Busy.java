@@ -11,7 +11,7 @@ public class Busy extends TerminalState {
     }
 
     @Override
-    public void toSilence() {
+    public void toSilence() throws BusyTerminalException {
         throw new BusyTerminalException(terminal.getKey());
     }
 

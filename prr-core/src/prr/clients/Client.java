@@ -29,7 +29,7 @@ public class Client implements Serializable, Printable, Observer {
     private String name;
     private final int nif;
     private final String key;
-    private ClientPlan plan = new BasePlan();
+    private PriceCalculator calculator = new BasePlan();
     private ArrayList<Notification> notifications = new ArrayList<>();
     private ArrayList<Terminal> terminals = new ArrayList<>();
     private final ClientType normal = new Normal(this);
@@ -175,8 +175,8 @@ public class Client implements Serializable, Printable, Observer {
         return videoCount;
     }
 
-    public ClientPlan getPlan() {
-        return plan;
+    public PriceCalculator getCalculator() {
+        return calculator;
     }
 
     public double getPrice(TextCommunication communication, boolean isFriend) {

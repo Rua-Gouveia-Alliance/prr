@@ -20,7 +20,7 @@ public abstract class TerminalState implements Serializable {
         this.terminal = terminal;
     }
 
-    public abstract void toSilence() throws SilencedTerminalException;
+    public abstract void toSilence() throws SilencedTerminalException, BusyTerminalException;
 
     public abstract void toOff() throws BusyTerminalException, OffTerminalException;
 

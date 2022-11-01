@@ -1,6 +1,7 @@
 package prr.app.terminal;
 
 import prr.Network;
+import prr.exceptions.BusyTerminalException;
 import prr.exceptions.SilencedTerminalException;
 import prr.terminals.Terminal;
 import pt.tecnico.uilib.menus.CommandException;
@@ -20,6 +21,8 @@ class DoSilenceTerminal extends TerminalCommand {
             _receiver.toSilence();
         } catch (SilencedTerminalException e) {
             _display.popup(Message.alreadySilent());
+        } catch (BusyTerminalException e) {
+            // Silent failure
         }
     }
 }
