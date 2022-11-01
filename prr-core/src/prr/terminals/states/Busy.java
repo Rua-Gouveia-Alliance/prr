@@ -37,7 +37,7 @@ public class Busy extends TerminalState {
 
     @Override
     public void endCommunication() {
-        if (terminal.getSavedState().equals(terminal.getIdleState()))
+        if ((terminal.getSavedState()).equals(terminal.getIdleState()))
             terminal.notifyInteractiveCommunicationObservers(new BusyToIdleNotification(terminal.getKey()));
         terminal.setState(terminal.getSavedState());
     }
