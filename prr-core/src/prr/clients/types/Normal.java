@@ -1,6 +1,7 @@
 package prr.clients.types;
 
 import prr.clients.Client;
+import prr.clients.PriceCalculator;
 import prr.communications.TextCommunication;
 import prr.communications.VoiceCommunication;
 import prr.communications.VideoCommunication;
@@ -11,18 +12,18 @@ public class Normal extends ClientType {
     }
 
     @Override
-    public double getPrice(TextCommunication communication, boolean isFriend) {
-        return client.getCalculator().getPrice(communication, this, isFriend);
+    public double accept(PriceCalculator calculator, TextCommunication communication, boolean isFriend) {
+        return calculator.visitNormal(communication, isFriend);
     }
 
     @Override
-    public double getPrice(VoiceCommunication communication, boolean isFriend) {
-        return client.getCalculator().getPrice(communication, this, isFriend);
+    public double accept(PriceCalculator calculator, VoiceCommunication communication, boolean isFriend) {
+        return calculator.visitNormal(communication, isFriend);
     }
 
     @Override
-    public double getPrice(VideoCommunication communication, boolean isFriend) {
-        return client.getCalculator().getPrice(communication, this, isFriend);
+    public double accept(PriceCalculator calculator, VideoCommunication communication, boolean isFriend) {
+        return calculator.visitNormal(communication, isFriend);
     }
 
     @Override

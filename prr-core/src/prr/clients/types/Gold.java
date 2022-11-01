@@ -1,6 +1,7 @@
 package prr.clients.types;
 
 import prr.clients.Client;
+import prr.clients.PriceCalculator;
 import prr.communications.TextCommunication;
 import prr.communications.VoiceCommunication;
 import prr.communications.VideoCommunication;
@@ -9,20 +10,20 @@ public class Gold extends ClientType {
     public Gold(Client client) {
         super(client);
     }
-    
+
     @Override
-    public double getPrice(TextCommunication communication, boolean isFriend) {
-        return client.getCalculator().getPrice(communication, this, isFriend);
+    public double accept(PriceCalculator calculator, TextCommunication communication, boolean isFriend) {
+        return calculator.visitGold(communication, isFriend);
     }
 
     @Override
-    public double getPrice(VideoCommunication communication, boolean isFriend) {
-        return client.getCalculator().getPrice(communication, this, isFriend);
+    public double accept(PriceCalculator calculator, VoiceCommunication communication, boolean isFriend) {
+        return calculator.visitGold(communication, isFriend);
     }
 
     @Override
-    public double getPrice(VoiceCommunication communication, boolean isFriend) {
-        return client.getCalculator().getPrice(communication, this, isFriend);
+    public double accept(PriceCalculator calculator, VideoCommunication communication, boolean isFriend) {
+        return calculator.visitGold(communication, isFriend);
     }
 
     @Override
@@ -49,4 +50,5 @@ public class Gold extends ClientType {
     public String getLabel() {
         return "GOLD";
     }
+
 }

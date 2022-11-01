@@ -1,5 +1,6 @@
 package prr.communications;
 
+import prr.clients.Client;
 import prr.terminals.Terminal;
 import prr.visitors.Printer;
 
@@ -15,6 +16,7 @@ public class VoiceCommunication extends InteractiveCommunication {
 
     @Override
     public void updatePrice(boolean isFriend) {
-        setPrice(getSender().getOwner().getPrice(this, isFriend));
+        Client sender = getSender().getOwner();
+        setPrice(sender.getType().accept(sender.getCalculator(), this, isFriend));
     }
 }

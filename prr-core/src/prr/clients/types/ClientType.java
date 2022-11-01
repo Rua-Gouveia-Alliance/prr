@@ -4,6 +4,7 @@ import java.io.Serial;
 import java.io.Serializable;
 
 import prr.clients.Client;
+import prr.clients.PriceCalculator;
 import prr.communications.TextCommunication;
 import prr.communications.VideoCommunication;
 import prr.communications.VoiceCommunication;
@@ -19,11 +20,11 @@ public abstract class ClientType implements Serializable {
         this.client = client;
     }
 
-    abstract public double getPrice(TextCommunication communication, boolean isFriend);
+    abstract public double accept(PriceCalculator calculator, TextCommunication communication, boolean isFriend);
 
-    abstract public double getPrice(VoiceCommunication communication, boolean isFriend);
+    abstract public double accept(PriceCalculator calculator, VoiceCommunication communication, boolean isFriend);
 
-    abstract public double getPrice(VideoCommunication communication, boolean isFriend);
+    abstract public double accept(PriceCalculator calculator, VideoCommunication communication, boolean isFriend);
 
     abstract public String getLabel();
 

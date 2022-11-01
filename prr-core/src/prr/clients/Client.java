@@ -51,6 +51,10 @@ public class Client implements Serializable, Printable, Observer {
         this.type = type;
     }
 
+    public void setPlan(PriceCalculator plan) {
+        this.calculator = plan;
+    }
+
     public void enableNotifications() {
         this.activeNotifications = true;
     }
@@ -177,18 +181,6 @@ public class Client implements Serializable, Printable, Observer {
 
     public PriceCalculator getCalculator() {
         return calculator;
-    }
-
-    public double getPrice(TextCommunication communication, boolean isFriend) {
-        return this.type.getPrice(communication, isFriend);
-    }
-
-    public double getPrice(VoiceCommunication communication, boolean isFriend) {
-        return this.type.getPrice(communication, isFriend);
-    }
-
-    public double getPrice(VideoCommunication communication, boolean isFriend) {
-        return this.type.getPrice(communication, isFriend);
     }
 
     public void queueNotification(Notification notification) {
