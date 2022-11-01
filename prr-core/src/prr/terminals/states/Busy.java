@@ -12,7 +12,7 @@ public class Busy extends TerminalState {
 
     @Override
     public void toSilence() {
-        terminal.setState(terminal.getSilenceState());
+        throw new BusyTerminalException(terminal.getKey());
     }
 
     @Override
@@ -22,7 +22,6 @@ public class Busy extends TerminalState {
 
     @Override
     public void toOn() throws BusyTerminalException {
-        terminal.notifyInteractiveCommunicationObservers(new BusyToIdleNotification(terminal.getKey()));
         throw new BusyTerminalException(terminal.getKey());
     }
 
@@ -38,6 +37,8 @@ public class Busy extends TerminalState {
 
     @Override
     public void endCommunication() {
+        if (terminal.getSavedState().equals(terminal.getIdleState()))
+            terminal.notifyInteractiveCommunicationObservers(new BusyToIdleNotification(terminal.getKey()));
         terminal.setState(terminal.getSavedState());
     }
 
