@@ -32,7 +32,7 @@ class DoStartInteractiveCommunication extends TerminalCommand {
         } catch (InvalidOriginException e) {
             _display.popup(Message.unsupportedAtOrigin(e.getKey(), e.getType()));
         } catch (InvalidDestinationException e) {
-            _display.popup(Message.unsupportedAtOrigin(e.getKey(), e.getType()));
+            _display.popup(Message.unsupportedAtDestination(e.getKey(), e.getType()));
         } catch (OffTerminalException e) {
             _display.popup(Message.destinationIsOff(e.getKey()));
         } catch (SilencedTerminalException e) {

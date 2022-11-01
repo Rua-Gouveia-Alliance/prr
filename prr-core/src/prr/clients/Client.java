@@ -51,8 +51,12 @@ public class Client implements Serializable, Printable, Observer {
         this.type = type;
     }
 
-    public void setActiveNotifications(boolean notifications) {
-        this.activeNotifications = notifications;
+    public void enableNotifications() {
+        this.activeNotifications = true;
+    }
+
+    public void disableNotifications() {
+        this.activeNotifications = false;
     }
 
     public ClientType getGold() {
@@ -170,7 +174,7 @@ public class Client implements Serializable, Printable, Observer {
     public ClientPlan getPlan() {
         return plan;
     }
-    
+
     public double getPrice(TextCommunication communication, boolean isFriend) {
         return this.type.getPrice(communication, isFriend);
     }

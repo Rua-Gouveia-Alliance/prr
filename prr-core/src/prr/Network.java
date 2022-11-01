@@ -87,7 +87,8 @@ public class Network implements Serializable {
         return ++communicationKey;
     }
 
-    public TextCommunication newTextCommunication(Terminal sender, Terminal receiver, String message, boolean isFriend) {
+    public TextCommunication newTextCommunication(Terminal sender, Terminal receiver, String message,
+            boolean isFriend) {
         return new TextCommunication(getCommunicationKey(), sender, receiver, message, isFriend);
     }
 
@@ -161,7 +162,7 @@ public class Network implements Serializable {
         Client client = getClient(key);
         if (client.getActiveNotifications())
             throw new NotificationsAlreadyEnabledException();
-        client.setActiveNotifications(true);
+        client.enableNotifications();
     }
 
     /**
@@ -177,7 +178,7 @@ public class Network implements Serializable {
         Client client = getClient(key);
         if (!client.getActiveNotifications())
             throw new NotificationsAlreadyDisabledException();
-        client.setActiveNotifications(false);
+        client.disableNotifications();
     }
 
     /**

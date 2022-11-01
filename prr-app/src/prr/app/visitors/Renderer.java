@@ -50,8 +50,7 @@ public class Renderer implements Printer {
         screen.add(Message.silentToIdle() + "|" + notification.getId());
     }
 
-    @Override
-    public void visit(FancyTerminal terminal) {
+    public String getTerminalFriends(Terminal terminal) {
         ArrayList<String> terminalFriends = terminal.getFriends();
         Collections.sort(terminalFriends);
         String friends = "";
@@ -61,28 +60,21 @@ public class Renderer implements Printer {
                 friends += friend + ",";
             friends = friends.substring(0, friends.length() - 1);
         }
+        return friends;
+    }
 
+    @Override
+    public void visit(FancyTerminal terminal) {
         screen.add(Message.fancyTerminal() + "|" + terminal.getKey() + "|" + terminal.getOwnerKey() + "|"
                 + terminal.getStateLabel() + "|"
-                + Math.round(terminal.getPaid()) + "|" + Math.round(terminal.getDebt()) + friends);
+                + Math.round(terminal.getPaid()) + "|" + Math.round(terminal.getDebt()) + getTerminalFriends(terminal));
     }
 
     @Override
     public void visit(BasicTerminal terminal) {
-        //TODO faz sentido? Melhorar codigo tmb Acho que sqe os terminal friends tao a ser alterados e isso e mau
-        ArrayList<String> terminalFriends = terminal.getFriends();
-        Collections.sort(terminalFriends);
-        String friends = "";
-        if (!terminalFriends.isEmpty()) {
-            friends += "|";
-            for (String friend : terminalFriends)
-                friends += friend + ",";
-            friends = friends.substring(0, friends.length() - 1);
-        }
-
         screen.add(Message.basicTerminal() + "|" + terminal.getKey() + "|" + terminal.getOwnerKey() + "|"
                 + terminal.getStateLabel() + "|"
-                + Math.round(terminal.getPaid()) + "|" + Math.round(terminal.getDebt()) + friends);
+                + Math.round(terminal.getPaid()) + "|" + Math.round(terminal.getDebt()) + getTerminalFriends(terminal));
     }
 
     @Override
