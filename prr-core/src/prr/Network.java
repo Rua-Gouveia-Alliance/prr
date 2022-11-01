@@ -328,6 +328,7 @@ public class Network implements Serializable {
                 c.accept(visitor);
                 for (Notification n : c.getNotifications())
                     n.accept(visitor);
+                c.clearNotifications();
                 return;
             }
     }
