@@ -339,12 +339,14 @@ abstract public class Terminal implements Serializable, Printable, Subject {
 
     @Override
     public void registerInteractiveCommunicationObserver(Observer observer) {
-        interactiveCommunicationObservers.add(observer);
+        if (!interactiveCommunicationObservers.contains(observer))
+            interactiveCommunicationObservers.add(observer);
     }
 
     @Override
     public void registerTextCommunicationObserver(Observer observer) {
-        textCommunicationObservers.add(observer);
+        if (!textCommunicationObservers.contains(observer))
+            textCommunicationObservers.add(observer);
     }
 
     @Override

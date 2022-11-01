@@ -23,7 +23,7 @@ public class Silence extends TerminalState {
     @Override
     public void toOn() throws SilencedTerminalException {
         terminal.notifyInteractiveCommunicationObservers(new SilentToIdleNotification(terminal.getKey()));
-        throw new SilencedTerminalException(terminal.getKey());
+        terminal.setState(terminal.getIdleState());
     }
 
     @Override
