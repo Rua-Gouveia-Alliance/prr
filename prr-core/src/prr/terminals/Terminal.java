@@ -228,13 +228,13 @@ abstract public class Terminal implements Serializable, Printable, Subject {
             getState().receiveCommunication();
         } catch (OffTerminalException e) {
             registerInteractiveCommunicationObserver((communication.getSender()).getOwner());
-            throw new OffTerminalException(getKey());
+            throw e;
         } catch (BusyTerminalException e) {
             registerInteractiveCommunicationObserver((communication.getSender()).getOwner());
-            throw new BusyTerminalException(getKey());
+            throw e;
         } catch (SilencedTerminalException e) {
             registerInteractiveCommunicationObserver((communication.getSender()).getOwner());
-            throw new SilencedTerminalException(getKey());
+            throw e;
         }
         setCurrentCommunication(communication);
         registerReceivedCommunication(communication);
