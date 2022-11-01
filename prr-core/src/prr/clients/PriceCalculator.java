@@ -9,7 +9,7 @@ import prr.communications.TextCommunication;
 import prr.communications.VideoCommunication;
 import prr.communications.VoiceCommunication;
 
-public abstract class ClientPlan implements Serializable {
+public abstract class PriceCalculator implements Serializable {
 
     public abstract double getPrice(TextCommunication text, Normal type, boolean isFriend);
 

@@ -9,7 +9,7 @@ import prr.communications.TextCommunication;
 import prr.communications.VideoCommunication;
 import prr.communications.VoiceCommunication;
 
-public class BasePlan extends ClientPlan {
+public class BasePlan extends PriceCalculator {
 
     @Serial
     private static final long serialVersionUID = 202222102220L;
