@@ -32,7 +32,7 @@ public class Off extends TerminalState {
 
     @Override
     public void receiveCommunication() throws BusyTerminalException, OffTerminalException, SilencedTerminalException {
-        // TODO Auto-generated method stub
+        throw new OffTerminalException(terminal.getKey());
     }
 
     @Override
@@ -42,7 +42,7 @@ public class Off extends TerminalState {
 
     @Override
     public void endCommunication() {
-        // TODO Auto-generated method stub
+        // empty
     }
 
     @Override

@@ -39,7 +39,7 @@ public class Silence extends TerminalState {
 
     @Override
     public void endCommunication() {
-
+        // empty
     }
 
     @Override

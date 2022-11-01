@@ -41,7 +41,7 @@ public class Idle extends TerminalState {
 
     @Override
     public void endCommunication() {
-        // TODO Auto-generated method stub
+        // empty
     }
 
     @Override

@@ -35,19 +35,18 @@ public class FancyTerminal extends Terminal {
     @Override
     public void receiveVideoCommunication(VideoCommunication communication)
             throws OffTerminalException, SilencedTerminalException, BusyTerminalException {
-        if (isOff()) {
+        try {
+            getState().receiveCommunication();
+        } catch (OffTerminalException e) {
             registerInteractiveCommunicationObserver((communication.getSender()).getOwner());
             throw new OffTerminalException(getKey());
-        }
-        if (isBusy()) {
+        } catch (BusyTerminalException e) {
             registerInteractiveCommunicationObserver((communication.getSender()).getOwner());
             throw new BusyTerminalException(getKey());
-        }
-        if (isSilenced()) {
+        } catch (SilencedTerminalException e) {
             registerInteractiveCommunicationObserver((communication.getSender()).getOwner());
             throw new SilencedTerminalException(getKey());
         }
-        getState().startCommunication();
         setCurrentCommunication(communication);
         registerReceivedCommunication(communication);
     }
