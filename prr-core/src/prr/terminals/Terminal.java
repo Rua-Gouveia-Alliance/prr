@@ -173,7 +173,7 @@ abstract public class Terminal implements Serializable, Printable, Subject {
 
     public void addFriend(String friend, Network network) throws TerminalDoesntExistException {
         network.checkTerminal(friend);
-        if (!friends.contains(friend))
+        if (!friends.contains(friend) && !friend.equals(getKey()))
             friends.add(friend);
     }
 
@@ -255,7 +255,7 @@ abstract public class Terminal implements Serializable, Printable, Subject {
         receiver.notifyEndedCommunication();
         return currentCommunication.endCommunication(units, isFriend(receiver.getKey()));
     }
-    
+
     public void notifyEndedCommunication() {
         getState().endCommunication();
     }
