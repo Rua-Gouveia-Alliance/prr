@@ -83,6 +83,10 @@ public class Client implements Serializable, Printable, Observer {
         return this.type;
     }
 
+    public void updateType() {
+        getType().update();
+    }
+
     public String getTypeLabel() {
         return this.type.getLabel();
     }

@@ -190,6 +190,7 @@ abstract public class Terminal implements Serializable, Printable, Subject {
         receiver.receiveText(communication);
         registerMadeCommunication(communication);
         getOwner().increaseTextCount();
+        getOwner().updateType();
     }
 
     public void receiveText(TextCommunication text) throws OffTerminalException {
@@ -247,7 +248,9 @@ abstract public class Terminal implements Serializable, Printable, Subject {
         Terminal receiver = currentCommunication.getReceiver();
         getState().endCommunication();
         receiver.notifyEndedCommunication();
-        return currentCommunication.endCommunication(units, isFriend(receiver.getKey()));
+        double price = currentCommunication.endCommunication(units, isFriend(receiver.getKey()));
+        getOwner().updateType();
+        return price;
     }
 
     public void notifyEndedCommunication() {
@@ -311,6 +314,7 @@ abstract public class Terminal implements Serializable, Printable, Subject {
             throw new InvalidCommunicationException();
 
         communication.payCommunication();
+        getOwner().updateType();
     }
 
     public int getCommunicationCount() {
