@@ -203,6 +203,8 @@ abstract public class Terminal implements Serializable, Printable, Subject {
     public void startInteractiveCommunication(String receiverKey, String type, Network network)
             throws TerminalDoesntExistException, InvalidOriginException,
             InvalidDestinationException, BusyTerminalException, OffTerminalException, SilencedTerminalException {
+        if (receiverKey.equals(getKey()))
+            throw new InvalidDestinationException(receiverKey, type);
         Terminal receiver = network.getTerminal(receiverKey);
         if (type.equals("VOICE"))
             startVoiceCommunication(receiver, network);
