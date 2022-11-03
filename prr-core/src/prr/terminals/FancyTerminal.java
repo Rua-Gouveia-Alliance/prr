@@ -37,13 +37,7 @@ public class FancyTerminal extends Terminal {
             throws OffTerminalException, SilencedTerminalException, BusyTerminalException {
         try {
             getState().receiveCommunication();
-        } catch (OffTerminalException e) {
-            registerInteractiveCommunicationObserver((communication.getSender()).getOwner());
-            throw e;
-        } catch (BusyTerminalException e) {
-            registerInteractiveCommunicationObserver((communication.getSender()).getOwner());
-            throw e;
-        } catch (SilencedTerminalException e) {
+        } catch (OffTerminalException | BusyTerminalException | SilencedTerminalException e) {
             registerInteractiveCommunicationObserver((communication.getSender()).getOwner());
             throw e;
         }
