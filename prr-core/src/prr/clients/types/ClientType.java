@@ -37,9 +37,12 @@ public abstract class ClientType implements Serializable {
     abstract protected boolean canUpgrade();
 
     public void update() {
-        if (canUpgrade())
+        if (canUpgrade()) {
             upgrade();
-        else if (canDowngrade())
+            client.resetCount();
+        } else if (canDowngrade()) {
             downgrade();
+            client.resetCount();
+        }
     }
 }
