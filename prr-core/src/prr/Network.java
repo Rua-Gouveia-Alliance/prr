@@ -6,7 +6,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Map;
-import java.util.Queue;
 import java.util.TreeMap;
 
 import prr.util.NaturalLanguageTextComparator;

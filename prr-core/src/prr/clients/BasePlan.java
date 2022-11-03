@@ -2,9 +2,6 @@ package prr.clients;
 
 import java.io.Serial;
 
-import prr.clients.types.Gold;
-import prr.clients.types.Normal;
-import prr.clients.types.Platinum;
 import prr.communications.TextCommunication;
 import prr.communications.VideoCommunication;
 import prr.communications.VoiceCommunication;
