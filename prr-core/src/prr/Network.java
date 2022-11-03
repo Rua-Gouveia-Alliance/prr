@@ -87,15 +87,34 @@ public class Network implements Serializable {
         return ++communicationKey;
     }
 
+    /**
+     * Generate a new {@link TextCommunication}
+     * 
+     * @param sender   new message's sender
+     * @param receiver new message's receiver
+     * @param message  message contents
+     */
     public TextCommunication newTextCommunication(Terminal sender, Terminal receiver, String message,
             boolean isFriend) {
         return new TextCommunication(getCommunicationKey(), sender, receiver, message, isFriend);
     }
 
+    /**
+     * Generate a new {@link VoiceCommunication}
+     * 
+     * @param sender   new message's sender
+     * @param receiver new message's receiver
+     */
     public VoiceCommunication newVoiceCommunication(Terminal sender, Terminal receiver) {
         return new VoiceCommunication(getCommunicationKey(), sender, receiver);
     }
 
+    /**
+     * Generate a new {@link VideoCommunication}
+     * 
+     * @param sender   new message's sender
+     * @param receiver new message's receiver
+     */
     public VideoCommunication newVideoCommunication(Terminal sender, Terminal receiver) {
         return new VideoCommunication(getCommunicationKey(), sender, receiver);
     }
@@ -129,7 +148,7 @@ public class Network implements Serializable {
     /**
      * Checks if a terminal exists
      * 
-     * @param key the key that identifies the client
+     * @param key the key that identifies the terminal
      * @throws TerminalDoesntExistException if the given key can't be found
      */
     public void checkTerminal(String key) throws TerminalDoesntExistException {
@@ -204,13 +223,12 @@ public class Network implements Serializable {
     /**
      * Gets global payments
      * 
-     * @return Total payd by all clients
+     * @return Total paid by all clients
      */
     public long getGlobalPayments() {
         long total = 0;
-        for (Client c : clients.values()) {
+        for (Client c : clients.values())
             total += c.getPaid();
-        }
         return total;
     }
 
@@ -221,9 +239,8 @@ public class Network implements Serializable {
      */
     public long getGlobalDebts() {
         long total = 0;
-        for (Client c : clients.values()) {
+        for (Client c : clients.values())
             total += c.getDebt();
-        }
         return total;
     }
 
@@ -279,7 +296,7 @@ public class Network implements Serializable {
     }
 
     /**
-     * Visit the communications made by all selected client with a printer
+     * Visit the communications received by all selected client with a printer
      * 
      * @param selector
      * @param visitor
@@ -327,7 +344,7 @@ public class Network implements Serializable {
             if (selector.ok(c)) {
                 c.accept(visitor);
                 Notification n;
-                while((n = c.getNotifications().poll()) != null)
+                while ((n = c.getNotifications().poll()) != null)
                     n.accept(visitor);
             }
     }
