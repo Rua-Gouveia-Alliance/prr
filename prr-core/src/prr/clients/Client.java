@@ -4,6 +4,8 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import prr.terminals.Terminal;
 import prr.observers.Observer;
@@ -14,9 +16,6 @@ import prr.clients.types.Gold;
 import prr.clients.types.Normal;
 import prr.clients.types.Platinum;
 import prr.communications.Communication;
-import prr.communications.TextCommunication;
-import prr.communications.VideoCommunication;
-import prr.communications.VoiceCommunication;
 import prr.notifications.Notification;
 import prr.notifications.DeliveryMethod;
 import prr.notifications.InAppNotifications;
@@ -30,7 +29,7 @@ public class Client implements Serializable, Printable, Observer {
     private final int nif;
     private final String key;
     private PriceCalculator calculator = new BasePlan();
-    private ArrayList<Notification> notifications = new ArrayList<>();
+    private Queue<Notification> notifications = new LinkedList<>();
     private ArrayList<Terminal> terminals = new ArrayList<>();
     private final ClientType normal = new Normal(this);
     private final ClientType gold = new Gold(this);
@@ -142,7 +141,7 @@ public class Client implements Serializable, Printable, Observer {
         return terminals;
     }
 
-    public Collection<Notification> getNotifications() {
+    public Queue<Notification> getNotifications() {
         return notifications;
     }
 

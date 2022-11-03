@@ -50,8 +50,8 @@ public class Renderer implements Printer {
         screen.add(Message.silentToIdle() + "|" + notification.getId());
     }
 
-    public String getTerminalFriends(Terminal terminal) {
-        ArrayList<String> terminalFriends = terminal.getFriends();
+    private String getTerminalFriends(Terminal terminal) {
+        ArrayList<String> terminalFriends = new ArrayList<>(terminal.getFriends());
         Collections.sort(terminalFriends);
         String friends = "";
         if (!terminalFriends.isEmpty()) {

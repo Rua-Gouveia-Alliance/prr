@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Queue;
 import java.util.TreeMap;
 
 import prr.util.NaturalLanguageTextComparator;
@@ -326,10 +327,9 @@ public class Network implements Serializable {
         for (Client c : clients.values())
             if (selector.ok(c)) {
                 c.accept(visitor);
-                for (Notification n : c.getNotifications())
+                Notification n;
+                while((n = c.getNotifications().poll()) != null)
                     n.accept(visitor);
-                c.clearNotifications();
-                return;
             }
     }
 
