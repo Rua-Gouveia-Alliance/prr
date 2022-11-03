@@ -86,7 +86,7 @@ abstract public class Terminal implements Serializable, Printable, Subject {
         return this.owner.getKey();
     }
 
-    public ArrayList<String> getFriends() {
+    public Collection<String> getFriends() {
         return friends;
     }
 

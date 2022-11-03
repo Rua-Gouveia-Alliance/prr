@@ -326,10 +326,9 @@ public class Network implements Serializable {
         for (Client c : clients.values())
             if (selector.ok(c)) {
                 c.accept(visitor);
-                for (Notification n : c.getNotifications())
+                Notification n;
+                while((n = c.getNotifications().poll()) != null)
                     n.accept(visitor);
-                c.clearNotifications();
-                return;
             }
     }
 
