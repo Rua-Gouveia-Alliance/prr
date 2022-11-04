@@ -2,11 +2,6 @@
 
 Project done in the scope of the course Object-Oriented Programming, IST 2022/2023.
 
-## Index
-
-1. [How to run](#How-to-run)
-1. [Useful links](#Useful-links)
-
 ## How to run
 
 1. `make`
