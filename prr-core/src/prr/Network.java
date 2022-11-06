@@ -7,7 +7,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.Collection;
 
 import prr.util.NaturalLanguageTextComparator;
 import prr.visitors.Printer;
