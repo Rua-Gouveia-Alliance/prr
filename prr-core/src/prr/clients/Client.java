@@ -120,6 +120,10 @@ public class Client implements Serializable, Printable, Observer {
         return paid;
     }
 
+    public double getAveragePayments() {
+        return getPaid() / getTerminalCount();
+    }
+
     public double getBalance() {
         double balance = 0;
         for (Terminal terminal : this.terminals)

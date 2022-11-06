@@ -27,7 +27,7 @@ public class Renderer implements Printer {
                 + client.getTypeLabel() + "|"
                 + (client.getActiveNotifications() ? Message.activeNotifications() : Message.inactiveNotifications())
                 + "|" + client.getTerminalCount() + "|" + Math.round(client.getPaid()) + "|"
-                + Math.round(client.getDebt()));
+                + Math.round(client.getDebt()) + "|" + Math.round(client.getAveragePayments()));
     }
 
     @Override
