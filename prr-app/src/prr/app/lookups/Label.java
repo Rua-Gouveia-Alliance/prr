@@ -31,4 +31,6 @@ interface Label {
 
     String SHOW_CLIENTS_WITH_LOWEST_PAYMENTS = "Mostrar cliente(s) com menor valor de pagamentos";
 
+    String SHOW_TERMINALS_WITH_HIGHEST_PAYMENTS = "Mostrar terminal(is) com maior valor de pagamentos";
+
 }

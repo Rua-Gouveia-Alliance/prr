@@ -186,6 +186,19 @@ public class Network implements Serializable {
     }
 
     /**
+     * Get payment values of the terminal(s) with highest payment values
+     */
+    public double getHighestTotalPayments() {
+        double highest = -1;
+        for (Terminal t : terminals.values()) {
+            if (t.getPaid() > highest)
+                highest = t.getPaid();
+        }
+
+        return highest;
+    }
+
+    /**
      * Enables client notifications
      * 
      * @param key the key that identifies the client

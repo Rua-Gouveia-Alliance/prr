@@ -16,7 +16,8 @@ public final class Menu extends pt.tecnico.uilib.menus.Menu {
                 new DoShowClientsWithDebts(receiver), //
                 new DoShowUnusedTerminals(receiver), //
                 new DoShowTerminalsWithPositiveBalance(receiver), //
-                new DoShowClientsWithLowestPayments(receiver)//
+                new DoShowClientsWithLowestPayments(receiver), //
+                new DoShowTerminalsWithHighestPayments(receiver)//
         );
     }
 }
