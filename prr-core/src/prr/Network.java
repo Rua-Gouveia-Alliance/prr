@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.Collection;
 
 import prr.util.NaturalLanguageTextComparator;
 import prr.visitors.Printer;
@@ -166,6 +167,22 @@ public class Network implements Serializable {
     public Client getClient(String key) throws ClientDoesntExistException {
         checkClient(key);
         return clients.get(key);
+    }
+
+    /**
+     * Get payment values of the client(s) with lowest payment values
+     */
+    public double getLowestTotalPayments() {
+        if (clients.size() == 0)
+            return 0;
+
+        double lowest = -1;
+        for (Client c : clients.values()) {
+            if (lowest == -1 || c.getPaid() < lowest)
+                lowest = c.getPaid();
+        }
+
+        return lowest;
     }
 
     /**
